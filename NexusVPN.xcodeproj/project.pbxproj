@@ -6,14 +6,67 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7C5DDF2F493C8F002DBCA701 /* Pods_NexusVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4E3B2FB32DDB1EFEB6A6F1 /* Pods_NexusVPN.framework */; };
+		8E061EBC2F10DED800EDE9D2 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */; };
+		8E061EC52F10DED800EDE9D2 /* mind.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8E061EBA2F10DED800EDE9D2 /* mind.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8E061EC22F10DED800EDE9D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E061E9A2F0F9E0D00EDE9D2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E061EB92F10DED800EDE9D2;
+			remoteInfo = mind;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8E061EC42F10DED800EDE9D2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8E061EC52F10DED800EDE9D2 /* mind.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2F4E3B2FB32DDB1EFEB6A6F1 /* Pods_NexusVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NexusVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		843BA125E418286F9D976ADC /* Pods-NexusVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NexusVPN.release.xcconfig"; path = "Target Support Files/Pods-NexusVPN/Pods-NexusVPN.release.xcconfig"; sourceTree = "<group>"; };
 		8E061EA22F0F9E0D00EDE9D2 /* NexusVPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexusVPN.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E061EBA2F10DED800EDE9D2 /* mind.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = mind.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		C8FE34F33A9E7E1545EF60F9 /* Pods-NexusVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NexusVPN.debug.xcconfig"; path = "Target Support Files/Pods-NexusVPN/Pods-NexusVPN.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8E061EC82F10DED800EDE9D2 /* Exceptions for "mind" folder in "mind" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8E061EB92F10DED800EDE9D2 /* mind */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8E061EA42F0F9E0D00EDE9D2 /* NexusVPN */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = NexusVPN;
+			sourceTree = "<group>";
+		};
+		8E061EBD2F10DED800EDE9D2 /* mind */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8E061EC82F10DED800EDE9D2 /* Exceptions for "mind" folder in "mind" target */,
+			);
+			path = mind;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,17 +76,47 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C5DDF2F493C8F002DBCA701 /* Pods_NexusVPN.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E061EB72F10DED800EDE9D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E061EBC2F10DED800EDE9D2 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		812E7C797F360CF01AB05F74 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F4E3B2FB32DDB1EFEB6A6F1 /* Pods_NexusVPN.framework */,
+				8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89D05E467A96D67189432439 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C8FE34F33A9E7E1545EF60F9 /* Pods-NexusVPN.debug.xcconfig */,
+				843BA125E418286F9D976ADC /* Pods-NexusVPN.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8E061E992F0F9E0D00EDE9D2 = {
 			isa = PBXGroup;
 			children = (
 				8E061EA42F0F9E0D00EDE9D2 /* NexusVPN */,
+				8E061EBD2F10DED800EDE9D2 /* mind */,
 				8E061EA32F0F9E0D00EDE9D2 /* Products */,
+				89D05E467A96D67189432439 /* Pods */,
+				812E7C797F360CF01AB05F74 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				8E061EA22F0F9E0D00EDE9D2 /* NexusVPN.app */,
+				8E061EBA2F10DED800EDE9D2 /* mind.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -52,23 +136,47 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E061EAD2F0F9E0E00EDE9D2 /* Build configuration list for PBXNativeTarget "NexusVPN" */;
 			buildPhases = (
+				A49C1F293FC75722C0315250 /* [CP] Check Pods Manifest.lock */,
 				8E061E9E2F0F9E0D00EDE9D2 /* Sources */,
 				8E061E9F2F0F9E0D00EDE9D2 /* Frameworks */,
 				8E061EA02F0F9E0D00EDE9D2 /* Resources */,
+				77AC39F39845C16282D53941 /* [CP] Embed Pods Frameworks */,
+				8E061EC42F10DED800EDE9D2 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E061EC32F10DED800EDE9D2 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8E061EA42F0F9E0D00EDE9D2 /* NexusVPN */,
+			);
+			name = NexusVPN;
+			productName = NexusVPN;
+			productReference = 8E061EA22F0F9E0D00EDE9D2 /* NexusVPN.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8E061EB92F10DED800EDE9D2 /* mind */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E061EC92F10DED800EDE9D2 /* Build configuration list for PBXNativeTarget "mind" */;
+			buildPhases = (
+				8E061EB62F10DED800EDE9D2 /* Sources */,
+				8E061EB72F10DED800EDE9D2 /* Frameworks */,
+				8E061EB82F10DED800EDE9D2 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				8E061EA42F0F9E0D00EDE9D2 /* NexusVPN */,
+				8E061EBD2F10DED800EDE9D2 /* mind */,
 			);
-			name = NexusVPN;
+			name = mind;
 			packageProductDependencies = (
 			);
-			productName = NexusVPN;
-			productReference = 8E061EA22F0F9E0D00EDE9D2 /* NexusVPN.app */;
-			productType = "com.apple.product-type.application";
+			productName = mind;
+			productReference = 8E061EBA2F10DED800EDE9D2 /* mind.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +189,9 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					8E061EA12F0F9E0D00EDE9D2 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					8E061EB92F10DED800EDE9D2 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -100,6 +211,7 @@
 			projectRoot = "";
 			targets = (
 				8E061EA12F0F9E0D00EDE9D2 /* NexusVPN */,
+				8E061EB92F10DED800EDE9D2 /* mind */,
 			);
 		};
 /* End PBXProject section */
@@ -112,7 +224,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8E061EB82F10DED800EDE9D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		77AC39F39845C16282D53941 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A49C1F293FC75722C0315250 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NexusVPN-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8E061E9E2F0F9E0D00EDE9D2 /* Sources */ = {
@@ -122,7 +287,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8E061EB62F10DED800EDE9D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8E061EC32F10DED800EDE9D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E061EB92F10DED800EDE9D2 /* mind */;
+			targetProxy = 8E061EC22F10DED800EDE9D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8E061EAB2F0F9E0E00EDE9D2 /* Debug */ = {
@@ -243,17 +423,21 @@
 		};
 		8E061EAE2F0F9E0E00EDE9D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8FE34F33A9E7E1545EF60F9 /* Pods-NexusVPN.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NexusVPN/NexusVPN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFWY6RAV2Z;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NexusVPN;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -262,42 +446,47 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.vpn.NexusVPN;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Debug;
 		};
 		8E061EAF2F0F9E0E00EDE9D2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 843BA125E418286F9D976ADC /* Pods-NexusVPN.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NexusVPN/NexusVPN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFWY6RAV2Z;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NexusVPN;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -306,26 +495,98 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.vpn.NexusVPN;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Release;
+		};
+		8E061EC62F10DED800EDE9D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = mind/mind.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WFWY6RAV2Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = mind/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = mind;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.vpn.mind;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		8E061EC72F10DED800EDE9D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = mind/mind.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WFWY6RAV2Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = mind/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = mind;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.vpn.mind;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -346,6 +607,15 @@
 			buildConfigurations = (
 				8E061EAE2F0F9E0E00EDE9D2 /* Debug */,
 				8E061EAF2F0F9E0E00EDE9D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E061EC92F10DED800EDE9D2 /* Build configuration list for PBXNativeTarget "mind" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E061EC62F10DED800EDE9D2 /* Debug */,
+				8E061EC72F10DED800EDE9D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
