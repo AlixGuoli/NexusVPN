@@ -51,9 +51,9 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                            
+                
                             // 设置按钮
-                            Button(action: {
+                Button(action: {
                                 navigationPath.append(NavigationDestination.settings)
                             }) {
                                 Image(systemName: "gearshape.fill")
@@ -71,7 +71,7 @@ struct ContentView: View {
                             TriangleConnectionButton(
                                 stage: viewModel.stage,
                                 onTap: {
-                                    viewModel.onPrimaryButtonTapped()
+                    viewModel.onPrimaryButtonTapped()
                                 }
                             )
                             .frame(width: 200, height: 200)
@@ -114,13 +114,13 @@ struct ContentView: View {
                                         Text(language.text("home.action.smartMode"))
                                             .font(.system(size: 13, weight: .medium))
                                     }
-                                    .foregroundColor(.white)
+                        .foregroundColor(.white)
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 10)
                                     .background(Color.white.opacity(0.15))
                                     .cornerRadius(20)
                                 }
-                            }
+                }
                             .padding(.top, 8)
                         }
                         .padding(.vertical, 40)
@@ -140,7 +140,7 @@ struct ContentView: View {
                                 unit: "KB/s",
                                 label: language.text("home.info.download")
                             )
-                        }
+            }
                         .padding(.top, 30)
                         .padding(.bottom, 20)
                     }

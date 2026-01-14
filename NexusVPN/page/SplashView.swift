@@ -17,9 +17,16 @@ struct SplashView: View {
     
     var body: some View {
         ZStack {
-            // 深色背景
-            Color.black
-                .ignoresSafeArea()
+            // 与主页/连接页统一的深色渐变背景
+            LinearGradient(
+                colors: [
+                    Color(red: 0.05, green: 0.15, blue: 0.25),
+                    Color(red: 0.02, green: 0.05, blue: 0.10)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             VStack(spacing: 20) {
                 // Logo
@@ -28,6 +35,12 @@ struct SplashView: View {
                     .scaledToFit()
                     .frame(width: 120, height: 120)
                     .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    .shadow(
+                        color: Color(red: 0.25, green: 0.85, blue: 1.0).opacity(0.55),
+                        radius: 20,
+                        x: 0,
+                        y: 10
+                    )
                 
                 // App 名称
                 Text("Nexus VPN")
@@ -38,17 +51,29 @@ struct SplashView: View {
                 VStack(spacing: 8) {
                     ZStack(alignment: .leading) {
                         Capsule()
-                            .fill(Color.white.opacity(0.2))
+                            .fill(Color.white.opacity(0.20))
                             .frame(height: 4)
                         
                         Capsule()
-                            .fill(Color.blue)
-                            .frame(width: CGFloat(progress) / 100.0 * 200.0, height: 4)
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        Color(red: 0.40, green: 0.90, blue: 1.00),
+                                        Color(red: 0.12, green: 0.45, blue: 0.95)
+                                    ],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .frame(
+                                width: CGFloat(progress) / 100.0 * 200.0,
+                                height: 4
+                            )
                     }
                     .frame(width: 200, alignment: .leading)
                     
                     Text("\(progress)%")
-                        .font(.system(size: 14))
+                        .font(.system(size: 13))
                         .foregroundColor(Color.white.opacity(0.7))
                 }
                 .padding(.top, 20)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppTrackingTransparency
 
 @main
 struct NexusVPNApp: App {
@@ -15,6 +16,8 @@ struct NexusVPNApp: App {
     @State private var hasAcceptedPrivacy: Bool = UserDefaults.standard.bool(
         forKey: "NexusVPN.PrivacyAccepted"
     )
+    
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -48,6 +51,45 @@ struct NexusVPNApp: App {
                     }
                     .environmentObject(languageManager)
                     .ignoresSafeArea()
+                }
+            }
+            .onChange(of: scenePhase) { newPhase in
+                processScenePhaseChange(newPhase)
+            }
+        }
+    }
+    
+    // MARK: - App lifecycle & ATT
+    
+    private func processScenePhaseChange(_ newPhase: ScenePhase) {
+        switch newPhase {
+        case .active:
+            requestAppTrackingAuthorization()
+        case .inactive, .background:
+            break
+        @unknown default:
+            break
+        }
+    }
+    
+    /// App 切回前台时触发一次 ATT 权限请求（仅 iOS 14+）
+    private func requestAppTrackingAuthorization() {
+        guard #available(iOS 14, *) else { return }
+        
+        // 延迟一点时间，确保应用完全启动
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    NVLog.log("ATT", "Tracking authorized")
+                case .denied:
+                    NVLog.log("ATT", "Tracking denied")
+                case .notDetermined:
+                    NVLog.log("ATT", "Tracking not determined")
+                case .restricted:
+                    NVLog.log("ATT", "Tracking restricted")
+                @unknown default:
+                    NVLog.log("ATT", "Tracking unknown status")
                 }
             }
         }
