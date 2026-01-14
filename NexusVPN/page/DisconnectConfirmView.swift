@@ -11,18 +11,19 @@ struct DisconnectConfirmView: View {
     let onConfirm: () -> Void
     let onCancel: () -> Void
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var language: AppLanguageManager
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("确认断开")
+            Text(language.text("disconnect.title"))
                 .font(.headline)
             
-            Text("确定要断开 VPN 连接吗？")
+            Text(language.text("disconnect.message"))
                 .font(.body)
                 .foregroundColor(.secondary)
             
             HStack(spacing: 15) {
-                Button("取消") {
+                Button(language.text("common.cancel")) {
                     onCancel()
                     dismiss()
                 }
@@ -32,7 +33,7 @@ struct DisconnectConfirmView: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(8)
                 
-                Button("断开") {
+                Button(language.text("disconnect.confirm")) {
                     onConfirm()
                     dismiss()
                 }

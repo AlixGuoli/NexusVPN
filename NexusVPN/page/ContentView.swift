@@ -10,10 +10,13 @@ import SwiftUI
 enum NavigationDestination: Hashable {
     case connecting
     case result(ConnectionResult)
+    case settings
+    case language
 }
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: HomeSessionViewModel
+    @EnvironmentObject var language: AppLanguageManager
     @State private var navigationPath = NavigationPath()
     
     var body: some View {
@@ -43,14 +46,16 @@ struct ContentView: View {
                             Spacer()
                             
                             // 标题
-                            Text("Nexus VPN")
+                            Text(language.text("app.title"))
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.white)
                             
                             Spacer()
                             
-                            // 设置按钮（占位）
-                            Button(action: {}) {
+                            // 设置按钮
+                            Button(action: {
+                                navigationPath.append(NavigationDestination.settings)
+                            }) {
                                 Image(systemName: "gearshape.fill")
                                     .font(.system(size: 20))
                                     .foregroundColor(.white.opacity(0.7))
@@ -81,7 +86,7 @@ struct ContentView: View {
                                 Image(systemName: "location.fill")
                                     .font(.system(size: 14))
                                     .foregroundColor(.white.opacity(0.6))
-                                Text("Auto • Best Location")
+                                Text(language.text("home.node.auto"))
                                     .font(.system(size: 14))
                                     .foregroundColor(.white.opacity(0.7))
                             }
@@ -92,7 +97,7 @@ struct ContentView: View {
                                     HStack(spacing: 6) {
                                         Image(systemName: "network")
                                             .font(.system(size: 12))
-                                        Text("Change Node")
+                                        Text(language.text("home.action.changeNode"))
                                             .font(.system(size: 13, weight: .medium))
                                     }
                                     .foregroundColor(.white)
@@ -106,7 +111,7 @@ struct ContentView: View {
                                     HStack(spacing: 6) {
                                         Image(systemName: "bolt.fill")
                                             .font(.system(size: 12))
-                                        Text("Smart Mode")
+                                        Text(language.text("home.action.smartMode"))
                                             .font(.system(size: 13, weight: .medium))
                                     }
                                     .foregroundColor(.white)
@@ -126,14 +131,14 @@ struct ContentView: View {
                                 icon: "arrow.up.circle.fill",
                                 value: "0.0",
                                 unit: "KB/s",
-                                label: "Upload"
+                                label: language.text("home.info.upload")
                             )
                             
                             InfoItem(
                                 icon: "arrow.down.circle.fill",
                                 value: "0.0",
                                 unit: "KB/s",
-                                label: "Download"
+                                label: language.text("home.info.download")
                             )
                         }
                         .padding(.top, 30)
@@ -151,6 +156,10 @@ struct ContentView: View {
                         viewModel.clearResult()
                         navigationPath.removeLast()
                     }
+                case .settings:
+                    SettingsView()
+                case .language:
+                    LanguageSettingsView()
                 }
             }
             .sheet(isPresented: Binding(
@@ -192,13 +201,13 @@ struct ContentView: View {
     private var statusText: String {
         switch viewModel.stage {
         case .idle:
-            return "Not Connected"
+            return language.text("home.status.notConnected")
         case .connecting:
-            return "Connecting..."
+            return language.text("home.status.connecting")
         case .online:
-            return "Connected"
+            return language.text("home.status.connected")
         case .failed:
-            return "Connection Failed"
+            return language.text("home.status.failed")
         }
     }
     
@@ -222,6 +231,7 @@ struct TriangleConnectionButton: View {
     let stage: ConnectionStage
     let onTap: () -> Void
     
+    @EnvironmentObject var language: AppLanguageManager
     @State private var scale: CGFloat = 1.0
     @State private var glowOpacity: Double = 0.45
     @State private var trianglePulse: CGFloat = 1.0
@@ -380,11 +390,11 @@ struct TriangleConnectionButton: View {
     private var centerText: String {
         switch stage {
         case .idle, .failed:
-            return "Tap to Connect"
+            return language.text("button.connect.tap")
         case .connecting:
-            return "Connecting..."
+            return language.text("button.connect.connecting")
         case .online:
-            return "Connected"
+            return language.text("button.connect.connected")
         }
     }
     

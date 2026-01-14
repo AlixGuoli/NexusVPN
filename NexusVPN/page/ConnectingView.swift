@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ConnectingView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var language: AppLanguageManager
     
     /// 三角装甲点亮进度（0~1，不断循环）
     @State private var chargeProgress: CGFloat = 0.0
@@ -114,7 +115,7 @@ struct ConnectingView: View {
                 
                 // 文案区域 + 简单加载动画（不依赖时间进度）
                 VStack(spacing: 18) {
-                    Text("正在建立安全连接…")
+                    Text(language.text("connecting.title"))
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)
                     

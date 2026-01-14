@@ -10,6 +10,7 @@ import SwiftUI
 struct ResultView: View {
     let result: ConnectionResult
     let onDismiss: () -> Void
+    @EnvironmentObject var language: AppLanguageManager
     
     var body: some View {
         VStack(spacing: 20) {
@@ -20,7 +21,7 @@ struct ResultView: View {
             Text(resultText)
                 .font(.title)
             
-            Button("确定") {
+            Button(language.text("common.ok")) {
                 onDismiss()
             }
             .foregroundColor(.white)
@@ -56,11 +57,11 @@ struct ResultView: View {
     private var resultText: String {
         switch result {
         case .connectSuccess:
-            return "连接成功"
+            return language.text("result.connectSuccess")
         case .connectFailure:
-            return "连接失败"
+            return language.text("result.connectFailure")
         case .disconnectSuccess:
-            return "断开成功"
+            return language.text("result.disconnectSuccess")
         }
     }
 }

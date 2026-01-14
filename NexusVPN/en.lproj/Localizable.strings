@@ -1,0 +1,57 @@
+"app.title" = "Nexus VPN";
+
+"home.status.notConnected" = "Not Connected";
+"home.status.connecting" = "Connecting...";
+"home.status.connected" = "Connected";
+"home.status.failed" = "Connection Failed";
+
+"home.node.auto" = "Auto • Best Location";
+"home.action.changeNode" = "Change Node";
+"home.action.smartMode" = "Smart Mode";
+"home.info.upload" = "Upload";
+"home.info.download" = "Download";
+
+"button.connect.tap" = "Tap to Connect";
+"button.connect.connecting" = "Connecting...";
+"button.connect.connected" = "Connected";
+
+"connecting.title" = "Establishing secure connection…";
+
+"result.connectSuccess" = "Connected";
+"result.connectFailure" = "Connection Failed";
+"result.disconnectSuccess" = "Disconnected";
+
+"disconnect.title" = "Disconnect";
+"disconnect.message" = "Are you sure you want to disconnect the VPN?";
+"disconnect.confirm" = "Disconnect";
+
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+
+"settings.title" = "Settings";
+"settings.language.sectionTitle" = "Language";
+"settings.language.followSystem" = "Use system language";
+
+// First launch privacy gate (normalized keys without dots)
+"privacy_title" = "Privacy & Data Usage Overview";
+"privacy_preamble" = "To provide a stable and smooth VPN experience, we only collect a small amount of necessary information. The data we use mainly focuses on the following areas:";
+"privacy_section_intro" = "What we may collect";
+
+"privacy_point_device_title" = "Device information: ";
+"privacy_point_device_body" = "We may collect information such as device model, operating system version, and language settings. This helps us adapt the app to different devices and optimize overall performance.";
+
+"privacy_point_connection_title" = "Connection quality: ";
+"privacy_point_connection_body" = "Connection-related statistics may be processed in an aggregated and anonymous way. They are used to analyze connection quality and improve route selection, not to identify individual users.";
+
+"privacy_point_usage_title" = "Usage duration & bandwidth: ";
+"privacy_point_usage_body" = "Overall session duration and bandwidth usage may be counted to help us plan server capacity, keep the service stable and reduce congestion.";
+
+"privacy_point_ads_title" = "Advertising services: ";
+"privacy_point_ads_body" = "If third-party advertising services are used, they may collect data in accordance with their own privacy policies.";
+
+"privacy_policy_footer" = "For full details, please read our Privacy Policy.";
+"privacy_policy_link" = "View Privacy Policy";
+
+"privacy_agree_statement" = "By tapping “Accept & Continue”, you confirm that you have read and agree to the brief description above.";
+"privacy_action_accept" = "Accept & Continue";
+"privacy_action_later" = "Decline and Exit";

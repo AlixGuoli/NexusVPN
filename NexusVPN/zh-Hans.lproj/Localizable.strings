@@ -1,0 +1,57 @@
+"app.title" = "Nexus VPN";
+
+"home.status.notConnected" = "未连接";
+"home.status.connecting" = "连接中...";
+"home.status.connected" = "已连接";
+"home.status.failed" = "连接失败";
+
+"home.node.auto" = "自动 • 最佳节点";
+"home.action.changeNode" = "切换节点";
+"home.action.smartMode" = "智能模式";
+"home.info.upload" = "上传";
+"home.info.download" = "下载";
+
+"button.connect.tap" = "点击连接";
+"button.connect.connecting" = "正在连接...";
+"button.connect.connected" = "已连接";
+
+"connecting.title" = "正在建立安全连接…";
+
+"result.connectSuccess" = "连接成功";
+"result.connectFailure" = "连接失败";
+"result.disconnectSuccess" = "断开成功";
+
+"disconnect.title" = "确认断开";
+"disconnect.message" = "确定要断开 VPN 连接吗？";
+"disconnect.confirm" = "断开";
+
+"common.ok" = "确定";
+"common.cancel" = "取消";
+
+"settings.title" = "设置";
+"settings.language.sectionTitle" = "语言";
+"settings.language.followSystem" = "使用系统语言";
+
+// 首次启动隐私弹窗（去掉点号的 key）
+"privacy_title" = "隐私保护与数据使用说明";
+"privacy_preamble" = "为了给你提供更稳定、流畅的 VPN 体验，我们只会在必要范围内使用少量信息，主要包括下面几个方面：";
+"privacy_section_intro" = "我们可能会使用到的信息";
+
+"privacy_point_device_title" = "设备相关信息：";
+"privacy_point_device_body" = "例如设备型号、系统版本、系统语言等，用于适配不同设备，优化整体性能和兼容性。";
+
+"privacy_point_connection_title" = "连接质量统计：";
+"privacy_point_connection_body" = "部分连接情况会以汇总、匿名的方式进行统计，用来评估线路质量和优化节点选择，而不会用来识别具体用户。";
+
+"privacy_point_usage_title" = "使用时长与带宽：";
+"privacy_point_usage_body" = "我们可能会统计整体会话时长和带宽占用，用于规划服务器资源，保持服务稳定，避免拥堵。";
+
+"privacy_point_ads_title" = "广告服务相关数据：";
+"privacy_point_ads_body" = "如需接入第三方广告服务，相应数据将按照各自的隐私政策进行处理。";
+
+"privacy_policy_footer" = "详细内容请查阅我们的《隐私政策》。";
+"privacy_policy_link" = "查看隐私政策";
+
+"privacy_agree_statement" = "点击“同意并继续”代表你已阅读并认可以上内容。";
+"privacy_action_accept" = "同意并继续";
+"privacy_action_later" = "不同意并退出";
