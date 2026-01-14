@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import NetworkExtension
+import Network
 
 /// 对 UI 暴露的连接阶段
 enum ConnectionStage {
@@ -54,6 +55,8 @@ final class HomeSessionViewModel: ObservableObject {
     // MARK: - 内部依赖
     
     private let engine: ConnectionEngine
+    private var networkMonitor: NWPathMonitor?
+    private var networkQueue: DispatchQueue?
     
     // MARK: - 初始化
     
@@ -66,6 +69,9 @@ final class HomeSessionViewModel: ObservableObject {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        networkMonitor?.cancel()
+        networkMonitor = nil
+        networkQueue = nil
     }
     
     // MARK: - 通知监听
@@ -93,10 +99,14 @@ final class HomeSessionViewModel: ObservableObject {
     private func translateSystemStatusToUI(_ status: NEVPNStatus) {
         NVLog.log("VM", "系统状态变更: NEVPNStatus=\(status.rawValue)")
         switch status {
-        case .invalid:
-            stage = .idle
-            needsPostVerification = false
-            
+        case .connected:
+            // 如果需要延迟检测（用户主动连接），保持 connecting 状态，等待二次验证
+            if needsPostVerification {
+                runPostConnectProbe()
+            } else {
+                // 不需要验证（如恢复已有连接），直接显示在线
+                stage = .online
+            }
         case .disconnected:
             stage = .idle
             // 如果是用户主动断开，显示断开成功结果页
@@ -106,23 +116,11 @@ final class HomeSessionViewModel: ObservableObject {
                 isUserInitiatedDisconnect = false
             }
             needsPostVerification = false
-            
-        case .connecting:
+        case .invalid:
+            stage = .idle
+            needsPostVerification = false
+        case .connecting, .disconnecting,.reasserting:
             stage = .connecting
-            
-        case .connected:
-            stage = .online
-            // 如果需要延迟检测（用户主动连接），执行检测流程
-            if needsPostVerification {
-                runPostConnectProbe()
-            }
-            
-        case .disconnecting:
-            stage = .connecting
-            
-        case .reasserting:
-            stage = .connecting
-            
         @unknown default:
             stage = .failed
             needsPostVerification = false
@@ -198,6 +196,49 @@ final class HomeSessionViewModel: ObservableObject {
         result = nil
     }
     
+    // MARK: - 网络检查
+    
+    /// 检查当前网络类型（WiFi、蜂窝、无网络），用于触发网络权限弹窗
+    func checkNetworkType() {
+        // 如果已经有监控器在运行，先取消
+        if let existingMonitor = networkMonitor {
+            existingMonitor.cancel()
+        }
+        
+        let monitor = NWPathMonitor()
+        let queue = DispatchQueue(label: "com.nexusvpn.network.monitor")
+        
+        monitor.pathUpdateHandler = { [weak self, weak monitor] path in
+            // 检测网络类型
+            if path.status == .satisfied {
+                if path.usesInterfaceType(.wifi) {
+                    NVLog.log("VM", "网络类型: WiFi")
+                } else if path.usesInterfaceType(.cellular) {
+                    NVLog.log("VM", "网络类型: 蜂窝网络")
+                } else if path.usesInterfaceType(.wiredEthernet) {
+                    NVLog.log("VM", "网络类型: 有线网络")
+                } else {
+                    NVLog.log("VM", "网络类型: 其他")
+                }
+            } else {
+                NVLog.log("VM", "网络类型: 无网络连接")
+            }
+            
+            // 检测一次后取消监控（避免持续占用资源）
+            monitor?.cancel()
+            DispatchQueue.main.async {
+                self?.networkMonitor = nil
+                self?.networkQueue = nil
+            }
+        }
+        
+        monitor.start(queue: queue)
+        
+        // 保存引用以便后续清理
+        networkMonitor = monitor
+        networkQueue = queue
+    }
+    
     // MARK: - 连接流程
     
     /// 用户从首页主动发起的连接流程入口
@@ -269,7 +310,7 @@ final class HomeSessionViewModel: ObservableObject {
         Task { @MainActor in
             NVLog.log("VM", "executePostConnectionCheck() 开始二次检测")
             // 延迟 3 秒模拟检测（后续可替换为真实探测）
-            try? await Task.sleep(nanoseconds: 3_000_000_000)
+            try? await Task.sleep(nanoseconds: 10_000_000_000)
             
             // 检查连接是否仍然有效
             let isStillConnected = engine.vpnStatus == .connected
