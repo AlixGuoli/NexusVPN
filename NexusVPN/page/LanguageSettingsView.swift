@@ -56,11 +56,16 @@ struct LanguageSettingsView: View {
                 // 内容区域
                 ScrollView {
                     VStack(spacing: 12) {
-                        // 这里按语言一条一条分块展示，方便以后增加更多语言
+                        // 这里按语言一条一条分块展示
                         languageRow(for: .system)
-                        languageRow(for: .english)
-                        languageRow(for: .chineseSimplified)
-                        // 后续如果要加更多语言，可以在这里继续追加
+                        languageRow(for: .english)           // 英语
+                        languageRow(for: .russian)           // 俄语（主要市场）
+                        languageRow(for: .german)
+                        languageRow(for: .french)
+                        languageRow(for: .spanish)
+                        languageRow(for: .japanese)
+                        languageRow(for: .korean)
+                        languageRow(for: .chineseSimplified) // 开发阶段自用，发包前可移除
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 10)
@@ -104,12 +109,12 @@ struct LanguageSettingsView: View {
             }
         } label: {
             HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(item.displayName)
-                        .font(.system(size: 15, weight: isSelected ? .semibold : .regular))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(item == .system ? language.text("language.system") : item.displayName)
+                        .font(.system(size: 16, weight: isSelected ? .semibold : .regular))
                         .foregroundColor(.white.opacity(isSelected ? 1.0 : 0.85))
                     
-                    // 预留副标题位，后面如果要加“推荐”等标签可以用
+                    // 预留副标题位，后面如果要加"推荐"等标签可以用
                     if item == .system {
                         Text(language.text("settings.language.followSystem"))
                             .font(.system(size: 11))
@@ -125,8 +130,8 @@ struct LanguageSettingsView: View {
                         .font(.system(size: 18))
                 }
             }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
             .background(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .fill(Color.white.opacity(isSelected ? 0.14 : 0.06))

@@ -45,9 +45,9 @@ final class ConnectionEngine {
             // 没有任何配置时，创建一份新的基础配置
             let newManager = NETunnelProviderManager()
             let proto = NETunnelProviderProtocol()
-            proto.serverAddress = "Nexus VPN"
+            proto.serverAddress = "FKey VPN"
             newManager.protocolConfiguration = proto
-            newManager.localizedDescription = "Nexus VPN"
+            newManager.localizedDescription = "FKey VPN"
             
             newManager.saveToPreferences { error in
                 if let error = error {

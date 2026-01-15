@@ -17,7 +17,6 @@ enum NavigationDestination: Hashable {
     case portCheck
     case qrcodeGenerator
     case passwordGenerator
-    case ipInfo
 }
 
 struct ContentView: View {
@@ -167,11 +166,6 @@ struct ContentView: View {
                                     title: language.text("toolbox.port.title"),
                                     action: { navigationPath.append(NavigationDestination.portCheck) }
                                 )
-                                NetworkToolRow(
-                                    icon: "antenna.radiowaves.left.and.right",
-                                    title: language.text("toolbox.ipinfo.title"),
-                                    action: { navigationPath.append(NavigationDestination.ipInfo) }
-                                )
                             }
                             .padding(.horizontal, 20)
                             
@@ -248,8 +242,6 @@ struct ContentView: View {
                     QRCodeGeneratorView()
                 case .passwordGenerator:
                     PasswordGeneratorView()
-                case .ipInfo:
-                    IPInfoView()
                 }
             }
             .onChange(of: viewModel.showConnectingView) { show in

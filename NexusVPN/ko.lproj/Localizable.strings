@@ -1,0 +1,147 @@
+"app.title" = "FKey VPN";
+
+"home.status.notConnected" = "연결 안 됨";
+"home.status.connecting" = "연결 중...";
+"home.status.connected" = "연결됨";
+"home.status.failed" = "연결 실패";
+
+"home.node.auto" = "자동 • 최적 위치";
+"home.action.changeNode" = "노드 변경";
+"home.info.upload" = "업로드";
+"home.info.download" = "다운로드";
+
+"button.connect.tap" = "탭하여 연결";
+"button.connect.connecting" = "연결 중...";
+"button.connect.connected" = "연결됨";
+"button.disconnect.tap" = "연결 해제";
+
+"connecting.title" = "보안 연결 설정 중…";
+
+"result.connectSuccess" = "연결됨";
+"result.connectFailure" = "연결 실패";
+"result.disconnectSuccess" = "연결 해제됨";
+
+"disconnect.title" = "연결 해제";
+"disconnect.message" = "VPN을 연결 해제하시겠습니까?";
+"disconnect.confirm" = "연결 해제";
+
+"common.ok" = "확인";
+"common.cancel" = "취소";
+
+"settings.title" = "설정";
+"settings.language.sectionTitle" = "언어";
+"language.system" = "시스템";
+"settings.language.followSystem" = "시스템 언어 사용";
+
+"settings.section.general" = "일반";
+"settings.section.about" = "앱 정보 및 지원";
+
+"settings.about.title" = "FKey VPN 정보";
+"settings.about.subtitle" = "버전 정보 및 공식 웹사이트";
+"settings.privacy.title" = "개인정보 처리방침";
+"settings.privacy.subtitle" = "데이터 처리 방법";
+
+"settings.terms.title" = "이용약관";
+"settings.terms.subtitle" = "사용 조건 및 약관";
+
+"settings.telegram.title" = "Telegram";
+"settings.telegram.subtitle" = "Telegram 채널 참여";
+
+"privacy_title" = "개인정보 및 데이터 사용 개요";
+"privacy_preamble" = "안정적이고 원활한 VPN 경험을 제공하기 위해 필요한 정보만 소량 수집합니다. 사용하는 데이터는 주로 다음 영역에 중점을 둡니다:";
+"privacy_section_intro" = "수집할 수 있는 정보";
+
+"privacy_point_device_title" = "기기 정보: ";
+"privacy_point_device_body" = "기기 모델, 운영 체제 버전, 언어 설정 등의 정보를 수집할 수 있습니다. 이를 통해 앱을 다양한 기기에 맞추고 전반적인 성능을 최적화할 수 있습니다.";
+
+"privacy_point_connection_title" = "연결 품질: ";
+"privacy_point_connection_body" = "연결 관련 통계는 집계되고 익명화된 방식으로 처리될 수 있습니다. 개별 사용자를 식별하는 것이 아니라 연결 품질을 분석하고 경로 선택을 개선하는 데 사용됩니다.";
+
+"privacy_point_usage_title" = "사용 시간 및 대역폭: ";
+"privacy_point_usage_body" = "전체 세션 지속 시간과 대역폭 사용량을 계산하여 서버 용량 계획, 서비스 안정성 유지 및 혼잡 감소에 도움을 줄 수 있습니다.";
+
+"privacy_point_ads_title" = "광고 서비스: ";
+"privacy_point_ads_body" = "타사 광고 서비스가 사용되는 경우, 해당 서비스는 자체 개인정보 처리방침에 따라 데이터를 수집할 수 있습니다.";
+
+"privacy_policy_footer" = "자세한 내용은 개인정보 처리방침을 읽어보세요.";
+"privacy_policy_link" = "개인정보 처리방침 보기";
+
+"privacy_agree_statement" = "\"동의하고 계속\"을 탭하면 위의 간단한 설명을 읽고 동의한 것으로 확인됩니다.";
+"privacy_action_accept" = "동의하고 계속";
+"privacy_action_later" = "거부하고 종료";
+
+"result.share.title" = "앱 공유";
+"result.share.subtitle" = "더 안전한 네트워크 경험을 위해 친구들에게 추천하세요.";
+"result.join.title" = "참여";
+"result.join.subtitle" = "최신 업데이트를 위해 Telegram 채널에 참여하세요.";
+
+"relay.list.title" = "노드 선택";
+"relay.auto.name" = "자동";
+"relay.auto.desc" = "최적의 노드를 자동으로 선택";
+"relay.status.excellent" = "우수";
+"relay.status.good" = "양호";
+"relay.status.normal" = "보통";
+
+"toolbox.title" = "도구 상자";
+"toolbox.subtitle" = "네트워크 도구 · 텍스트 유틸리티";
+"toolbox.desc" = "네트워크 테스트 및 텍스트 도우미를 포함하여 기기에서 완전히 실행되는 몇 가지 작은 유틸리티입니다. 아무것도 업로드되지 않습니다.";
+
+"toolbox.section.network" = "네트워크 도구";
+"toolbox.section.utility" = "유틸리티";
+
+"toolbox.ping.title" = "Ping 테스트";
+"toolbox.ping.subtitle" = "대상 호스트까지의 지연 시간 측정";
+"toolbox.ping.hint" = "도메인 또는 IP를 입력하세요(예: example.com). 그런 다음 테스트를 실행하여 지연 시간을 추정합니다.";
+"toolbox.ping.start" = "테스트 시작";
+"toolbox.ping.running" = "테스트 중...";
+"toolbox.ping.done" = "테스트 완료";
+"toolbox.ping.latest" = "최신";
+"toolbox.ping.min" = "최소";
+"toolbox.ping.max" = "최대";
+"toolbox.ping.avg" = "평균";
+
+"toolbox.port.title" = "포트 확인";
+"toolbox.port.subtitle" = "포트가 접근 가능한지 확인";
+"toolbox.port.hint" = "호스트와 포트를 입력하세요(예: example.com 및 443). 포트를 확인합니다.";
+"toolbox.port.start" = "확인 시작";
+"toolbox.port.running" = "확인 중...";
+"toolbox.port.open" = "✅ 포트가 접근 가능합니다";
+"toolbox.port.closed" = "❌ 이 포트에 연결할 수 없습니다";
+
+"toolbox.qrcode.title" = "QR 코드";
+"toolbox.qrcode.subtitle" = "QR 코드 생성";
+"toolbox.qrcode.hint" = "텍스트 또는 URL을 입력한 다음 생성을 탭하여 QR 코드를 만듭니다.";
+"toolbox.qrcode.placeholder" = "QR 코드가 여기에 표시됩니다";
+"toolbox.qrcode.save" = "저장";
+"toolbox.qrcode.saved" = "저장됨!";
+"toolbox.qrcode.share" = "공유";
+"toolbox.qrcode.generate" = "생성";
+
+"toolbox.ipinfo.title" = "IP 정보";
+"toolbox.ipinfo.subtitle" = "네트워크 정보 보기";
+"toolbox.ipinfo.hint" = "현재 IP 주소 및 네트워크 정보를 확인하세요.";
+"toolbox.ipinfo.refresh" = "새로고침";
+"toolbox.ipinfo.loading" = "로딩 중...";
+"toolbox.ipinfo.placeholder" = "새로고침을 탭하여 IP 정보 로드";
+"toolbox.ipinfo.ip" = "IP 주소";
+"toolbox.ipinfo.location" = "위치";
+"toolbox.ipinfo.isp" = "ISP";
+"toolbox.ipinfo.country" = "국가";
+"toolbox.ipinfo.networkType" = "네트워크 유형";
+
+"toolbox.password.title" = "비밀번호 생성기";
+"toolbox.password.subtitle" = "안전한 무작위 비밀번호 생성";
+"toolbox.password.hint" = "비밀번호 길이와 문자 유형을 구성한 다음 안전한 비밀번호를 생성하세요.";
+"toolbox.password.placeholder" = "생성된 비밀번호가 여기에 표시됩니다";
+"toolbox.password.length" = "길이";
+"toolbox.password.includeNumbers" = "숫자 포함";
+"toolbox.password.includeSymbols" = "기호 포함";
+"toolbox.password.generate" = "생성";
+"toolbox.password.copy" = "복사";
+"toolbox.password.copied" = "복사됨!";
+
+"about.title" = "앱 정보";
+"about.version" = "버전";
+"about.description.title" = "간단하고 집중된 VPN";
+"about.description.body" = "FKey VPN은 깔끔한 인터페이스와 직접적인 연결 경험을 제공하는 데 중점을 둡니다. 불필요한 복잡성을 피하고 모든 상호 작용을 이해하기 쉽게 유지하려고 노력합니다.\n\n목표는 안정적인 연결과 앱 전체에서 일관된 모양과 느낌으로 빠르게 온라인에 연결할 수 있도록 돕는 것입니다. 계속해서 세부 사항을 반복하고 향후 버전에서 더 유용한 기능을 추가할 것입니다.";
+"about.website.button" = "공식 웹사이트 방문";

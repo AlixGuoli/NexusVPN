@@ -1,0 +1,147 @@
+"app.title" = "FKey VPN";
+
+"home.status.notConnected" = "未接続";
+"home.status.connecting" = "接続中...";
+"home.status.connected" = "接続済み";
+"home.status.failed" = "接続失敗";
+
+"home.node.auto" = "自動 • 最適な場所";
+"home.action.changeNode" = "ノードを変更";
+"home.info.upload" = "アップロード";
+"home.info.download" = "ダウンロード";
+
+"button.connect.tap" = "タップして接続";
+"button.connect.connecting" = "接続中...";
+"button.connect.connected" = "接続済み";
+"button.disconnect.tap" = "切断";
+
+"connecting.title" = "セキュアな接続を確立中…";
+
+"result.connectSuccess" = "接続済み";
+"result.connectFailure" = "接続失敗";
+"result.disconnectSuccess" = "切断済み";
+
+"disconnect.title" = "切断";
+"disconnect.message" = "VPNを切断してもよろしいですか？";
+"disconnect.confirm" = "切断";
+
+"common.ok" = "OK";
+"common.cancel" = "キャンセル";
+
+"settings.title" = "設定";
+"settings.language.sectionTitle" = "言語";
+"language.system" = "システム";
+"settings.language.followSystem" = "システムの言語を使用";
+
+"settings.section.general" = "一般";
+"settings.section.about" = "アプリについてとサポート";
+
+"settings.about.title" = "FKey VPNについて";
+"settings.about.subtitle" = "バージョン情報と公式サイト";
+"settings.privacy.title" = "プライバシーポリシー";
+"settings.privacy.subtitle" = "データの取り扱い方法";
+
+"settings.terms.title" = "利用規約";
+"settings.terms.subtitle" = "利用条件と規約";
+
+"settings.telegram.title" = "Telegram";
+"settings.telegram.subtitle" = "Telegramチャンネルに参加";
+
+"privacy_title" = "プライバシーとデータ使用の概要";
+"privacy_preamble" = "安定したスムーズなVPN体験を提供するため、必要な情報のみを少量収集しています。使用するデータは主に以下の領域に焦点を当てています：";
+"privacy_section_intro" = "収集する可能性のある情報";
+
+"privacy_point_device_title" = "デバイス情報：";
+"privacy_point_device_body" = "デバイスのモデル、オペレーティングシステムのバージョン、言語設定などの情報を収集する場合があります。これにより、アプリをさまざまなデバイスに適応させ、全体的なパフォーマンスを最適化できます。";
+
+"privacy_point_connection_title" = "接続品質：";
+"privacy_point_connection_body" = "接続関連の統計は、集約された匿名の方法で処理される場合があります。これらは、接続品質を分析し、ルート選択を改善するために使用され、個々のユーザーを識別するためではありません。";
+
+"privacy_point_usage_title" = "使用時間と帯域幅：";
+"privacy_point_usage_body" = "セッション全体の継続時間と帯域幅の使用量をカウントして、サーバー容量の計画、サービスの安定性の維持、混雑の軽減に役立てます。";
+
+"privacy_point_ads_title" = "広告サービス：";
+"privacy_point_ads_body" = "サードパーティの広告サービスが使用されている場合、それらは独自のプライバシーポリシーに従ってデータを収集する場合があります。";
+
+"privacy_policy_footer" = "詳細については、プライバシーポリシーをお読みください。";
+"privacy_policy_link" = "プライバシーポリシーを表示";
+
+"privacy_agree_statement" = "「同意して続行」をタップすることで、上記の簡単な説明を読み、同意したことを確認します。";
+"privacy_action_accept" = "同意して続行";
+"privacy_action_later" = "拒否して終了";
+
+"result.share.title" = "アプリを共有";
+"result.share.subtitle" = "より安全なネットワーク体験のために友達に推薦。";
+"result.join.title" = "参加";
+"result.join.subtitle" = "最新の更新情報をTelegramチャンネルに参加。";
+
+"relay.list.title" = "ノードを選択";
+"relay.auto.name" = "自動";
+"relay.auto.desc" = "最適なノードを自動選択";
+"relay.status.excellent" = "優秀";
+"relay.status.good" = "良好";
+"relay.status.normal" = "通常";
+
+"toolbox.title" = "ツールボックス";
+"toolbox.subtitle" = "ネットワークツール · テキストユーティリティ";
+"toolbox.desc" = "ネットワークテストやテキストヘルパーを含む、デバイス上で完全に実行されるいくつかの小さなユーティリティ。何もアップロードされません。";
+
+"toolbox.section.network" = "ネットワークツール";
+"toolbox.section.utility" = "ユーティリティ";
+
+"toolbox.ping.title" = "Pingテスト";
+"toolbox.ping.subtitle" = "ターゲットホストへのレイテンシを測定";
+"toolbox.ping.hint" = "ドメインまたはIPを入力してください（例：example.com）。その後、テストを実行してレイテンシを推定します。";
+"toolbox.ping.start" = "テスト開始";
+"toolbox.ping.running" = "テスト中...";
+"toolbox.ping.done" = "テスト完了";
+"toolbox.ping.latest" = "最新";
+"toolbox.ping.min" = "最小";
+"toolbox.ping.max" = "最大";
+"toolbox.ping.avg" = "平均";
+
+"toolbox.port.title" = "ポートチェック";
+"toolbox.port.subtitle" = "ポートが到達可能か確認";
+"toolbox.port.hint" = "ホストとポートを入力してください（例：example.comと443）。ポートを確認します。";
+"toolbox.port.start" = "チェック開始";
+"toolbox.port.running" = "確認中...";
+"toolbox.port.open" = "✅ ポートは到達可能";
+"toolbox.port.closed" = "❌ このポートに接続できません";
+
+"toolbox.qrcode.title" = "QRコード";
+"toolbox.qrcode.subtitle" = "QRコードを生成";
+"toolbox.qrcode.hint" = "テキストまたはURLを入力し、生成をタップしてQRコードを作成します。";
+"toolbox.qrcode.placeholder" = "QRコードがここに表示されます";
+"toolbox.qrcode.save" = "保存";
+"toolbox.qrcode.saved" = "保存しました！";
+"toolbox.qrcode.share" = "共有";
+"toolbox.qrcode.generate" = "生成";
+
+"toolbox.ipinfo.title" = "IP情報";
+"toolbox.ipinfo.subtitle" = "ネットワーク情報を表示";
+"toolbox.ipinfo.hint" = "現在のIPアドレスとネットワーク情報を表示します。";
+"toolbox.ipinfo.refresh" = "更新";
+"toolbox.ipinfo.loading" = "読み込み中...";
+"toolbox.ipinfo.placeholder" = "更新をタップしてIP情報を読み込み";
+"toolbox.ipinfo.ip" = "IPアドレス";
+"toolbox.ipinfo.location" = "場所";
+"toolbox.ipinfo.isp" = "ISP";
+"toolbox.ipinfo.country" = "国";
+"toolbox.ipinfo.networkType" = "ネットワークタイプ";
+
+"toolbox.password.title" = "パスワードジェネレーター";
+"toolbox.password.subtitle" = "安全なランダムパスワードを生成";
+"toolbox.password.hint" = "パスワードの長さと文字タイプを設定し、安全なパスワードを生成します。";
+"toolbox.password.placeholder" = "生成されたパスワードがここに表示されます";
+"toolbox.password.length" = "長さ";
+"toolbox.password.includeNumbers" = "数字を含める";
+"toolbox.password.includeSymbols" = "記号を含める";
+"toolbox.password.generate" = "生成";
+"toolbox.password.copy" = "コピー";
+"toolbox.password.copied" = "コピーしました！";
+
+"about.title" = "アプリについて";
+"about.version" = "バージョン";
+"about.description.title" = "シンプルで集中したVPN";
+"about.description.body" = "FKey VPNは、クリーンなインターフェースと直接的な接続体験を提供することに焦点を当てています。不要な混乱を避け、すべての操作を理解しやすく保つよう努めています。\n\n目標は、安定した接続とアプリ全体で一貫したルックアンドフィールで、迅速にオンラインに接続できるよう支援することです。今後も詳細を繰り返し改善し、将来のバージョンでより有用な機能を追加していきます。";
+"about.website.button" = "公式サイトを訪問";

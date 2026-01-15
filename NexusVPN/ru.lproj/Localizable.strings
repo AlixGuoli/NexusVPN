@@ -1,0 +1,147 @@
+"app.title" = "FKey VPN";
+
+"home.status.notConnected" = "Не подключено";
+"home.status.connecting" = "Подключение...";
+"home.status.connected" = "Подключено";
+"home.status.failed" = "Ошибка подключения";
+
+"home.node.auto" = "Авто • Лучшее местоположение";
+"home.action.changeNode" = "Сменить узел";
+"home.info.upload" = "Отдача";
+"home.info.download" = "Загрузка";
+
+"button.connect.tap" = "Подключить";
+"button.connect.connecting" = "Подключение...";
+"button.connect.connected" = "Подключено";
+"button.disconnect.tap" = "Отключить";
+
+"connecting.title" = "Установка защищённого соединения…";
+
+"result.connectSuccess" = "Подключено";
+"result.connectFailure" = "Ошибка подключения";
+"result.disconnectSuccess" = "Отключено";
+
+"disconnect.title" = "Отключить";
+"disconnect.message" = "Вы уверены, что хотите отключить VPN?";
+"disconnect.confirm" = "Отключить";
+
+"common.ok" = "ОК";
+"common.cancel" = "Отмена";
+
+"settings.title" = "Настройки";
+"settings.language.sectionTitle" = "Язык";
+"language.system" = "Система";
+"settings.language.followSystem" = "Использовать язык системы";
+
+"settings.section.general" = "Основные";
+"settings.section.about" = "О приложении и поддержка";
+
+"settings.about.title" = "О FKey VPN";
+"settings.about.subtitle" = "Информация о версии и официальный сайт";
+"settings.privacy.title" = "Политика конфиденциальности";
+"settings.privacy.subtitle" = "Как мы обрабатываем ваши данные";
+
+"settings.terms.title" = "Пользовательское соглашение";
+"settings.terms.subtitle" = "Условия использования";
+
+"settings.telegram.title" = "Telegram";
+"settings.telegram.subtitle" = "Присоединяйтесь к нашему Telegram-каналу";
+
+"privacy_title" = "Конфиденциальность и использование данных";
+"privacy_preamble" = "Для обеспечения стабильной и плавной работы VPN мы собираем только небольшое количество необходимой информации. Используемые нами данные в основном сосредоточены в следующих областях:";
+"privacy_section_intro" = "Что мы можем собирать";
+
+"privacy_point_device_title" = "Информация об устройстве: ";
+"privacy_point_device_body" = "Мы можем собирать такую информацию, как модель устройства, версия операционной системы и языковые настройки. Это помогает нам адаптировать приложение к различным устройствам и оптимизировать общую производительность.";
+
+"privacy_point_connection_title" = "Качество соединения: ";
+"privacy_point_connection_body" = "Статистика, связанная с соединением, может обрабатываться в агрегированном и анонимном виде. Она используется для анализа качества соединения и улучшения выбора маршрута, а не для идентификации отдельных пользователей.";
+
+"privacy_point_usage_title" = "Длительность использования и пропускная способность: ";
+"privacy_point_usage_body" = "Общая длительность сеанса и использование пропускной способности могут учитываться, чтобы помочь нам планировать мощность серверов, поддерживать стабильность сервиса и уменьшать перегрузки.";
+
+"privacy_point_ads_title" = "Рекламные сервисы: ";
+"privacy_point_ads_body" = "Если используются сторонние рекламные сервисы, они могут собирать данные в соответствии с их собственной политикой конфиденциальности.";
+
+"privacy_policy_footer" = "Для получения полной информации, пожалуйста, ознакомьтесь с нашей Политикой конфиденциальности.";
+"privacy_policy_link" = "Просмотреть политику конфиденциальности";
+
+"privacy_agree_statement" = "Нажимая «Принять и продолжить», вы подтверждаете, что прочитали и согласны с кратким описанием выше.";
+"privacy_action_accept" = "Принять и продолжить";
+"privacy_action_later" = "Отклонить и выйти";
+
+"result.share.title" = "Поделиться приложением";
+"result.share.subtitle" = "Рекомендуйте друзьям для более безопасного интернета.";
+"result.join.title" = "Присоединиться";
+"result.join.subtitle" = "Присоединяйтесь к нашему Telegram-каналу для получения последних обновлений.";
+
+"relay.list.title" = "Выбрать узел";
+"relay.auto.name" = "Авто";
+"relay.auto.desc" = "Автоматически выбрать лучший узел";
+"relay.status.excellent" = "Отлично";
+"relay.status.good" = "Хорошо";
+"relay.status.normal" = "Нормально";
+
+"toolbox.title" = "Инструменты";
+"toolbox.subtitle" = "Сетевые инструменты · Текстовые утилиты";
+"toolbox.desc" = "Несколько небольших утилит, которые работают полностью на устройстве, включая сетевые тесты и текстовые помощники. Ничего не загружается.";
+
+"toolbox.section.network" = "Сетевые инструменты";
+"toolbox.section.utility" = "Утилиты";
+
+"toolbox.ping.title" = "Тест Ping";
+"toolbox.ping.subtitle" = "Измерить задержку до целевого хоста";
+"toolbox.ping.hint" = "Введите домен или IP, например example.com, затем запустите тест для оценки задержки.";
+"toolbox.ping.start" = "Начать тест";
+"toolbox.ping.running" = "Тестирование...";
+"toolbox.ping.done" = "Тест завершён";
+"toolbox.ping.latest" = "Последний";
+"toolbox.ping.min" = "Мин";
+"toolbox.ping.max" = "Макс";
+"toolbox.ping.avg" = "Средн";
+
+"toolbox.port.title" = "Проверка порта";
+"toolbox.port.subtitle" = "Проверить доступность порта";
+"toolbox.port.hint" = "Введите хост и порт, например example.com и 443. Мы попытаемся проверить порт.";
+"toolbox.port.start" = "Начать проверку";
+"toolbox.port.running" = "Проверка...";
+"toolbox.port.open" = "✅ Порт доступен";
+"toolbox.port.closed" = "❌ Не удаётся подключиться к этому порту";
+
+"toolbox.qrcode.title" = "QR-код";
+"toolbox.qrcode.subtitle" = "Генерировать QR-коды";
+"toolbox.qrcode.hint" = "Введите текст или URL, затем нажмите «Создать», чтобы создать QR-код.";
+"toolbox.qrcode.placeholder" = "QR-код появится здесь";
+"toolbox.qrcode.save" = "Сохранить";
+"toolbox.qrcode.saved" = "Сохранено!";
+"toolbox.qrcode.share" = "Поделиться";
+"toolbox.qrcode.generate" = "Создать";
+
+"toolbox.ipinfo.title" = "Информация об IP";
+"toolbox.ipinfo.subtitle" = "Просмотр сетевой информации";
+"toolbox.ipinfo.hint" = "Просмотрите ваш текущий IP-адрес и сетевую информацию.";
+"toolbox.ipinfo.refresh" = "Обновить";
+"toolbox.ipinfo.loading" = "Загрузка...";
+"toolbox.ipinfo.placeholder" = "Нажмите «Обновить» для загрузки информации об IP";
+"toolbox.ipinfo.ip" = "IP-адрес";
+"toolbox.ipinfo.location" = "Местоположение";
+"toolbox.ipinfo.isp" = "Провайдер";
+"toolbox.ipinfo.country" = "Страна";
+"toolbox.ipinfo.networkType" = "Тип сети";
+
+"toolbox.password.title" = "Генератор паролей";
+"toolbox.password.subtitle" = "Генерировать безопасные случайные пароли";
+"toolbox.password.hint" = "Настройте длину пароля и типы символов, затем сгенерируйте безопасный пароль.";
+"toolbox.password.placeholder" = "Сгенерированный пароль появится здесь";
+"toolbox.password.length" = "Длина";
+"toolbox.password.includeNumbers" = "Включать цифры";
+"toolbox.password.includeSymbols" = "Включать символы";
+"toolbox.password.generate" = "Сгенерировать";
+"toolbox.password.copy" = "Копировать";
+"toolbox.password.copied" = "Скопировано!";
+
+"about.title" = "О приложении";
+"about.version" = "Версия";
+"about.description.title" = "Простой и сфокусированный VPN";
+"about.description.body" = "FKey VPN сосредоточен на предоставлении чистого интерфейса и прямого опыта подключения. Мы избегаем ненужного беспорядка и стараемся сделать каждое взаимодействие простым для понимания.\n\nЦель — помочь вам быстро выйти в интернет со стабильным соединением и единообразным внешним видом во всём приложении. Мы продолжим итерации по деталям и добавим больше полезных функций в будущих версиях.";
+"about.website.button" = "Посетить официальный сайт";

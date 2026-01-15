@@ -27,11 +27,12 @@ struct ResultView: View {
             )
             .ignoresSafeArea()
             
-            VStack(spacing: 24) {
-                Spacer()
+            VStack(spacing: 22) {
+                // 顶部留一点呼吸空间
+                Spacer(minLength: 12)
                 
-                // 结果主卡片
-                VStack(spacing: 16) {
+                // 结果主卡片（整体稍微靠上）
+                VStack(spacing: 18) {
                     Image(systemName: iconName)
                         .font(.system(size: 56, weight: .semibold))
                         .foregroundColor(iconColor)
@@ -47,19 +48,30 @@ struct ResultView: View {
                             .multilineTextAlignment(.center)
                     }
                 }
-                .padding(24)
+                .padding(.vertical, 26)
+                .padding(.horizontal, 22)
                 .frame(maxWidth: .infinity)
                 .background(
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .fill(Color.white.opacity(0.06))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.white.opacity(0.10),
+                                    Color.white.opacity(0.04)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .stroke(Color.white.opacity(0.16), lineWidth: 1)
+                        )
+                        .shadow(color: Color.black.opacity(0.35), radius: 24, x: 0, y: 18)
                 )
                 
                 // 分享 & 加入我们 卡片
-                VStack(spacing: 14) {
+                VStack(spacing: 12) {
                     shareAppCard
                     joinUsCard
                 }
@@ -79,8 +91,8 @@ struct ResultView: View {
                 }
                 .buttonStyle(.plain)
             }
-            .padding(.horizontal, 24)
-            .padding(.bottom, 24)
+            .padding(.horizontal, 22)
+            .padding(.bottom, 26)
         }
         .navigationBarBackButtonHidden(true)
         .onDisappear {
@@ -181,8 +193,14 @@ struct ResultView: View {
                 .foregroundColor(.white.opacity(0.5))
         }
         .padding(14)
-        .background(Color.white.opacity(0.06))
-        .cornerRadius(16)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color.white.opacity(0.06))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(Color.white.opacity(0.14), lineWidth: 1)
+                )
+        )
     }
     
     private var joinUsCard: some View {
@@ -215,8 +233,14 @@ struct ResultView: View {
                     .foregroundColor(.white.opacity(0.5))
             }
             .padding(14)
-            .background(Color.white.opacity(0.06))
-            .cornerRadius(16)
+            .background(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(Color.white.opacity(0.06))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .stroke(Color.white.opacity(0.14), lineWidth: 1)
+                    )
+            )
         }
         .buttonStyle(.plain)
     }

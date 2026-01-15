@@ -43,7 +43,7 @@ struct SplashView: View {
                     )
                 
                 // App 名称
-                Text("Nexus VPN")
+                Text("FKey VPN")
                     .font(.system(size: 26, weight: .semibold, design: .rounded))
                     .foregroundColor(.white)
                 

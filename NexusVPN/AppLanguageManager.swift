@@ -13,6 +13,12 @@ import Combine
 enum AppLanguage: String, CaseIterable, Identifiable {
     case system   = "system"
     case english  = "en"
+    case russian  = "ru"
+    case german   = "de"
+    case french   = "fr"
+    case spanish  = "es"
+    case japanese = "ja"
+    case korean   = "ko"
     case chineseSimplified = "zh-Hans"
     
     var id: String { rawValue }
@@ -24,6 +30,18 @@ enum AppLanguage: String, CaseIterable, Identifiable {
             return "跟随系统"
         case .english:
             return "English"
+        case .russian:
+            return "Русский"
+        case .german:
+            return "Deutsch"
+        case .french:
+            return "Français"
+        case .spanish:
+            return "Español"
+        case .japanese:
+            return "日本語"
+        case .korean:
+            return "한국어"
         case .chineseSimplified:
             return "简体中文"
         }
@@ -42,6 +60,18 @@ enum AppLanguage: String, CaseIterable, Identifiable {
             }
         case .english:
             return "en"
+        case .russian:
+            return "ru"
+        case .german:
+            return "de"
+        case .french:
+            return "fr"
+        case .spanish:
+            return "es"
+        case .japanese:
+            return "ja"
+        case .korean:
+            return "ko"
         case .chineseSimplified:
             return "zh-Hans"
         }

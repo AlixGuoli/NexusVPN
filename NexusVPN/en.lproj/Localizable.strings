@@ -1,4 +1,4 @@
-"app.title" = "Nexus VPN";
+"app.title" = "FKey VPN";
 
 "home.status.notConnected" = "Not Connected";
 "home.status.connecting" = "Connecting...";
@@ -30,12 +30,13 @@
 
 "settings.title" = "Settings";
 "settings.language.sectionTitle" = "Language";
+"language.system" = "System";
 "settings.language.followSystem" = "Use system language";
 
 "settings.section.general" = "General";
 "settings.section.about" = "About & Support";
 
-"settings.about.title" = "About Nexus VPN";
+"settings.about.title" = "About FKey VPN";
 "settings.about.subtitle" = "Version info and official website";
 "settings.privacy.title" = "Privacy Policy";
 "settings.privacy.subtitle" = "How we handle your data";
@@ -144,5 +145,5 @@
 "about.title" = "About";
 "about.version" = "Version";
 "about.description.title" = "A simple, focused VPN";
-"about.description.body" = "Nexus VPN focuses on providing a clean interface and a straightforward connection experience. We avoid unnecessary clutter and try to keep every interaction easy to understand.\n\nThe goal is to help you get online quickly, with a stable connection and a consistent look and feel across the app. We will continue to iterate on details and add more useful features in future versions.";
+"about.description.body" = "FKey VPN focuses on providing a clean interface and a straightforward connection experience. We avoid unnecessary clutter and try to keep every interaction easy to understand.\n\nThe goal is to help you get online quickly, with a stable connection and a consistent look and feel across the app. We will continue to iterate on details and add more useful features in future versions.";
 "about.website.button" = "Visit official website";

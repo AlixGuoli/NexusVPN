@@ -1,4 +1,4 @@
-"app.title" = "Nexus VPN";
+"app.title" = "FKey VPN";
 
 "home.status.notConnected" = "未连接";
 "home.status.connecting" = "连接中...";
@@ -30,12 +30,13 @@
 
 "settings.title" = "设置";
 "settings.language.sectionTitle" = "语言";
+"language.system" = "系统";
 "settings.language.followSystem" = "使用系统语言";
 
 "settings.section.general" = "通用";
 "settings.section.about" = "关于与支持";
 
-"settings.about.title" = "关于 Nexus VPN";
+"settings.about.title" = "关于 FKey VPN";
 "settings.about.subtitle" = "版本信息与官网";
 "settings.privacy.title" = "隐私政策";
 "settings.privacy.subtitle" = "了解我们如何处理你的数据";
@@ -144,5 +145,5 @@
 "about.title" = "关于";
 "about.version" = "版本";
 "about.description.title" = "一款专注、简洁的 VPN";
-"about.description.body" = "Nexus VPN 专注于连接体验本身，界面力求干净、易懂，不过度堆叠复杂功能，让大多数操作一眼就能明白。\n\n我们的目标是帮助你尽快建立稳定连接，并在整个使用过程中保持一致的视觉和交互体验。后续版本会在保持简洁的前提下，逐步补充更多实用功能。";
+"about.description.body" = "FKey VPN 专注于连接体验本身，界面力求干净、易懂，不过度堆叠复杂功能，让大多数操作一眼就能明白。\n\n我们的目标是帮助你尽快建立稳定连接，并在整个使用过程中保持一致的视觉和交互体验。后续版本会在保持简洁的前提下，逐步补充更多实用功能。";
 "about.website.button" = "前往官网";

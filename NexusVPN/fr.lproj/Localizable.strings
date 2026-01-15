@@ -1,0 +1,147 @@
+"app.title" = "FKey VPN";
+
+"home.status.notConnected" = "Non connecté";
+"home.status.connecting" = "Connexion...";
+"home.status.connected" = "Connecté";
+"home.status.failed" = "Échec de la connexion";
+
+"home.node.auto" = "Auto • Meilleur emplacement";
+"home.action.changeNode" = "Changer de nœud";
+"home.info.upload" = "Téléversement";
+"home.info.download" = "Téléchargement";
+
+"button.connect.tap" = "Appuyer pour se connecter";
+"button.connect.connecting" = "Connexion...";
+"button.connect.connected" = "Connecté";
+"button.disconnect.tap" = "Déconnecter";
+
+"connecting.title" = "Établissement de la connexion sécurisée…";
+
+"result.connectSuccess" = "Connecté";
+"result.connectFailure" = "Échec de la connexion";
+"result.disconnectSuccess" = "Déconnecté";
+
+"disconnect.title" = "Déconnecter";
+"disconnect.message" = "Êtes-vous sûr de vouloir déconnecter le VPN ?";
+"disconnect.confirm" = "Déconnecter";
+
+"common.ok" = "OK";
+"common.cancel" = "Annuler";
+
+"settings.title" = "Paramètres";
+"settings.language.sectionTitle" = "Langue";
+"language.system" = "Système";
+"settings.language.followSystem" = "Utiliser la langue du système";
+
+"settings.section.general" = "Général";
+"settings.section.about" = "À propos et support";
+
+"settings.about.title" = "À propos de FKey VPN";
+"settings.about.subtitle" = "Informations sur la version et site officiel";
+"settings.privacy.title" = "Politique de confidentialité";
+"settings.privacy.subtitle" = "Comment nous traitons vos données";
+
+"settings.terms.title" = "Conditions d'utilisation";
+"settings.terms.subtitle" = "Conditions et termes d'utilisation";
+
+"settings.telegram.title" = "Telegram";
+"settings.telegram.subtitle" = "Rejoindre notre canal Telegram";
+
+"privacy_title" = "Confidentialité et utilisation des données";
+"privacy_preamble" = "Pour offrir une expérience VPN stable et fluide, nous ne collectons qu'une petite quantité d'informations nécessaires. Les données que nous utilisons se concentrent principalement sur les domaines suivants :";
+"privacy_section_intro" = "Ce que nous pouvons collecter";
+
+"privacy_point_device_title" = "Informations sur l'appareil : ";
+"privacy_point_device_body" = "Nous pouvons collecter des informations telles que le modèle de l'appareil, la version du système d'exploitation et les paramètres de langue. Cela nous aide à adapter l'application à différents appareils et à optimiser les performances globales.";
+
+"privacy_point_connection_title" = "Qualité de la connexion : ";
+"privacy_point_connection_body" = "Les statistiques liées à la connexion peuvent être traitées de manière agrégée et anonyme. Elles sont utilisées pour analyser la qualité de la connexion et améliorer la sélection d'itinéraires, et non pour identifier des utilisateurs individuels.";
+
+"privacy_point_usage_title" = "Durée d'utilisation et bande passante : ";
+"privacy_point_usage_body" = "La durée totale de la session et l'utilisation de la bande passante peuvent être comptées pour nous aider à planifier la capacité du serveur, à maintenir le service stable et à réduire la congestion.";
+
+"privacy_point_ads_title" = "Services publicitaires : ";
+"privacy_point_ads_body" = "Si des services publicitaires tiers sont utilisés, ils peuvent collecter des données conformément à leurs propres politiques de confidentialité.";
+
+"privacy_policy_footer" = "Pour plus de détails, veuillez lire notre Politique de confidentialité.";
+"privacy_policy_link" = "Voir la politique de confidentialité";
+
+"privacy_agree_statement" = "En appuyant sur \"Accepter et continuer\", vous confirmez avoir lu et accepté la brève description ci-dessus.";
+"privacy_action_accept" = "Accepter et continuer";
+"privacy_action_later" = "Refuser et quitter";
+
+"result.share.title" = "Partager l'application";
+"result.share.subtitle" = "Recommandez à vos amis pour une expérience réseau plus sûre.";
+"result.join.title" = "Nous rejoindre";
+"result.join.subtitle" = "Rejoignez notre canal Telegram pour les dernières mises à jour.";
+
+"relay.list.title" = "Sélectionner un nœud";
+"relay.auto.name" = "Auto";
+"relay.auto.desc" = "Sélectionner automatiquement le meilleur nœud";
+"relay.status.excellent" = "Excellent";
+"relay.status.good" = "Bon";
+"relay.status.normal" = "Normal";
+
+"toolbox.title" = "Boîte à outils";
+"toolbox.subtitle" = "Outils réseau · Utilitaires texte";
+"toolbox.desc" = "Quelques petits utilitaires qui fonctionnent entièrement sur l'appareil, y compris des tests réseau et des assistants de texte. Rien n'est téléversé.";
+
+"toolbox.section.network" = "Outils réseau";
+"toolbox.section.utility" = "Utilitaires";
+
+"toolbox.ping.title" = "Test Ping";
+"toolbox.ping.subtitle" = "Mesurer la latence vers un hôte cible";
+"toolbox.ping.hint" = "Entrez un domaine ou une IP, par exemple example.com, puis lancez un test pour estimer la latence.";
+"toolbox.ping.start" = "Démarrer le test";
+"toolbox.ping.running" = "Test en cours...";
+"toolbox.ping.done" = "Test terminé";
+"toolbox.ping.latest" = "Dernier";
+"toolbox.ping.min" = "Min";
+"toolbox.ping.max" = "Max";
+"toolbox.ping.avg" = "Moy";
+
+"toolbox.port.title" = "Vérification du port";
+"toolbox.port.subtitle" = "Vérifier si un port est accessible";
+"toolbox.port.hint" = "Entrez un hôte et un port, par exemple example.com et 443. Nous tenterons de vérifier le port.";
+"toolbox.port.start" = "Démarrer la vérification";
+"toolbox.port.running" = "Vérification...";
+"toolbox.port.open" = "✅ Le port est accessible";
+"toolbox.port.closed" = "❌ Impossible de se connecter à ce port";
+
+"toolbox.qrcode.title" = "Code QR";
+"toolbox.qrcode.subtitle" = "Générer des codes QR";
+"toolbox.qrcode.hint" = "Entrez du texte ou une URL, puis appuyez sur Générer pour créer un code QR.";
+"toolbox.qrcode.placeholder" = "Le code QR apparaîtra ici";
+"toolbox.qrcode.save" = "Enregistrer";
+"toolbox.qrcode.saved" = "Enregistré !";
+"toolbox.qrcode.share" = "Partager";
+"toolbox.qrcode.generate" = "Générer";
+
+"toolbox.ipinfo.title" = "Informations IP";
+"toolbox.ipinfo.subtitle" = "Afficher les informations réseau";
+"toolbox.ipinfo.hint" = "Affichez votre adresse IP actuelle et les informations réseau.";
+"toolbox.ipinfo.refresh" = "Actualiser";
+"toolbox.ipinfo.loading" = "Chargement...";
+"toolbox.ipinfo.placeholder" = "Appuyez sur Actualiser pour charger les informations IP";
+"toolbox.ipinfo.ip" = "Adresse IP";
+"toolbox.ipinfo.location" = "Emplacement";
+"toolbox.ipinfo.isp" = "FAI";
+"toolbox.ipinfo.country" = "Pays";
+"toolbox.ipinfo.networkType" = "Type de réseau";
+
+"toolbox.password.title" = "Générateur de mots de passe";
+"toolbox.password.subtitle" = "Générer des mots de passe aléatoires sécurisés";
+"toolbox.password.hint" = "Configurez la longueur du mot de passe et les types de caractères, puis générez un mot de passe sécurisé.";
+"toolbox.password.placeholder" = "Le mot de passe généré apparaîtra ici";
+"toolbox.password.length" = "Longueur";
+"toolbox.password.includeNumbers" = "Inclure les chiffres";
+"toolbox.password.includeSymbols" = "Inclure les symboles";
+"toolbox.password.generate" = "Générer";
+"toolbox.password.copy" = "Copier";
+"toolbox.password.copied" = "Copié !";
+
+"about.title" = "À propos";
+"about.version" = "Version";
+"about.description.title" = "Un VPN simple et ciblé";
+"about.description.body" = "FKey VPN se concentre sur la fourniture d'une interface propre et d'une expérience de connexion directe. Nous évitons l'encombrement inutile et essayons de rendre chaque interaction facile à comprendre.\n\nL'objectif est de vous aider à vous connecter rapidement, avec une connexion stable et une apparence cohérente dans toute l'application. Nous continuerons à itérer sur les détails et à ajouter plus de fonctionnalités utiles dans les versions futures.";
+"about.website.button" = "Visiter le site officiel";
