@@ -160,6 +160,7 @@ struct ConnectingView: View {
             // 整体略微上移，给底部预留卡片空间
             .offset(y: -40)
         }
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             startAnimations()
         }

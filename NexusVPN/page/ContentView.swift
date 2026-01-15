@@ -37,11 +37,12 @@ struct ContentView: View {
                     VStack(spacing: 0) {
                         // 顶部区域
                         HStack {
-                            // Logo
+                            // Logo（图片本身是正方形，这里加一点圆角让风格更统一）
                             Image("logo")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             
                             Spacer()
                             
@@ -152,10 +153,8 @@ struct ContentView: View {
                 case .connecting:
                     ConnectingView()
                 case .result(let result):
-                    ResultView(result: result) {
-                        viewModel.clearResult()
-                        navigationPath.removeLast()
-                    }
+                    ResultView(result: result)
+                        .environmentObject(viewModel)
                 case .settings:
                     SettingsView()
                 case .language:
@@ -326,11 +325,12 @@ struct TriangleConnectionButton: View {
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
-                        .offset(y: 35)
+                        .offset(y: 42)
                 }
             }
         }
         .buttonStyle(.plain)
+        .contentShape(Rectangle())
         .disabled(stage == .connecting)
         .onAppear {
             startAnimations()
@@ -394,7 +394,7 @@ struct TriangleConnectionButton: View {
         case .connecting:
             return language.text("button.connect.connecting")
         case .online:
-            return language.text("button.connect.connected")
+            return language.text("button.disconnect.tap")
         }
     }
     

@@ -2,7 +2,7 @@
 //  SplashView.swift
 //  NexusVPN
 //
-//  启动页：3秒后跳转主页
+//  启动页：2.5秒后跳转主页
 //
 
 import SwiftUI
@@ -89,8 +89,8 @@ struct SplashView: View {
             // 检查网络类型，触发网络权限弹窗
             viewModel.checkNetworkType()
             
-            // 进度从 0 递增到 100（3秒内完成）
-            timer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { t in
+            // 进度从 0 递增到 100（2.5秒内完成）
+            timer = Timer.scheduledTimer(withTimeInterval: 0.025, repeats: true) { t in
                 if progress >= 100 {
                     t.invalidate()
                     timer = nil
@@ -99,8 +99,8 @@ struct SplashView: View {
                 progress += 1
             }
             
-            // 3秒后跳转主页
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            // 2.5秒后跳转主页
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 withAnimation(.easeOut(duration: 0.3)) {
                     opacity = 0.0
                 }

@@ -310,7 +310,7 @@ final class HomeSessionViewModel: ObservableObject {
         Task { @MainActor in
             NVLog.log("VM", "executePostConnectionCheck() 开始二次检测")
             // 延迟 3 秒模拟检测（后续可替换为真实探测）
-            try? await Task.sleep(nanoseconds: 10_000_000_000)
+            try? await Task.sleep(nanoseconds: 3_000_000_000)
             
             // 检查连接是否仍然有效
             let isStillConnected = engine.vpnStatus == .connected

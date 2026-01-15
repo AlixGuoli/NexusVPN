@@ -12,7 +12,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.bluelink.nexus.vpn</string>
+		<string>group.com.bluelink.nexus.key.vpn</string>
 	</array>
 </dict>
 </plist>

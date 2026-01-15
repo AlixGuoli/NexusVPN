@@ -14,6 +14,7 @@
 "button.connect.tap" = "Tap to Connect";
 "button.connect.connecting" = "Connecting...";
 "button.connect.connected" = "Connected";
+"button.disconnect.tap" = "Disconnect";
 
 "connecting.title" = "Establishing secure connection…";
 
@@ -52,6 +53,11 @@
 "privacy_policy_footer" = "For full details, please read our Privacy Policy.";
 "privacy_policy_link" = "View Privacy Policy";
 
-"privacy_agree_statement" = "By tapping “Accept & Continue”, you confirm that you have read and agree to the brief description above.";
+"privacy_agree_statement" = "By tapping \"Accept & Continue\", you confirm that you have read and agree to the brief description above.";
 "privacy_action_accept" = "Accept & Continue";
 "privacy_action_later" = "Decline and Exit";
+
+"result.share.title" = "Share App";
+"result.share.subtitle" = "Recommend to friends for a safer network experience.";
+"result.join.title" = "Join Us";
+"result.join.subtitle" = "Join our Telegram channel for the latest updates.";
