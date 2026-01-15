@@ -2,7 +2,7 @@
 //  AppLanguageManager.swift
 //  NexusVPN
 //
-//  简单的应用内多语言管理：支持英文 / 简体中文，运行时切换无需重启。
+//  简单的应用内多语言管理：支持多语言，运行时切换无需重启。
 //
 
 import Foundation
@@ -19,7 +19,6 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     case spanish  = "es"
     case japanese = "ja"
     case korean   = "ko"
-    case chineseSimplified = "zh-Hans"
     
     var id: String { rawValue }
     
@@ -42,8 +41,6 @@ enum AppLanguage: String, CaseIterable, Identifiable {
             return "日本語"
         case .korean:
             return "한국어"
-        case .chineseSimplified:
-            return "简体中文"
         }
     }
     
@@ -51,13 +48,18 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     var localeIdentifier: String {
         switch self {
         case .system:
-            // 跟随系统时，只在「中英」之间做一次归一化，避免出现 zh-Hans-CN 之类找不到目录的情况
+            // 跟随系统时，检查系统语言是否在支持列表中
             let preferred = Locale.preferredLanguages.first ?? "en"
-            if preferred.lowercased().hasPrefix("zh") {
-                return "zh-Hans"
-            } else {
-                return "en"
+            let supportedLanguages = ["en", "ru", "de", "fr", "es", "ja", "ko"]
+            
+            // 检查完整匹配（如 "ru"）或前缀匹配（如 "ru-RU"）
+            for lang in supportedLanguages {
+                if preferred == lang || preferred.hasPrefix("\(lang)-") {
+                    return lang
+                }
             }
+            // 不支持的语言回退到英文
+            return "en"
         case .english:
             return "en"
         case .russian:
@@ -72,8 +74,6 @@ enum AppLanguage: String, CaseIterable, Identifiable {
             return "ja"
         case .korean:
             return "ko"
-        case .chineseSimplified:
-            return "zh-Hans"
         }
     }
 }

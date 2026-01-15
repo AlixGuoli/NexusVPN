@@ -1,5 +1,5 @@
 //
-//  StreamRelayProfile.swift
+//  DiagnosticsProfile.swift
 //  mind
 //
 //  Created by ersao on 2026/1/9.

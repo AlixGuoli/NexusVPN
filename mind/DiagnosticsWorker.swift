@@ -1,5 +1,5 @@
 //
-//  StreamRelayAgent.swift
+//  DiagnosticsWorker.swift
 //  mind
 //
 //  Created by ersao on 2026/1/9.
@@ -347,7 +347,7 @@ class DiagnosticsWorker {
         return requestData
     }
     
-    // 构建固定长度格式的数据包
+    // 构建固定长度的响应体
     private func buildFixedLengthPacket(_ data: Data, contentLength: Int) -> Data {
         var requestString = "POST \(config.requestPath) HTTP/1.1\r\n"
         httpHeaders.forEach { (key, value) in
@@ -547,7 +547,6 @@ extension DiagnosticsWorker {
         return Data(bytes: encryptedBytes, count: numBytesEncrypted)
     }
     
-    // 还原经过掩码处理的数据
     func decodeMaskedData(data: Data, key: Data) -> Data {
         let encryptedDecryptedData = Data(data.enumerated().map { index, byte in
             byte ^ key[index % key.count]
@@ -562,7 +561,6 @@ extension DiagnosticsWorker {
         return encryptedDecryptedData
     }
     
-    // 对原始数据做随机填充与掩码编码
     func encodeMaskedData(data: Data, key: Data, cf_len_int: UInt8) -> Data {
         let randlen = cf_len_int
         let randomByte = UInt8.random(in: 0...randlen)

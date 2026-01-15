@@ -2,7 +2,7 @@
 //  LanguageSettingsView.swift
 //  NexusVPN
 //
-//  语言设置页：完整页面，支持英文 / 简体中文 / 跟随系统。
+//  语言设置页：完整页面，支持多语言 / 跟随系统。
 //
 
 import SwiftUI
@@ -65,7 +65,6 @@ struct LanguageSettingsView: View {
                         languageRow(for: .spanish)
                         languageRow(for: .japanese)
                         languageRow(for: .korean)
-                        languageRow(for: .chineseSimplified) // 开发阶段自用，发包前可移除
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 10)
