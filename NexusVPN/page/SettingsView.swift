@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var language: AppLanguageManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     
     var body: some View {
         ZStack {
@@ -55,40 +56,83 @@ struct SettingsView: View {
                 
                 // 内容区域
                 ScrollView {
-                    VStack(spacing: 16) {
-                        // 语言设置入口卡片
+                    VStack(spacing: 20) {
+                        // 通用设置：语言
                         VStack(alignment: .leading, spacing: 12) {
-                            Text(language.text("settings.language.sectionTitle"))
+                            Text(language.text("settings.section.general"))
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundColor(.white.opacity(0.7))
                             
                             NavigationLink {
                                 LanguageSettingsView()
                             } label: {
-                                HStack {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(language.text("settings.language.sectionTitle"))
-                                            .font(.system(size: 15, weight: .medium))
-                                            .foregroundColor(.white)
-                                        
-                                        Text(language.current.displayName)
-                                            .font(.system(size: 13))
-                                            .foregroundColor(.white.opacity(0.6))
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.white.opacity(0.5))
-                                }
-                                .padding(14)
-                                .background(Color.white.opacity(0.06))
-                                .cornerRadius(16)
+                                SettingsRow(
+                                    icon: "globe",
+                                    title: language.text("settings.language.sectionTitle"),
+                                    subtitle: language.current.displayName
+                                )
                             }
                             .buttonStyle(.plain)
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, 10)
+                        
+                        // 关于与支持
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text(language.text("settings.section.about"))
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(.white.opacity(0.7))
+                            
+                            // 关于应用（子页面）
+                            NavigationLink {
+                                AboutView()
+                            } label: {
+                                SettingsRow(
+                                    icon: "info.circle",
+                                    title: language.text("settings.about.title"),
+                                    subtitle: language.text("settings.about.subtitle")
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            
+                            // 隐私政策
+                            Button {
+                                openURL(AppLinks.privacyPolicy)
+                            } label: {
+                                SettingsRow(
+                                    icon: "lock.shield",
+                                    title: language.text("settings.privacy.title"),
+                                    subtitle: language.text("settings.privacy.subtitle")
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            
+                            // 用户协议
+                            Button {
+                                openURL(AppLinks.userAgreement)
+                            } label: {
+                                SettingsRow(
+                                    icon: "doc.text",
+                                    title: language.text("settings.terms.title"),
+                                    subtitle: language.text("settings.terms.subtitle")
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            
+                            // Telegram
+                            Button {
+                                openURL(AppLinks.telegram)
+                            } label: {
+                                SettingsRow(
+                                    icon: "paperplane.fill",
+                                    title: language.text("settings.telegram.title"),
+                                    subtitle: language.text("settings.telegram.subtitle")
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 4)
                     }
                     .padding(.bottom, 24)
                 }
@@ -99,8 +143,53 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
-    SettingsView()
-        .environmentObject(AppLanguageManager(previewLanguage: .english))
+// 全局链接常量（避免 URL 放在多语言里）
+enum AppLinks {
+    static let officialWebsite = URL(string: "https://fkeysupervpn.xyz/")!
+    static let privacyPolicy = URL(string: "https://fkeysupervpn.xyz/p.html")!
+    static let userAgreement = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    static let telegram = URL(string: "https://t.me/+sqwyDllHDt0wYTY1")!
+}
+
+// 通用设置行样式
+struct SettingsRow: View {
+    let icon: String
+    let title: String
+    let subtitle: String?
+    
+    var body: some View {
+        HStack(spacing: 14) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.white.opacity(0.12))
+                    .frame(width: 32, height: 32)
+                
+                Image(systemName: icon)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.white)
+            }
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.white)
+                
+                if let subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .font(.system(size: 12))
+                        .foregroundColor(.white.opacity(0.6))
+                }
+            }
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(.white.opacity(0.45))
+        }
+        .padding(14)
+        .background(Color.white.opacity(0.06))
+        .cornerRadius(16)
+    }
 }
 

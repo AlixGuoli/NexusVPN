@@ -13,6 +13,11 @@ enum NavigationDestination: Hashable {
     case settings
     case language
     case relayList
+    case pingTest
+    case portCheck
+    case qrcodeGenerator
+    case passwordGenerator
+    case ipInfo
 }
 
 struct ContentView: View {
@@ -101,60 +106,103 @@ struct ContentView: View {
                                 }
                             }
                             
-                            // 两个小按钮
-                            HStack(spacing: 16) {
-                                Button(action: {
-                                    navigationPath.append(NavigationDestination.relayList)
-                                }) {
-                                    HStack(spacing: 6) {
-                                        Image(systemName: "network")
-                                            .font(.system(size: 12))
-                                        Text(language.text("home.action.changeNode"))
-                                            .font(.system(size: 13, weight: .medium))
-                                    }
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 10)
-                                    .background(Color.white.opacity(0.15))
-                                    .cornerRadius(20)
+                            // 切换节点按钮
+                            Button(action: {
+                                navigationPath.append(NavigationDestination.relayList)
+                            }) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "network")
+                                        .font(.system(size: 12))
+                                    Text(language.text("home.action.changeNode"))
+                                        .font(.system(size: 13, weight: .medium))
                                 }
-                                
-                                Button(action: {}) {
-                                    HStack(spacing: 6) {
-                                        Image(systemName: "bolt.fill")
-                                            .font(.system(size: 12))
-                                        Text(language.text("home.action.smartMode"))
-                                            .font(.system(size: 13, weight: .medium))
-                                    }
-                        .foregroundColor(.white)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 10)
-                                    .background(Color.white.opacity(0.15))
-                                    .cornerRadius(20)
-                                }
-                }
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 10)
+                                .background(Color.white.opacity(0.15))
+                                .cornerRadius(20)
+                            }
                             .padding(.top, 8)
                         }
-                        .padding(.vertical, 40)
+                        .padding(.top, 40)
                         
-                        // 信息条
-                        HStack(spacing: 30) {
-                            InfoItem(
+                        // 信息卡片（可扩展：连接时长、数据流量等）
+                        HStack(spacing: 12) {
+                            // 上传卡片
+                            SpeedCard(
                                 icon: "arrow.up.circle.fill",
-                                value: "0.0",
-                                unit: "KB/s",
+                                value: formatSpeed(viewModel.uploadSpeed),
+                                unit: viewModel.uploadSpeed >= 1000 ? "MB/s" : "KB/s",
                                 label: language.text("home.info.upload")
                             )
                             
-                            InfoItem(
+                            // 下载卡片
+                            SpeedCard(
                                 icon: "arrow.down.circle.fill",
-                                value: "0.0",
-                                unit: "KB/s",
+                                value: formatSpeed(viewModel.downloadSpeed),
+                                unit: viewModel.downloadSpeed >= 1000 ? "MB/s" : "KB/s",
                                 label: language.text("home.info.download")
                             )
-            }
-                        .padding(.top, 30)
-                        .padding(.bottom, 20)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 26) // 适当拉开与下方标题的距离
+                        
+                        // 工具区：网络工具（列表行），其他工具（左右卡片）
+                        VStack(alignment: .leading, spacing: 18) {
+                            // 网络工具标题
+                            Text(language.text("toolbox.section.network"))
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(.white.opacity(0.7))
+                                .padding(.horizontal, 24)
+                            
+                            // 网络相关工具：列表行样式，更贴近“设置项”感觉
+                            VStack(spacing: 10) {
+                                NetworkToolRow(
+                                    icon: "waveform.path.ecg",
+                                    title: language.text("toolbox.ping.title"),
+                                    action: { navigationPath.append(NavigationDestination.pingTest) }
+                                )
+                                NetworkToolRow(
+                                    icon: "network",
+                                    title: language.text("toolbox.port.title"),
+                                    action: { navigationPath.append(NavigationDestination.portCheck) }
+                                )
+                                NetworkToolRow(
+                                    icon: "antenna.radiowaves.left.and.right",
+                                    title: language.text("toolbox.ipinfo.title"),
+                                    action: { navigationPath.append(NavigationDestination.ipInfo) }
+                                )
+                            }
+                            .padding(.horizontal, 20)
+                            
+                            // 实用工具标题
+                            Text(language.text("toolbox.section.utility"))
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(.white.opacity(0.7))
+                                .padding(.top, 4)
+                                .padding(.horizontal, 24)
+                            
+                            // 其他工具：左右两张卡片，保持原来的“方块卡片”风格
+                            HStack(spacing: 12) {
+                                ToolGridItem(
+                                    icon: "key.fill",
+                                    title: language.text("toolbox.password.title"),
+                                    action: {
+                                        navigationPath.append(NavigationDestination.passwordGenerator)
+                                    }
+                                )
+                                
+                                ToolGridItem(
+                                    icon: "qrcode",
+                                    title: language.text("toolbox.qrcode.title"),
+                                    action: {
+                                        navigationPath.append(NavigationDestination.qrcodeGenerator)
+                                    }
+                                )
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 24)
+                        }
                     }
                 }
                 
@@ -192,6 +240,16 @@ struct ContentView: View {
                 case .relayList:
                     RelayListView()
                         .environmentObject(relayStore)
+                case .pingTest:
+                    PingTestView()
+                case .portCheck:
+                    PortCheckView()
+                case .qrcodeGenerator:
+                    QRCodeGeneratorView()
+                case .passwordGenerator:
+                    PasswordGeneratorView()
+                case .ipInfo:
+                    IPInfoView()
                 }
             }
             .onChange(of: viewModel.showConnectingView) { show in
@@ -215,6 +273,15 @@ struct ContentView: View {
     }
     
     // MARK: - 计算属性
+    
+    // 格式化速度显示（自动切换单位）
+    private func formatSpeed(_ speed: Double) -> String {
+        if speed >= 1000 {
+            return String(format: "%.2f", speed / 1000)
+        } else {
+            return String(format: "%.1f", speed)
+        }
+    }
     
     private var statusText: String {
         switch viewModel.stage {
@@ -680,38 +747,164 @@ struct TriangleShape: Shape {
     }
 }
 
-// MARK: - 信息项组件
+// MARK: - 速度卡片组件
 
-struct InfoItem: View {
+struct SpeedCard: View {
     let icon: String
     let value: String
     let unit: String
     let label: String
     
     var body: some View {
-        VStack(spacing: 6) {
+        HStack(spacing: 10) {
+            // 图标
             Image(systemName: icon)
-                .font(.system(size: 20))
-                .foregroundColor(.cyan.opacity(0.8))
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(.cyan.opacity(0.9))
+                .frame(width: 20)
             
-            HStack(alignment: .firstTextBaseline, spacing: 2) {
-                Text(value)
-                    .font(.system(size: 16, weight: .semibold))
-                Text(unit)
-                    .font(.system(size: 12))
+            // 内容区域
+            VStack(alignment: .leading, spacing: 2) {
+                // 数值和单位
+                HStack(alignment: .firstTextBaseline, spacing: 3) {
+                    Text(value)
+                        .font(.system(size: 15, weight: .semibold, design: .monospaced))
+                    Text(unit)
+                        .font(.system(size: 11, weight: .medium))
+                }
+                .foregroundColor(.white)
+                
+                // 标签
+                Text(label)
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(.white.opacity(0.7))
             }
-            .foregroundColor(.white)
             
-            Text(label)
-                .font(.system(size: 11))
-                .foregroundColor(.white.opacity(0.6))
+            Spacer()
         }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.white.opacity(0.08))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                )
+        )
     }
 }
 
 #Preview {
     ContentView()
         .environmentObject(HomeSessionViewModel())
+}
+
+// MARK: - 工具网格项组件（首页工具区）
+
+struct ToolGridItem: View {
+    let icon: String
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 10) {
+                // 图标
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.cyan.opacity(0.25),
+                                    Color.blue.opacity(0.15)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 56, height: 56)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 24, weight: .medium))
+                        .foregroundColor(.cyan.opacity(0.9))
+                }
+                
+                // 标题
+                Text(title)
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundColor(.white)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
+                    .frame(height: 32)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .padding(.horizontal, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(Color.white.opacity(0.08))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// 网络工具列表行（左图标 + 文案 + 右箭头）
+struct NetworkToolRow: View {
+    let icon: String
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 14) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.cyan.opacity(0.28),
+                                    Color.blue.opacity(0.18)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 38, height: 38)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(.white)
+                }
+                
+                Text(title)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.white.opacity(0.4))
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(Color.white.opacity(0.06))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(Color.white.opacity(0.10), lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(.plain)
+    }
 }
 
 // MARK: - 三角形 Glyph（内部小三角）

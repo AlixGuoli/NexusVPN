@@ -7,7 +7,6 @@
 
 "home.node.auto" = "自动 • 最佳节点";
 "home.action.changeNode" = "切换节点";
-"home.action.smartMode" = "智能模式";
 "home.info.upload" = "上传";
 "home.info.download" = "下载";
 
@@ -32,6 +31,20 @@
 "settings.title" = "设置";
 "settings.language.sectionTitle" = "语言";
 "settings.language.followSystem" = "使用系统语言";
+
+"settings.section.general" = "通用";
+"settings.section.about" = "关于与支持";
+
+"settings.about.title" = "关于 Nexus VPN";
+"settings.about.subtitle" = "版本信息与官网";
+"settings.privacy.title" = "隐私政策";
+"settings.privacy.subtitle" = "了解我们如何处理你的数据";
+
+"settings.terms.title" = "用户协议";
+"settings.terms.subtitle" = "使用条款与约定";
+
+"settings.telegram.title" = "Telegram 频道";
+"settings.telegram.subtitle" = "加入频道获取最新消息";
 
 // 首次启动隐私弹窗（去掉点号的 key）
 "privacy_title" = "隐私保护与数据使用说明";
@@ -68,3 +81,68 @@
 "relay.status.excellent" = "优秀";
 "relay.status.good" = "良好";
 "relay.status.normal" = "一般";
+
+/* 工具箱 */
+"toolbox.title" = "工具箱";
+"toolbox.subtitle" = "网络工具 · 文本工具";
+"toolbox.desc" = "几个完全在设备上运行的小工具，包括网络测试和文本处理。所有操作都在本地完成，不会上传任何数据。";
+
+"toolbox.section.network" = "网络工具";
+"toolbox.section.utility" = "实用工具";
+
+"toolbox.ping.title" = "Ping 测试";
+"toolbox.ping.subtitle" = "测量到目标主机的延迟";
+"toolbox.ping.hint" = "输入域名或 IP，例如 example.com，然后运行测试来估算延迟。";
+"toolbox.ping.start" = "开始测试";
+"toolbox.ping.running" = "测试中...";
+"toolbox.ping.done" = "测试完成";
+"toolbox.ping.latest" = "最新";
+"toolbox.ping.min" = "最小";
+"toolbox.ping.max" = "最大";
+"toolbox.ping.avg" = "平均";
+
+"toolbox.port.title" = "端口检测";
+"toolbox.port.subtitle" = "检查端口是否可达";
+"toolbox.port.hint" = "输入主机和端口，例如 example.com 和 443。我们将尝试检测端口。";
+"toolbox.port.start" = "开始检测";
+"toolbox.port.running" = "检测中...";
+"toolbox.port.open" = "✅ 端口可达";
+"toolbox.port.closed" = "❌ 无法连接到此端口";
+
+"toolbox.qrcode.title" = "二维码";
+"toolbox.qrcode.subtitle" = "生成二维码";
+"toolbox.qrcode.hint" = "输入文本或链接，点击“生成”按钮创建二维码。";
+"toolbox.qrcode.placeholder" = "二维码将显示在这里";
+"toolbox.qrcode.save" = "保存";
+"toolbox.qrcode.saved" = "已保存！";
+"toolbox.qrcode.share" = "分享";
+ "toolbox.qrcode.generate" = "生成";
+
+"toolbox.ipinfo.title" = "IP 信息";
+"toolbox.ipinfo.subtitle" = "查看网络信息";
+"toolbox.ipinfo.hint" = "查看你当前的 IP 地址和网络信息。";
+"toolbox.ipinfo.refresh" = "刷新";
+"toolbox.ipinfo.loading" = "加载中...";
+"toolbox.ipinfo.placeholder" = "点击刷新加载 IP 信息";
+"toolbox.ipinfo.ip" = "IP 地址";
+"toolbox.ipinfo.location" = "位置";
+"toolbox.ipinfo.isp" = "运营商";
+"toolbox.ipinfo.country" = "国家";
+"toolbox.ipinfo.networkType" = "网络类型";
+
+"toolbox.password.title" = "密码生成器";
+"toolbox.password.subtitle" = "生成安全的随机密码";
+"toolbox.password.hint" = "配置密码长度和字符类型，然后生成一个安全密码。";
+"toolbox.password.placeholder" = "生成的密码将显示在这里";
+"toolbox.password.length" = "长度";
+"toolbox.password.includeNumbers" = "包含数字";
+"toolbox.password.includeSymbols" = "包含符号";
+"toolbox.password.generate" = "生成";
+"toolbox.password.copy" = "复制";
+"toolbox.password.copied" = "已复制！";
+
+"about.title" = "关于";
+"about.version" = "版本";
+"about.description.title" = "一款专注、简洁的 VPN";
+"about.description.body" = "Nexus VPN 专注于连接体验本身，界面力求干净、易懂，不过度堆叠复杂功能，让大多数操作一眼就能明白。\n\n我们的目标是帮助你尽快建立稳定连接，并在整个使用过程中保持一致的视觉和交互体验。后续版本会在保持简洁的前提下，逐步补充更多实用功能。";
+"about.website.button" = "前往官网";

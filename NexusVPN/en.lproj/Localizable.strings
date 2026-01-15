@@ -7,7 +7,6 @@
 
 "home.node.auto" = "Auto • Best Location";
 "home.action.changeNode" = "Change Node";
-"home.action.smartMode" = "Smart Mode";
 "home.info.upload" = "Upload";
 "home.info.download" = "Download";
 
@@ -32,6 +31,20 @@
 "settings.title" = "Settings";
 "settings.language.sectionTitle" = "Language";
 "settings.language.followSystem" = "Use system language";
+
+"settings.section.general" = "General";
+"settings.section.about" = "About & Support";
+
+"settings.about.title" = "About Nexus VPN";
+"settings.about.subtitle" = "Version info and official website";
+"settings.privacy.title" = "Privacy Policy";
+"settings.privacy.subtitle" = "How we handle your data";
+
+"settings.terms.title" = "User Agreement";
+"settings.terms.subtitle" = "Usage terms and conditions";
+
+"settings.telegram.title" = "Telegram";
+"settings.telegram.subtitle" = "Join our Telegram channel";
 
 // First launch privacy gate (normalized keys without dots)
 "privacy_title" = "Privacy & Data Usage Overview";
@@ -68,3 +81,68 @@
 "relay.status.excellent" = "Excellent";
 "relay.status.good" = "Good";
 "relay.status.normal" = "Normal";
+
+/* Toolbox */
+"toolbox.title" = "Toolbox";
+"toolbox.subtitle" = "Network tools · Text utilities";
+"toolbox.desc" = "A few small utilities that run entirely on-device, including network tests and text helpers. Nothing is uploaded.";
+
+"toolbox.section.network" = "Network tools";
+"toolbox.section.utility" = "Utilities";
+
+"toolbox.ping.title" = "Ping Test";
+"toolbox.ping.subtitle" = "Measure latency to a target host";
+"toolbox.ping.hint" = "Enter a domain or IP, such as example.com, then run a test to estimate latency.";
+"toolbox.ping.start" = "Start Test";
+"toolbox.ping.running" = "Testing...";
+"toolbox.ping.done" = "Test Finished";
+"toolbox.ping.latest" = "Latest";
+"toolbox.ping.min" = "Min";
+"toolbox.ping.max" = "Max";
+"toolbox.ping.avg" = "Avg";
+
+"toolbox.port.title" = "Port Check";
+"toolbox.port.subtitle" = "Check if a port is reachable";
+"toolbox.port.hint" = "Enter a host and port, for example example.com and 443. We will attempt to check the port.";
+"toolbox.port.start" = "Start Check";
+"toolbox.port.running" = "Checking...";
+"toolbox.port.open" = "✅ Port is reachable";
+"toolbox.port.closed" = "❌ Cannot connect to this port";
+
+"toolbox.qrcode.title" = "QR Code";
+"toolbox.qrcode.subtitle" = "Generate QR codes";
+"toolbox.qrcode.hint" = "Enter text or URL, then tap Generate to create a QR code.";
+"toolbox.qrcode.placeholder" = "QR code will appear here";
+"toolbox.qrcode.save" = "Save";
+"toolbox.qrcode.saved" = "Saved!";
+"toolbox.qrcode.share" = "Share";
+ "toolbox.qrcode.generate" = "Generate";
+
+"toolbox.ipinfo.title" = "IP Info";
+"toolbox.ipinfo.subtitle" = "View network information";
+"toolbox.ipinfo.hint" = "View your current IP address and network information.";
+"toolbox.ipinfo.refresh" = "Refresh";
+"toolbox.ipinfo.loading" = "Loading...";
+"toolbox.ipinfo.placeholder" = "Tap refresh to load IP information";
+"toolbox.ipinfo.ip" = "IP Address";
+"toolbox.ipinfo.location" = "Location";
+"toolbox.ipinfo.isp" = "ISP";
+"toolbox.ipinfo.country" = "Country";
+"toolbox.ipinfo.networkType" = "Network Type";
+
+"toolbox.password.title" = "Password Generator";
+"toolbox.password.subtitle" = "Generate secure random passwords";
+"toolbox.password.hint" = "Configure password length and character types, then generate a secure password.";
+"toolbox.password.placeholder" = "Generated password will appear here";
+"toolbox.password.length" = "Length";
+"toolbox.password.includeNumbers" = "Include Numbers";
+"toolbox.password.includeSymbols" = "Include Symbols";
+"toolbox.password.generate" = "Generate";
+"toolbox.password.copy" = "Copy";
+"toolbox.password.copied" = "Copied!";
+
+"about.title" = "About";
+"about.version" = "Version";
+"about.description.title" = "A simple, focused VPN";
+"about.description.body" = "Nexus VPN focuses on providing a clean interface and a straightforward connection experience. We avoid unnecessary clutter and try to keep every interaction easy to understand.\n\nThe goal is to help you get online quickly, with a stable connection and a consistent look and feel across the app. We will continue to iterate on details and add more useful features in future versions.";
+"about.website.button" = "Visit official website";

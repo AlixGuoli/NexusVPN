@@ -38,6 +38,15 @@ final class HomeSessionViewModel: ObservableObject {
     /// 连接开始时间（用于计算连接时长）
     @Published var connectionStartTime: Date?
     
+    /// 上传速度（KB/s，假数据）
+    @Published private(set) var uploadSpeed: Double = 0.0
+    
+    /// 下载速度（KB/s，假数据）
+    @Published private(set) var downloadSpeed: Double = 0.0
+    
+    /// 速度更新定时器
+    private var speedTimer: Timer?
+    
     // MARK: - 内部状态标志
     
     /// 标记是否需要执行连接后的延迟检测（仅用户主动连接时）
@@ -80,6 +89,7 @@ final class HomeSessionViewModel: ObservableObject {
         networkMonitor?.cancel()
         networkMonitor = nil
         networkQueue = nil
+        stopSpeedUpdates()
     }
     
     // MARK: - 通知监听
@@ -118,11 +128,15 @@ final class HomeSessionViewModel: ObservableObject {
                 if connectionStartTime == nil {
                     restoreConnectionStartTime()
                 }
+                // 开始更新速度
+                startSpeedUpdates()
             }
         case .disconnected:
             stage = .idle
             // 清除连接开始时间
             clearConnectionStartTime()
+            // 停止速度更新
+            stopSpeedUpdates()
             // 如果是用户主动断开，显示断开成功结果页
             if isUserInitiatedDisconnect && result == nil {
                 result = .disconnectSuccess
@@ -133,6 +147,7 @@ final class HomeSessionViewModel: ObservableObject {
         case .invalid:
             stage = .idle
             clearConnectionStartTime()
+            stopSpeedUpdates()
             needsPostVerification = false
         case .connecting, .disconnecting,.reasserting:
             stage = .connecting
@@ -349,6 +364,8 @@ final class HomeSessionViewModel: ObservableObject {
         result = .connectSuccess
         // 记录连接开始时间
         saveConnectionStartTime()
+        // 开始更新速度
+        startSpeedUpdates()
     }
     
     /// 将当前会话标记为连接失败并 reset UI
@@ -392,5 +409,41 @@ final class HomeSessionViewModel: ObservableObject {
         guard let startTime = connectionStartTime else { return nil }
         let duration = Date().timeIntervalSince(startTime)
         return duration > 0 ? duration : nil
+    }
+    
+    // MARK: - 速度更新
+    
+    /// 开始更新速度（仅在连接时）
+    private func startSpeedUpdates() {
+        stopSpeedUpdates() // 先停止之前的定时器
+        
+        // 初始化速度值（符合大众VPN实际情况）
+        // 上传：50-300 KB/s（0.05-0.3 MB/s）
+        // 下载：200-1000 KB/s（0.2-1 MB/s），偶尔可能超过1MB/s
+        uploadSpeed = Double.random(in: 50...300)
+        downloadSpeed = Double.random(in: 200...1000)
+        
+        // 每秒更新一次速度（模拟真实变化）
+        speedTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self, self.stage == .online else {
+                self?.stopSpeedUpdates()
+                return
+            }
+            
+            // 在原有基础上随机波动（±15%）
+            let uploadChange = Double.random(in: -0.15...0.15)
+            let downloadChange = Double.random(in: -0.15...0.15)
+            
+            self.uploadSpeed = max(20, self.uploadSpeed * (1 + uploadChange))
+            self.downloadSpeed = max(50, self.downloadSpeed * (1 + downloadChange))
+        }
+    }
+    
+    /// 停止速度更新
+    private func stopSpeedUpdates() {
+        speedTimer?.invalidate()
+        speedTimer = nil
+        uploadSpeed = 0.0
+        downloadSpeed = 0.0
     }
 }
