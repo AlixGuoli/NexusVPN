@@ -61,3 +61,10 @@
 "result.share.subtitle" = "推荐给朋友一起用更安全的网络。";
 "result.join.title" = "加入我们";
 "result.join.subtitle" = "进入 Telegram 频道获取最新消息。";
+
+"relay.list.title" = "选择节点";
+"relay.auto.name" = "Auto";
+"relay.auto.desc" = "自动选择最佳节点";
+"relay.status.excellent" = "优秀";
+"relay.status.good" = "良好";
+"relay.status.normal" = "一般";

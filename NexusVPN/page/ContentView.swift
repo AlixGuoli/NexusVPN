@@ -12,11 +12,13 @@ enum NavigationDestination: Hashable {
     case result(ConnectionResult)
     case settings
     case language
+    case relayList
 }
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: HomeSessionViewModel
     @EnvironmentObject var language: AppLanguageManager
+    @StateObject private var relayStore = RelayStore.shared
     @State private var navigationPath = NavigationPath()
     
     var body: some View {
@@ -88,14 +90,22 @@ struct ContentView: View {
                                 Image(systemName: "location.fill")
                                     .font(.system(size: 14))
                                     .foregroundColor(.white.opacity(0.6))
-                                Text(language.text("home.node.auto"))
-                                    .font(.system(size: 14))
-                                    .foregroundColor(.white.opacity(0.7))
+                                if let selectedRelay = relayStore.selectedRelay {
+                                    Text(selectedRelay.id == -1 ? language.text("relay.auto.name") : selectedRelay.name)
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.white.opacity(0.7))
+                                } else {
+                                    Text(language.text("relay.auto.name"))
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.white.opacity(0.7))
+                                }
                             }
                             
                             // 两个小按钮
                             HStack(spacing: 16) {
-                                Button(action: {}) {
+                                Button(action: {
+                                    navigationPath.append(NavigationDestination.relayList)
+                                }) {
                                     HStack(spacing: 6) {
                                         Image(systemName: "network")
                                             .font(.system(size: 12))
@@ -179,6 +189,9 @@ struct ContentView: View {
                     SettingsView()
                 case .language:
                     LanguageSettingsView()
+                case .relayList:
+                    RelayListView()
+                        .environmentObject(relayStore)
                 }
             }
             .onChange(of: viewModel.showConnectingView) { show in

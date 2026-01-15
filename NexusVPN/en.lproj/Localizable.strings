@@ -61,3 +61,10 @@
 "result.share.subtitle" = "Recommend to friends for a safer network experience.";
 "result.join.title" = "Join Us";
 "result.join.subtitle" = "Join our Telegram channel for the latest updates.";
+
+"relay.list.title" = "Select Node";
+"relay.auto.name" = "Auto";
+"relay.auto.desc" = "Automatically select the best node";
+"relay.status.excellent" = "Excellent";
+"relay.status.good" = "Good";
+"relay.status.normal" = "Normal";

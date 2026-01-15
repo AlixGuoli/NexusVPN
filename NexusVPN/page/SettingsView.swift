@@ -27,31 +27,31 @@ struct SettingsView: View {
             VStack(spacing: 24) {
                 // 顶部栏
                 HStack {
+                    // 左侧返回按钮
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 16, weight: .semibold))
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(.white.opacity(0.8))
-                            .padding(8)
-                            .background(Color.white.opacity(0.12))
-                            .clipShape(Circle())
                     }
                     
                     Spacer()
                     
+                    // 居中标题
                     Text(language.text("settings.title"))
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 20, weight: .semibold))
                         .foregroundColor(.white)
                     
                     Spacer()
                     
-                    // 占位使标题居中
-                    Color.clear
-                        .frame(width: 32, height: 32)
+                    // 右侧占位（保持标题居中）
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.clear)
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 16)
+                .padding(.vertical, 16)
                 
                 // 内容区域
                 ScrollView {
