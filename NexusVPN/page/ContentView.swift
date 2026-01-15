@@ -73,7 +73,8 @@ struct ContentView: View {
                                 stage: viewModel.stage,
                                 onTap: {
                     viewModel.onPrimaryButtonTapped()
-                                }
+                                },
+                                connectionStartTime: viewModel.connectionStartTime
                             )
                             .frame(width: 200, height: 200)
                             
@@ -146,6 +147,25 @@ struct ContentView: View {
                         .padding(.bottom, 20)
                     }
                 }
+                
+                // 断开确认弹窗（覆盖在主页上）
+                if viewModel.showDisconnectAlert {
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            viewModel.cancelDisconnect()
+                        }
+                    
+                    DisconnectConfirmView(
+                        onConfirm: {
+                            viewModel.confirmDisconnect()
+                        },
+                        onCancel: {
+                            viewModel.cancelDisconnect()
+                        }
+                    )
+                    .padding(.horizontal, 24)
+                }
             }
             .navigationBarHidden(true)
             .navigationDestination(for: NavigationDestination.self) { destination in
@@ -160,20 +180,6 @@ struct ContentView: View {
                 case .language:
                     LanguageSettingsView()
                 }
-            }
-            .sheet(isPresented: Binding(
-                get: { viewModel.showDisconnectAlert },
-                set: { _ in }
-            )) {
-                DisconnectConfirmView(
-                    onConfirm: {
-                        viewModel.confirmDisconnect()
-                    },
-                    onCancel: {
-                        viewModel.cancelDisconnect()
-                    }
-                )
-                .presentationDetents([.height(200)])
             }
             .onChange(of: viewModel.showConnectingView) { show in
                 if show {
@@ -229,6 +235,7 @@ struct ContentView: View {
 struct TriangleConnectionButton: View {
     let stage: ConnectionStage
     let onTap: () -> Void
+    let connectionStartTime: Date?
     
     @EnvironmentObject var language: AppLanguageManager
     @State private var scale: CGFloat = 1.0
@@ -238,6 +245,10 @@ struct TriangleConnectionButton: View {
     var body: some View {
         Button(action: onTap) {
             ZStack {
+                // 透明背景，确保整个区域可点击
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: 200, height: 200)
                 // 三角形边缘光晕（沿着三条边）
                 TriangleGlyph()
                     .stroke(
@@ -320,7 +331,28 @@ struct TriangleConnectionButton: View {
                         }
                     }
                     
-                    // 中间文案，位于三角内部略偏下
+                    // 连接时长（独立定位在三角形中心，不影响文案布局）
+                    if stage == .online, let startTime = connectionStartTime {
+                        if #available(iOS 15.0, *) {
+                            TimelineView(.periodic(from: Date(), by: 1.0)) { context in
+                                let duration = context.date.timeIntervalSince(startTime)
+                                Text(formatDuration(duration))
+                                    .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                                    .foregroundColor(Color.cyan.opacity(0.9))
+                                    .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 1)
+                            }
+                            .offset(y: 0)
+                        } else {
+                            let duration = Date().timeIntervalSince(startTime)
+                            Text(formatDuration(duration))
+                                .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                                .foregroundColor(Color.cyan.opacity(0.9))
+                                .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 1)
+                                .offset(y: 0)
+                        }
+                    }
+                    
+                    // 按钮文案（保持原有位置不变）
                     Text(centerText)
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)
@@ -328,9 +360,10 @@ struct TriangleConnectionButton: View {
                         .offset(y: 42)
                 }
             }
+            .frame(width: 200, height: 200)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .contentShape(Rectangle())
         .disabled(stage == .connecting)
         .onAppear {
             startAnimations()
@@ -395,6 +428,20 @@ struct TriangleConnectionButton: View {
             return language.text("button.connect.connecting")
         case .online:
             return language.text("button.disconnect.tap")
+        }
+    }
+    
+    /// 格式化连接时长为 "HH:MM:SS" 或 "MM:SS" 格式
+    private func formatDuration(_ duration: TimeInterval) -> String {
+        let totalSeconds = Int(duration)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+        
+        if hours > 0 {
+            return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        } else {
+            return String(format: "%02d:%02d", minutes, seconds)
         }
     }
     

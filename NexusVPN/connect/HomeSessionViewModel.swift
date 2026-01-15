@@ -35,6 +35,9 @@ final class HomeSessionViewModel: ObservableObject {
     @Published private(set) var showConnectingView: Bool = false
     @Published private(set) var showDisconnectAlert: Bool = false
     
+    /// 连接开始时间（用于计算连接时长）
+    @Published var connectionStartTime: Date?
+    
     // MARK: - 内部状态标志
     
     /// 标记是否需要执行连接后的延迟检测（仅用户主动连接时）
@@ -58,6 +61,9 @@ final class HomeSessionViewModel: ObservableObject {
     private var networkMonitor: NWPathMonitor?
     private var networkQueue: DispatchQueue?
     
+    /// UserDefaults key 用于持久化连接开始时间
+    private let connectionStartTimeKey = "NexusVPN.ConnectionStartTime"
+    
     // MARK: - 初始化
     
     init(engine: ConnectionEngine = .shared) {
@@ -65,6 +71,8 @@ final class HomeSessionViewModel: ObservableObject {
         registerStatusObserver()
         // 初始化时读取当前状态
         systemStatus = engine.vpnStatus
+        // 恢复连接开始时间（如果存在）
+        restoreConnectionStartTime()
     }
     
     deinit {
@@ -106,9 +114,15 @@ final class HomeSessionViewModel: ObservableObject {
             } else {
                 // 不需要验证（如恢复已有连接），直接显示在线
                 stage = .online
+                // 如果还没有记录开始时间，说明是恢复的连接，尝试恢复开始时间
+                if connectionStartTime == nil {
+                    restoreConnectionStartTime()
+                }
             }
         case .disconnected:
             stage = .idle
+            // 清除连接开始时间
+            clearConnectionStartTime()
             // 如果是用户主动断开，显示断开成功结果页
             if isUserInitiatedDisconnect && result == nil {
                 result = .disconnectSuccess
@@ -118,6 +132,7 @@ final class HomeSessionViewModel: ObservableObject {
             needsPostVerification = false
         case .invalid:
             stage = .idle
+            clearConnectionStartTime()
             needsPostVerification = false
         case .connecting, .disconnecting,.reasserting:
             stage = .connecting
@@ -332,6 +347,8 @@ final class HomeSessionViewModel: ObservableObject {
         stage = .online
         showConnectingView = false
         result = .connectSuccess
+        // 记录连接开始时间
+        saveConnectionStartTime()
     }
     
     /// 将当前会话标记为连接失败并 reset UI
@@ -342,5 +359,38 @@ final class HomeSessionViewModel: ObservableObject {
         showConnectingView = false
         result = .connectFailure
         needsPostVerification = false
+        clearConnectionStartTime()
+    }
+    
+    // MARK: - 连接时长管理
+    
+    /// 保存连接开始时间到 UserDefaults
+    private func saveConnectionStartTime() {
+        let now = Date()
+        connectionStartTime = now
+        UserDefaults.standard.set(now, forKey: connectionStartTimeKey)
+        NVLog.log("VM", "保存连接开始时间: \(now)")
+    }
+    
+    /// 从 UserDefaults 恢复连接开始时间
+    private func restoreConnectionStartTime() {
+        if let savedTime = UserDefaults.standard.object(forKey: connectionStartTimeKey) as? Date {
+            connectionStartTime = savedTime
+            NVLog.log("VM", "恢复连接开始时间: \(savedTime)")
+        }
+    }
+    
+    /// 清除连接开始时间
+    private func clearConnectionStartTime() {
+        connectionStartTime = nil
+        UserDefaults.standard.removeObject(forKey: connectionStartTimeKey)
+        NVLog.log("VM", "清除连接开始时间")
+    }
+    
+    /// 计算当前连接时长（秒），每次访问都会重新计算
+    var connectionDuration: TimeInterval? {
+        guard let startTime = connectionStartTime else { return nil }
+        let duration = Date().timeIntervalSince(startTime)
+        return duration > 0 ? duration : nil
     }
 }
