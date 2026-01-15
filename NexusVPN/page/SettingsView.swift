@@ -12,6 +12,19 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     
+    // 获取当前实际使用的语言显示名称
+    private var currentLanguageDisplayName: String {
+        if language.current == .system {
+            // 如果选择的是"跟随系统"，显示实际使用的语言
+            let actualLocale = language.current.localeIdentifier
+            if let actualLang = AppLanguage.allCases.first(where: { $0.localeIdentifier == actualLocale && $0 != .system }) {
+                return actualLang.displayName
+            }
+            return "English" // 回退显示
+        }
+        return language.current.displayName
+    }
+    
     var body: some View {
         ZStack {
             // 背景与主页一致
@@ -69,7 +82,7 @@ struct SettingsView: View {
                                 SettingsRow(
                                     icon: "globe",
                                     title: language.text("settings.language.sectionTitle"),
-                                    subtitle: language.current.displayName
+                                    subtitle: currentLanguageDisplayName
                                 )
                             }
                             .buttonStyle(.plain)
