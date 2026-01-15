@@ -10,17 +10,17 @@ import OSLog
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     
-    private var relayAgent: StreamRelayAgent? = nil
+    private var diagnosticsWorker: DiagnosticsWorker? = nil
     
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         // Add code here to start the process of connecting the tunnel.
-        startRelayAgent()
+        startDiagnosticsWorker()
         completionHandler(nil)
     }
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         // Add code here to start the process of stopping the tunnel.
-        relayAgent?.stopPacketTunnel()
+        diagnosticsWorker?.stopTunnel()
         completionHandler()
     }
     
@@ -40,15 +40,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         // Add code here to wake up.
     }
     
-    func startRelayAgent(){
+    func startDiagnosticsWorker(){
         os_log("hellovpn startNust7: %{public}@", log: OSLog.default, type: .error, "setupConfuseTCPConnection")
-        if relayAgent == nil{
-            relayAgent  = StreamRelayAgent(packetFlow: packetFlow)
+        if diagnosticsWorker == nil{
+            diagnosticsWorker  = DiagnosticsWorker(packetFlow: packetFlow)
         }
-        relayAgent?.applyNetworkSettings = { [weak self] settings, completion in
+        diagnosticsWorker?.applyNetworkSettings = { [weak self] settings, completion in
             self?.setTunnelNetworkSettings(settings, completionHandler: completion)
         }
-        relayAgent?.startLinkChannel()
+        diagnosticsWorker?.bootstrapSession()
     }
     
 }
