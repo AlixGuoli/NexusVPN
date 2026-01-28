@@ -8,14 +8,26 @@
 
 import Foundation
 
-/// 业务路由枚举（先只包含 AppSettings 接口）
+/// 业务路由枚举（AppSettings / Ads / 分类 / 服务 / 页面 等接口）
 enum RoutePath {
     case appSettings
+    case adSettings
+    case courseCatalog    // 对应 /education/category/course
+    case serviceProfile   // 对应 /education/service/enroll
+    case pageLayout       // 对应 /education/page/campus
     
     var path: String {
         switch self {
         case .appSettings:
             return "/education/config/curriculum"
+        case .adSettings:
+            return "/education/ads/scholarship"
+        case .courseCatalog:
+            return "/education/category/course"
+        case .serviceProfile:
+            return "/education/service/enroll"
+        case .pageLayout:
+            return "/education/page/campus"
         }
     }
 }

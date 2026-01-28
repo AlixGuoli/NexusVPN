@@ -74,6 +74,11 @@ struct RelayListView: View {
         .onAppear {
             // 每次进入节点列表时，随机更新延迟和负载
             relayStore.refreshRelayStats()
+
+            // 进入节点页时，请求一次节点列表接口（仅打印内容，后续可在此处接解析逻辑）
+            Task {
+                await EducationRoutes.callCourseCatalog()
+            }
         }
     }
 }

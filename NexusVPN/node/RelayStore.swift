@@ -156,4 +156,72 @@ final class RelayStore: ObservableObject {
         }
         NVLog.log("RelayStore", "刷新了节点统计")
     }
+
+    // MARK: - 从接口更新节点列表
+
+    /// 使用节点接口返回的 JSON 更新节点列表：
+    /// - 保留 auto 节点（id = -1）
+    /// - 将所有 categories 里的 nodes 平铺成真实节点列表
+    /// - 如果之前选中的节点不在新列表中，则重置为 auto
+    func updateFromCourseCatalog(json: String) {
+        guard let data = json.data(using: .utf8),
+              let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let categories = root["categories"] as? [[String: Any]] else {
+            NVLog.log("RelayStore", "节点列表 JSON 解析失败")
+            return
+        }
+
+        var parsedRelays: [Relay] = []
+
+        // 遍历所有 categories，将所有 nodes 平铺
+        for category in categories {
+            guard let nodes = category["nodes"] as? [[String: Any]] else { continue }
+            for nodeDict in nodes {
+                guard let id = nodeDict["id"] as? Int,
+                      let name = nodeDict["name"] as? String,
+                      let country = nodeDict["country"] as? String else {
+                    continue
+                }
+
+                let countryCode = country.uppercased()
+                let relay = Relay(
+                    id: id,
+                    name: name,
+                    countryCode: countryCode,
+                    latency: Int.random(in: 20...80),
+                    status: Int.random(in: 0...2)
+                )
+                parsedRelays.append(relay)
+            }
+        }
+
+        guard !parsedRelays.isEmpty else {
+            NVLog.log("RelayStore", "节点列表解析结果为空，保留现有假节点")
+            return
+        }
+
+        let previousSelectedId = selectedRelayId
+
+        // 重建节点列表：auto 节点 + 接口返回节点
+        var newRelays: [Relay] = [
+            Relay(
+                id: -1,
+                name: "Auto",
+                countryCode: "auto",
+                latency: 0,
+                status: 0
+            )
+        ]
+        newRelays.append(contentsOf: parsedRelays)
+
+        relays = newRelays
+        NVLog.log("RelayStore", "已根据接口更新节点列表：\(relays.count) 个（含 auto）")
+
+        // 如果之前选中的节点还存在，则保留选中；否则重置为 auto
+        if relays.contains(where: { $0.id == previousSelectedId }) {
+            selectedRelayId = previousSelectedId
+        } else {
+            selectedRelayId = -1
+        }
+    }
 }
