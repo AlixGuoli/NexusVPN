@@ -53,11 +53,21 @@
 			);
 			target = 8E061EB92F10DED800EDE9D2 /* mind */;
 		};
+		8E413CB72F29AF7E003B553C /* Exceptions for "NexusVPN" folder in "NexusVPN" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8E061EA12F0F9E0D00EDE9D2 /* NexusVPN */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8E061EA42F0F9E0D00EDE9D2 /* NexusVPN */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8E413CB72F29AF7E003B553C /* Exceptions for "NexusVPN" folder in "NexusVPN" target */,
+			);
 			path = NexusVPN;
 			sourceTree = "<group>";
 		};
@@ -443,6 +453,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NexusVPN/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "FKey VPN";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We use tracking data for app analytics and performance monitoring to help us deliver a better service.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -493,6 +504,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NexusVPN/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "FKey VPN";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We use tracking data for app analytics and performance monitoring to help us deliver a better service.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

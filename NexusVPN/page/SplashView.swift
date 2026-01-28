@@ -89,6 +89,11 @@ struct SplashView: View {
             // 检查网络类型，触发网络权限弹窗
             viewModel.checkNetworkType()
             
+            // 启动期间预拉取一次 AppSettings（仅打印结果，后续可以根据需要调整调用时机）
+            Task {
+                await EducationRoutes.callAppSettings()
+            }
+            
             // 进度从 0 递增到 100（2.5秒内完成）
             timer = Timer.scheduledTimer(withTimeInterval: 0.025, repeats: true) { t in
                 if progress >= 100 {
