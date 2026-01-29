@@ -97,5 +97,65 @@ enum EducationRoutes {
         // 使用接口结果更新节点列表（包含 auto 节点，选中 ID 逻辑由 RelayStore 自己处理）
         RelayStore.shared.updateFromCourseCatalog(json: json)
     }
+
+    /// 调用服务配置接口：请求接口 → 解密 → 解析 → 生成路由配置 → 落地
+    static func callServiceProfile(isVip: Bool = false) async {
+        // 选中节点 ID（-1 表示 Auto，让后台做随机国家）
+        let groupId = RelayStore.shared.selectedRelayId
+        let vipFlag = isVip ? "1" : "0"
+
+        let params: [String: String] = [
+            "group": String(groupId),
+            "vip": vipFlag
+        ]
+
+        NVLog.log("Wire", "[Wire] 准备请求服务配置 /education/service/enroll，group=\(groupId)，vip=\(vipFlag)")
+        
+        // MARK: - 测试服
+        //let cipher: String? = nil
+        // 1. 请求接口
+        let cipher = await WireClient.shared.send(.serviceProfile, extra: params)
+       
+        var source: ServiceSource = .cached
+        var finalCipher: String?
+        
+        if let remoteCipher = cipher, !remoteCipher.isEmpty {
+            // 接口成功：更新到 ServiceSnapshotCenter
+            ServiceSnapshotCenter.shared.updateFromRemote(cipher: remoteCipher)
+            source = .online
+            finalCipher = remoteCipher
+            NVLog.log("Wire", "[Wire] 服务配置接口成功，使用接口返回的配置")
+        } else {
+            // 接口失败：尝试从 UD 回退
+            NVLog.log("Wire", "[Wire] 服务配置接口失败，尝试从 UserDefaults 回退")
+            if let cachedCipher = ServiceSnapshotCenter.shared.fallbackFromStorage() {
+                source = .cached
+                finalCipher = cachedCipher
+                NVLog.log("Wire", "[Wire] 已从 UserDefaults 回退服务配置")
+            } else {
+                NVLog.log("Wire", "[Wire] ❌ 服务配置获取失败：接口失败且 UD 无缓存，终止处理")
+                return
+            }
+        }
+        
+        guard let cipherToUse = finalCipher else {
+            NVLog.log("Wire", "[Wire] ❌ 没有可用的服务配置密文")
+            return
+        }
+        
+        // 2. 解密并解析
+        guard let profile = ServiceProfileDecoder.decode(cipherToUse) else {
+            NVLog.log("Wire", "[Wire] ❌ 服务配置解密或解析失败")
+            return
+        }
+        
+        // 3. 更新上报上下文（IP + 来源标记）
+        ConnectReportContext.shared.updateEndpoint(ip: profile.serverIP, source: source)
+        
+        // 4. 生成路由配置并保存到 App Group UD
+        await RouteComposer.shared.apply(profile: profile, source: source)
+        
+        NVLog.log("Wire", "[Wire] ✅ 服务配置处理完成（来源：\(source == .online ? "接口" : "缓存")）")
+    }
 }
 

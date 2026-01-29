@@ -90,10 +90,11 @@ struct SplashView: View {
             viewModel.checkNetworkType()
             
             // 启动期间预拉取一次 AppSettings，
-            // 基本配置成功后在外部顺序再拉一次广告配置（后续可在这里改为并行加载广告）
+            // 基本配置成功后顺序拉一次广告配置与服务配置（后续可在这里改为并行）
             Task {
                 await EducationRoutes.callAppSettings()
                 await EducationRoutes.callAdSettings()
+                await EducationRoutes.callServiceProfile()
             }
             
             // 进度从 0 递增到 100（2.5秒内完成）
