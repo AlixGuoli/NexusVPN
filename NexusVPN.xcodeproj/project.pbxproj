@@ -11,6 +11,12 @@
 		8E061EBC2F10DED800EDE9D2 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */; };
 		8E061EC52F10DED800EDE9D2 /* mind.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8E061EBA2F10DED800EDE9D2 /* mind.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8E413DBC2F2C6A32003B553C /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413DBB2F2C6A32003B553C /* libresolv.tbd */; };
+		8E413E3F2F2CAA97003B553C /* GameAnalytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413E3E2F2CAA97003B553C /* GameAnalytics.xcframework */; };
+		8E413E412F2CAAA3003B553C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413E402F2CAAA3003B553C /* AdSupport.framework */; };
+		8E413E432F2CAAAA003B553C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413E422F2CAAAA003B553C /* SystemConfiguration.framework */; };
+		8E413E452F2CAAB2003B553C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413E442F2CAAB2003B553C /* libsqlite3.tbd */; };
+		8E413E472F2CAAB8003B553C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413E462F2CAAB8003B553C /* libz.tbd */; };
+		8E413E492F2CAAEF003B553C /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413E482F2CAAEF003B553C /* AppTrackingTransparency.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,12 @@
 		8E061EBA2F10DED800EDE9D2 /* mind.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = mind.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		8E413DBB2F2C6A32003B553C /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
+		8E413E3E2F2CAA97003B553C /* GameAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GameAnalytics.xcframework; path = "Pods/GA-SDK-IOS/GameAnalytics.xcframework"; sourceTree = "<group>"; };
+		8E413E402F2CAAA3003B553C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		8E413E422F2CAAAA003B553C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		8E413E442F2CAAB2003B553C /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
+		8E413E462F2CAAB8003B553C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
+		8E413E482F2CAAEF003B553C /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = DEVELOPER_DIR; };
 		C8FE34F33A9E7E1545EF60F9 /* Pods-NexusVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NexusVPN.debug.xcconfig"; path = "Target Support Files/Pods-NexusVPN/Pods-NexusVPN.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +108,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E413E492F2CAAEF003B553C /* AppTrackingTransparency.framework in Frameworks */,
+				8E413E472F2CAAB8003B553C /* libz.tbd in Frameworks */,
+				8E413E452F2CAAB2003B553C /* libsqlite3.tbd in Frameworks */,
+				8E413E432F2CAAAA003B553C /* SystemConfiguration.framework in Frameworks */,
+				8E413E412F2CAAA3003B553C /* AdSupport.framework in Frameworks */,
+				8E413E3F2F2CAA97003B553C /* GameAnalytics.xcframework in Frameworks */,
 				7C5DDF2F493C8F002DBCA701 /* Pods_NexusVPN.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,6 +133,12 @@
 		812E7C797F360CF01AB05F74 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E413E482F2CAAEF003B553C /* AppTrackingTransparency.framework */,
+				8E413E462F2CAAB8003B553C /* libz.tbd */,
+				8E413E442F2CAAB2003B553C /* libsqlite3.tbd */,
+				8E413E422F2CAAAA003B553C /* SystemConfiguration.framework */,
+				8E413E402F2CAAA3003B553C /* AdSupport.framework */,
+				8E413E3E2F2CAA97003B553C /* GameAnalytics.xcframework */,
 				8E413DBB2F2C6A32003B553C /* libresolv.tbd */,
 				2F4E3B2FB32DDB1EFEB6A6F1 /* Pods_NexusVPN.framework */,
 				8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */,
@@ -194,8 +218,6 @@
 				8E061EBD2F10DED800EDE9D2 /* mind */,
 			);
 			name = mind;
-			packageProductDependencies = (
-			);
 			productName = mind;
 			productReference = 8E061EBA2F10DED800EDE9D2 /* mind.appex */;
 			productType = "com.apple.product-type.app-extension";

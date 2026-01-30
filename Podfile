@@ -7,5 +7,6 @@ target 'NexusVPN' do
 
   # Pods for NexusVPN
   pod 'Alamofire'
-
+  pod 'GA-SDK-IOS', '~> 4.11.0'
+  
 end

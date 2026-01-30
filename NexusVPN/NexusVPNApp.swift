@@ -10,6 +10,7 @@ import AppTrackingTransparency
 
 @main
 struct NexusVPNApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var viewModel = HomeSessionViewModel()
     @StateObject private var languageManager = AppLanguageManager.shared
     @State private var showSplash: Bool = true
