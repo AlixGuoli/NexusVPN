@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import NetworkExtension
 import Network
+import Alamofire
 
 /// 对 UI 暴露的连接阶段
 enum ConnectionStage {
@@ -346,24 +347,77 @@ final class HomeSessionViewModel: ObservableObject {
     
     // MARK: - 连接后检测
     
-    /// 执行连接后的延迟检测（模拟网络探测）
+    /// 执行连接后的二次校验：探测网页能通才算 VPN 可用，否则主动断开
     private func runPostConnectProbe() {
         Task { @MainActor in
-            NVLog.log("VM", "executePostConnectionCheck() 开始二次检测")
-            // 延迟 3 秒模拟检测（后续可替换为真实探测）
-            try? await Task.sleep(nanoseconds: 3_000_000_000)
-            
-            // 检查连接是否仍然有效
-            let isStillConnected = engine.vpnStatus == .connected
-            NVLog.log("VM", "post check 检测结果 isStillConnected=\(isStillConnected)")
-            
-            if isStillConnected {
+            NVLog.log("Wire", "[Wire] post check 开始（探测网页是否可达）")
+            let ok = await canReachTargets()
+            NVLog.log("Wire", "[Wire] post check 结果 ok=\(ok)")
+            if ok {
                 applyConnectSuccessState()
             } else {
                 applyConnectFailureState()
             }
-            
             needsPostVerification = false
+        }
+    }
+    
+    /// 网络可达性探测：接口下发的 URL 优先，没有则用兜底；并行请求，能通一个即成功，10 秒超时
+    private func canReachTargets() async -> Bool {
+        var targets = AppSettingsCache.shared.probeServers() ?? []
+        targets = targets.filter { !$0.isEmpty }
+        if targets.isEmpty {
+            targets = ["https://www.google.com/generate_204", "http://cp.cloudflare.com/generate_204"]
+            NVLog.log("Wire", "[Wire] probe 使用兜底 URL")
+        }
+        NVLog.log("Wire", "[Wire] probe targets: \(targets)")
+        
+        let validTargets = targets.compactMap { URL(string: $0) }.map { $0.absoluteString }
+        guard !validTargets.isEmpty else {
+            return false
+        }
+        let stateQueue = DispatchQueue(label: "nexusvpn.probe.state")
+        var hasResumed = false
+        var completedCount = 0
+        let totalCount = validTargets.count
+        
+        return await withCheckedContinuation { continuation in
+            for urlString in validTargets {
+                AF.request(urlString, method: .get).response { resp in
+                    stateQueue.sync {
+                        if hasResumed { return }
+                        switch resp.result {
+                        case .success:
+                            NVLog.log("Wire", "[Wire] probe ok: \(urlString)")
+                            hasResumed = true
+                            AF.session.getAllTasks { tasks in
+                                tasks.forEach { $0.cancel() }
+                            }
+                            continuation.resume(returning: true)
+                        case .failure(let error):
+                            NVLog.log("Wire", "[Wire] probe fail: \(urlString) \(error.localizedDescription)")
+                            completedCount += 1
+                            if completedCount >= totalCount {
+                                hasResumed = true
+                                continuation.resume(returning: false)
+                            }
+                        }
+                    }
+                }
+            }
+            Task {
+                try? await Task.sleep(nanoseconds: 10_000_000_000)
+                stateQueue.sync {
+                    if !hasResumed {
+                        hasResumed = true
+                        NVLog.log("Wire", "[Wire] probe 超时（10s 未收到任一响应）")
+                        AF.session.getAllTasks { tasks in
+                            tasks.forEach { $0.cancel() }
+                        }
+                        continuation.resume(returning: false)
+                    }
+                }
+            }
         }
     }
     

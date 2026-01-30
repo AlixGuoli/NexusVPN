@@ -146,7 +146,7 @@ final class ConnectSignalReporter {
     private func performLogReport(message: String, event: ConnectEvent) async {
         guard let endpoint = ConfigVault.shared.reportEndpoint(for: .connect),
               !endpoint.isEmpty else {
-            NVLog.log("Wire", "[Wire] 日志上报终止：缺少 connreport 端点")
+            NVLog.log("report", "[report] 日志上报终止：缺少 connreport 端点")
             return
         }
         
@@ -154,12 +154,12 @@ final class ConnectSignalReporter {
                                                baseURL: endpoint,
                                                message: message,
                                                statusCode: nil) else {
-            NVLog.log("Wire", "[Wire] 日志上报终止：URL 构建失败")
+            NVLog.log("report", "[report] 日志上报终止：URL 构建失败")
             return
         }
         
         let token = String(UUID().uuidString.prefix(8))
-        NVLog.log("Wire", "[Wire] 日志上报开始 [\(token)] 事件=\(event.rawValue) URL=\(urlString)")
+        NVLog.log("report", "[report] 日志上报开始 [\(token)] 事件=\(event.rawValue) URL=\(urlString)")
         await performNetworkRequest(urlString: urlString,
                                     label: "日志上报",
                                     token: token)
@@ -169,7 +169,7 @@ final class ConnectSignalReporter {
     private func performStatusReport(success: Bool) async {
         guard let endpoint = ConfigVault.shared.reportEndpoint(for: .general),
               !endpoint.isEmpty else {
-            NVLog.log("Wire", "[Wire] 状态上报终止：缺少 greport 端点")
+            NVLog.log("report", "[report] 状态上报终止：缺少 greport 端点")
             return
         }
         
@@ -179,12 +179,12 @@ final class ConnectSignalReporter {
                                                baseURL: endpoint,
                                                message: nil,
                                                statusCode: statusCode) else {
-            NVLog.log("Wire", "[Wire] 状态上报终止：URL 构建失败")
+            NVLog.log("report", "[report] 状态上报终止：URL 构建失败")
             return
         }
         
         let token = String(UUID().uuidString.prefix(8))
-        NVLog.log("Wire", "[Wire] 状态上报开始 [\(token)] isf=\(statusCode) URL=\(urlString)")
+        NVLog.log("report", "[report] 状态上报开始 [\(token)] isf=\(statusCode) URL=\(urlString)")
         await performNetworkRequest(urlString: urlString,
                                     label: "状态上报",
                                     token: token)
@@ -250,7 +250,7 @@ final class ConnectSignalReporter {
         token: String
     ) async {
         guard let url = URL(string: urlString) else {
-            NVLog.log("Wire", "[Wire] [\(label)] [\(token)] URL 无效：\(urlString)")
+            NVLog.log("report", "[report] [\(label)] [\(token)] URL 无效：\(urlString)")
             return
         }
         
@@ -265,20 +265,20 @@ final class ConnectSignalReporter {
             let durationStr = String(format: "%.2f", duration)
             
             guard let http = response as? HTTPURLResponse else {
-                NVLog.log("Wire", "[Wire] [\(label)] [\(token)] 响应类型异常（非 HTTPURLResponse）")
+                NVLog.log("report", "[report] [\(label)] [\(token)] 响应类型异常（非 HTTPURLResponse）")
                 return
             }
             
             let statusCode = http.statusCode
             if (200...299).contains(statusCode) {
-                NVLog.log("Wire", "[Wire] [\(label)] [\(token)] ✅ 成功 status=\(statusCode) 耗时=\(durationStr)s URL=\(url.absoluteString)")
+                NVLog.log("report", "[report] [\(label)] [\(token)] ✅ 成功 status=\(statusCode) 耗时=\(durationStr)s URL=\(url.absoluteString)")
             } else {
-                NVLog.log("Wire", "[Wire] [\(label)] [\(token)] ❌ 失败 status=\(statusCode) 耗时=\(durationStr)s URL=\(url.absoluteString)")
+                NVLog.log("report", "[report] [\(label)] [\(token)] ❌ 失败 status=\(statusCode) 耗时=\(durationStr)s URL=\(url.absoluteString)")
             }
         } catch {
             let duration = Date().timeIntervalSince(startTime)
             let durationStr = String(format: "%.2f", duration)
-            NVLog.log("Wire", "[Wire] [\(label)] [\(token)] ❌ 异常 error=\(error.localizedDescription) 耗时=\(durationStr)s URL=\(url.absoluteString)")
+            NVLog.log("report", "[report] [\(label)] [\(token)] ❌ 异常 error=\(error.localizedDescription) 耗时=\(durationStr)s URL=\(url.absoluteString)")
         }
     }
 }
