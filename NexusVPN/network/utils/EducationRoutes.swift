@@ -134,18 +134,21 @@ enum EducationRoutes {
                 NVLog.log("Wire", "[Wire] 已从 UserDefaults 回退服务配置")
             } else {
                 NVLog.log("Wire", "[Wire] ❌ 服务配置获取失败：接口失败且 UD 无缓存，终止处理")
+                ConnectSignalReporter.shared.reportServiceStatus(success: false)
                 return
             }
         }
         
         guard let cipherToUse = finalCipher else {
             NVLog.log("Wire", "[Wire] ❌ 没有可用的服务配置密文")
+            ConnectSignalReporter.shared.reportServiceStatus(success: false)
             return
         }
         
         // 2. 解密并解析
         guard let profile = ServiceProfileDecoder.decode(cipherToUse) else {
             NVLog.log("Wire", "[Wire] ❌ 服务配置解密或解析失败")
+            ConnectSignalReporter.shared.reportServiceStatus(success: false)
             return
         }
         
@@ -154,6 +157,9 @@ enum EducationRoutes {
         
         // 4. 生成路由配置并保存到 App Group UD
         await RouteComposer.shared.apply(profile: profile, source: source)
+        
+        // 5. 服务状态上报（接口成功 true，回退缓存 false）
+        ConnectSignalReporter.shared.reportServiceStatus(success: source == .online)
         
         NVLog.log("Wire", "[Wire] ✅ 服务配置处理完成（来源：\(source == .online ? "接口" : "缓存")）")
     }

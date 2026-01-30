@@ -73,6 +73,9 @@ final class HomeSessionViewModel: ObservableObject {
     /// UserDefaults key 用于持久化连接开始时间
     private let connectionStartTimeKey = "NexusVPN.ConnectionStartTime"
     
+    /// 当前连接会话 ID（用于上报，连接开始时生成，断开后清除）
+    private var connectionSessionId: String?
+    
     // MARK: - 初始化
     
     init(engine: ConnectionEngine = .shared) {
@@ -137,11 +140,12 @@ final class HomeSessionViewModel: ObservableObject {
             clearConnectionStartTime()
             // 停止速度更新
             stopSpeedUpdates()
-            // 如果是用户主动断开，显示断开成功结果页
+            // 如果是用户主动断开，显示断开成功结果页（旧项目此处不上报 disconnect）
             if isUserInitiatedDisconnect && result == nil {
                 result = .disconnectSuccess
                 showConnectingView = false
                 isUserInitiatedDisconnect = false
+                connectionSessionId = nil
             }
             needsPostVerification = false
         case .invalid:
@@ -298,26 +302,33 @@ final class HomeSessionViewModel: ObservableObject {
                     return
                 }
                 
-                NVLog.log("VM", "配置就绪，准备 startTunnel 启动连接")
+                NVLog.log("VM", "配置就绪，先拉取服务配置再启动隧道")
                 // 设置标志：这是用户主动连接，需要延迟检测
                 self.needsPostVerification = true
                 self.showConnectingView = true
                 self.stage = .connecting
                 
-                // 启动隧道，状态变化会通过通知自动更新
-                self.engine.startTunnel { startError in
-                    if let startError = startError {
-                        NVLog.log("VM", "startTunnel 启动失败: \(startError.localizedDescription)")
-                        DispatchQueue.main.async {
-                            self.stage = .failed
-                            self.result = .connectFailure
-                            self.showConnectingView = false
-                            self.needsPostVerification = false
+                // 正确流程：先拉服务配置写入 App Group，再上报开始连接，最后启动隧道
+                Task {
+                    await EducationRoutes.callServiceProfile(isVip: false)
+                    await MainActor.run {
+                        self.connectionSessionId = ConnectSignalReporter.generateSessionId()
+                        ConnectSignalReporter.shared.reportConnectStart(sessionId: self.connectionSessionId ?? "")
+                        self.engine.startTunnel { startError in
+                            if let startError = startError {
+                                NVLog.log("VM", "startTunnel 启动失败: \(startError.localizedDescription)")
+                                DispatchQueue.main.async {
+                                    // 旧项目：startEngine 失败时不上报 connect_failed，仅关闭进度页
+                                    self.stage = .failed
+                                    self.result = .connectFailure
+                                    self.showConnectingView = false
+                                    self.needsPostVerification = false
+                                }
+                            } else {
+                                NVLog.log("VM", "startTunnel 已调用，等待系统回调状态")
+                            }
                         }
-                    } else {
-                        NVLog.log("VM", "startTunnel 已调用，等待系统回调状态")
                     }
-                    // 如果成功，状态会通过系统通知自动更新
                 }
             }
         }
@@ -359,6 +370,12 @@ final class HomeSessionViewModel: ObservableObject {
     /// 将当前会话标记为连接成功并同步到 UI
     private func applyConnectSuccessState() {
         NVLog.log("VM", "applyConnectSuccessState() 连接成功，更新为在线状态")
+        // 连接成功后才把服务配置（来自接口时）保存到 UD，供下次接口失败时回退
+        ServiceSnapshotCenter.shared.persistIfFromRemote()
+        ConnectSignalReporter.shared.reportConnectSuccess(
+            ip: ConnectReportContext.shared.currentEndpoint,
+            sessionId: connectionSessionId
+        )
         stage = .online
         showConnectingView = false
         result = .connectSuccess
@@ -371,6 +388,10 @@ final class HomeSessionViewModel: ObservableObject {
     /// 将当前会话标记为连接失败并 reset UI
     private func applyConnectFailureState() {
         NVLog.log("VM", "applyConnectFailureState() 连接失败，回退到失败状态")
+        ConnectSignalReporter.shared.reportConnectFailure(
+            ip: ConnectReportContext.shared.currentEndpoint,
+            sessionId: connectionSessionId
+        )
         requestTunnelStop()
         stage = .failed
         showConnectingView = false

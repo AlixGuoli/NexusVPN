@@ -33,16 +33,19 @@ final class ServiceSnapshotCenter {
     
     // MARK: - 更新配置
     
-    /// 从接口更新配置（接口成功时调用）
+    /// 从接口更新配置（接口成功时调用，仅更新内存，不写 UD；连接成功后再调用 persistIfFromRemote 写 UD）
     func updateFromRemote(cipher: String) {
         currentCipher = cipher
         source = .online
-        
-        // 异步保存到 UserDefaults（作为下次 fallback 用）
+        NVLog.log("Wire", "[Wire] 服务配置已更新（来源：接口），待连接成功后保存到 UD")
+    }
+    
+    /// 连接成功后调用：若当前配置来自接口，则写入 UserDefaults（供下次接口失败时回退）
+    func persistIfFromRemote() {
+        guard source == .online, let cipher = currentCipher, !cipher.isEmpty else { return }
         UserDefaults.standard.set(cipher, forKey: cipherStorageKey)
         UserDefaults.standard.synchronize()
-        
-        NVLog.log("Wire", "[Wire] 服务配置已更新（来源：接口），已保存到 UD")
+        NVLog.log("Wire", "[Wire] 连接成功，服务配置已保存到 UD（来源：接口）")
     }
     
     /// 从 UserDefaults 回退（接口失败时调用）

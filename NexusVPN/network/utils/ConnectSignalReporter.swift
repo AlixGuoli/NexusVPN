@@ -3,7 +3,7 @@
 //  NexusVPN
 //
 //  连接与服务状态上报中心：
-//  - 构建与旧项目一致的上报内容（事件 message / 查询参数）
+//  - 按后台约定构建上报内容（事件 message / 查询参数）
 //  - 日志上报：使用域名配置中的 connreport
 //  - 状态上报：使用域名配置中的 greport + /report_total
 //  - IP 地址由 ConnectReportContext 提供（已处理是否加 "f" 前缀）
@@ -19,10 +19,10 @@ final class ConnectSignalReporter {
     
     // MARK: - 常量
     
-    /// 设备类型（与旧项目保持一致）
+    /// 设备类型（后台约定）
     private let deviceType = "iPhone"
     
-    /// 连接事件类型（事件名与旧项目保持一致）
+    /// 连接事件类型（事件名按后台约定）
     private enum ConnectEvent: String {
         case start    = "start_connect"
         case failed   = "connect_failed"
@@ -77,8 +77,7 @@ final class ConnectSignalReporter {
     
     /// 上报“断开连接”事件
     func reportDisconnect(ip: String?) {
-        // 断开事件在旧项目里也沿用当前会话的 identifier，这里交由调用方决定是否复用 sessionId
-        // 仅使用 IP 信息，identifier 部分仍按当前时间戳 + 空 sid 组合
+        // 断开事件 identifier 用当前时间戳 + 空 sid；调用方未传 sessionId
         guard let message = buildConnectionMessage(event: .stop,
                                                    ipAddress: ip,
                                                    sessionId: nil) else {
@@ -89,7 +88,7 @@ final class ConnectSignalReporter {
     
     // MARK: - 对外接口：服务状态上报
     
-    /// 上报服务状态（等价于旧项目的 ReportCat / kEventServiceStatus）
+    /// 上报服务状态（接口配置成功/失败或回退）
     /// - Parameter success: true 表示使用接口配置成功，false 表示失败或回退
     func reportServiceStatus(success: Bool) {
         Task.detached { [weak self] in
@@ -97,11 +96,11 @@ final class ConnectSignalReporter {
         }
     }
     
-    // MARK: - 事件 message 构建（与旧项目格式保持一致）
+    // MARK: - 事件 message 构建（格式按后台约定）
     
     /// 构建连接事件的 message 字符串
     ///
-    /// 旧项目格式：
+    /// 约定格式：
     /// start_connect:   start_connect,<MMddHHmmss-sid>,0.0.0.0
     /// connect_failed:  connect_failed,<MMddHHmmss-sid>,<ip or 0.0.0.0>
     /// connect_success: connect_success,0,<MMddHHmmss-sid>,<ip or 0.0.0.0>
@@ -128,7 +127,7 @@ final class ConnectSignalReporter {
         }
     }
     
-    /// 生成时间戳（格式：MMddHHmmss），与旧项目保持一致
+    /// 生成时间戳（格式：MMddHHmmss）
     private func formattedTimestamp() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMddHHmmss"
@@ -191,7 +190,7 @@ final class ConnectSignalReporter {
                                     token: token)
     }
     
-    // MARK: - URL 构建（参数键名与旧项目保持一致）
+    // MARK: - URL 构建（参数键名按后台约定）
     
     private func buildEndpointURL(
         kind: EndpointKind,
@@ -202,7 +201,6 @@ final class ConnectSignalReporter {
         let targetURL: String
         var queryItems: [URLQueryItem] = []
         
-        // 旧项目中从 GVBaseParameters.parameters() 取值，这里改为 RequestContext.baseQuery()
         let ctx = RequestContext.baseQuery()
         let uid = ctx["uid"] ?? ""
         let country = ctx["country"] ?? ""
@@ -224,7 +222,6 @@ final class ConnectSignalReporter {
             ]
             
         case .status:
-            // 旧项目：targetURL = baseURL + "/report_total"
             targetURL = baseURL + "/report_total"
             let isfValue = statusCode ?? ""
             queryItems = [

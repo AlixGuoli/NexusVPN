@@ -10,6 +10,7 @@
 		7C5DDF2F493C8F002DBCA701 /* Pods_NexusVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4E3B2FB32DDB1EFEB6A6F1 /* Pods_NexusVPN.framework */; };
 		8E061EBC2F10DED800EDE9D2 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */; };
 		8E061EC52F10DED800EDE9D2 /* mind.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8E061EBA2F10DED800EDE9D2 /* mind.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8E413DBC2F2C6A32003B553C /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E413DBB2F2C6A32003B553C /* libresolv.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		8E061EA22F0F9E0D00EDE9D2 /* NexusVPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexusVPN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E061EBA2F10DED800EDE9D2 /* mind.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = mind.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		8E413DBB2F2C6A32003B553C /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
 		C8FE34F33A9E7E1545EF60F9 /* Pods-NexusVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NexusVPN.debug.xcconfig"; path = "Target Support Files/Pods-NexusVPN/Pods-NexusVPN.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,6 +62,13 @@
 			);
 			target = 8E061EA12F0F9E0D00EDE9D2 /* NexusVPN */;
 		};
+		8E413DAF2F2C65FE003B553C /* Exceptions for "NexusVPN" folder in "mind" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				network/service/WireGroupKeys.swift,
+			);
+			target = 8E061EB92F10DED800EDE9D2 /* mind */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -67,6 +76,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				8E413CB72F29AF7E003B553C /* Exceptions for "NexusVPN" folder in "NexusVPN" target */,
+				8E413DAF2F2C65FE003B553C /* Exceptions for "NexusVPN" folder in "mind" target */,
 			);
 			path = NexusVPN;
 			sourceTree = "<group>";
@@ -94,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E413DBC2F2C6A32003B553C /* libresolv.tbd in Frameworks */,
 				8E061EBC2F10DED800EDE9D2 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,6 +115,7 @@
 		812E7C797F360CF01AB05F74 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E413DBB2F2C6A32003B553C /* libresolv.tbd */,
 				2F4E3B2FB32DDB1EFEB6A6F1 /* Pods_NexusVPN.framework */,
 				8E061EBB2F10DED800EDE9D2 /* NetworkExtension.framework */,
 			);
@@ -546,6 +558,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFWY6RAV2Z;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = mind;
@@ -555,6 +568,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mind/new",
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.key.vpn.mind;
@@ -568,6 +585,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/ersao/Documents/NexusVPN/mind/mind_Header.h;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -581,6 +599,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFWY6RAV2Z;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = mind;
@@ -590,6 +609,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mind/new",
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluelink.nexus.key.vpn.mind;
@@ -603,6 +626,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/ersao/Documents/NexusVPN/mind/mind_Header.h;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

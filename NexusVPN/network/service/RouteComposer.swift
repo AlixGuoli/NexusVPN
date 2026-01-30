@@ -15,14 +15,10 @@ final class RouteComposer {
     
     static let shared = RouteComposer()
     
-    /// App Group UserDefaults suite name
-    private let appGroupSuite = "group.com.bluelink.nexus.key.vpn"
-    
-    /// App Group UD 中保存配置的 key
-    private let configKey = "Wire.Target.Config"
-    
-    /// App Group UD 中保存配置时间的 key
-    private let timestampKey = "Wire.Target.Timestamp"
+    /// App Group 常量与主 App / Extension 共用，见 WireGroupKeys
+    private var appGroupSuite: String { WireGroupKeys.suiteName }
+    private var configKey: String { WireGroupKeys.configKey }
+    private var timestampKey: String { WireGroupKeys.timestampKey }
     
     private init() {}
     

@@ -89,12 +89,10 @@ struct SplashView: View {
             // 检查网络类型，触发网络权限弹窗
             viewModel.checkNetworkType()
             
-            // 启动期间预拉取一次 AppSettings，
-            // 基本配置成功后顺序拉一次广告配置与服务配置（后续可在这里改为并行）
+            // 启动时拉基本配置与广告配置；服务配置仅在用户点连接时拉（kickOffUserConnectFlow 里 callServiceProfile）
             Task {
                 await EducationRoutes.callAppSettings()
                 await EducationRoutes.callAdSettings()
-                await EducationRoutes.callServiceProfile()
             }
             
             // 进度从 0 递增到 100（2.5秒内完成）
