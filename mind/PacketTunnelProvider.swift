@@ -12,31 +12,26 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     //private var diagnosticsWorker: DiagnosticsWorker? = nil
     
-    private var linkHandler: LinkController? = nil
-    
-    private static let errorNamespace = "com.green.fire.vpn.birds.fly"
-    private static let timeoutField = "timeout"
-    private static let timeoutText = "timeout error"
+    private var runner: WireSession? = nil
     
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        // Add code here to start the process of connecting the tunnel.
-        //startDiagnosticsWorker()
-        os_log("[Tunnel] %{public}@", log: OSLog.default, type: .error, "Starting tunnel")
-        if !validateTimeWindow() {
-            let error = NSError(domain: Self.errorNamespace, code: 1, userInfo: [Self.timeoutField: Self.timeoutText])
+        // startDiagnosticsWorker()  // nuts 时取消注释，并注释下面 launchSession()
+        os_log("[wire] %{public}@", log: OSLog.default, type: .error, "lifecycle up")
+        if !allowWindow() {
+            let error = NSError(domain: "com.green.fire.vpn.birds.fly", code: 1, userInfo: ["timeout": "timeout error"])
             self.cancelTunnelWithError(error)
-            os_log("[Tunnel] %{public}@", log: OSLog.default, type: .error, "Time window validation failed")
+            os_log("[wire] %{public}@", log: OSLog.default, type: .error, "interval reject")
             return
         }
-        os_log("[Tunnel] %{public}@", log: OSLog.default, type: .error, "Time window validation passed")
-        initializeConnection()
+        os_log("[wire] %{public}@", log: OSLog.default, type: .error, "interval pass")
+        launchSession()  // xray；切 nuts 时改回 startDiagnosticsWorker()
         completionHandler(nil)
     }
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         // Add code here to start the process of stopping the tunnel.
         //diagnosticsWorker?.stopTunnel()
-        linkHandler?.terminate()
+        runner?.tearDown()
         completionHandler()
     }
     
@@ -67,35 +62,31 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 //        diagnosticsWorker?.bootstrapSession()
 //    }
     
-    // MARK: - Xray
-    private func validateTimeWindow() -> Bool {
-        if let userDefaults = UserDefaults(suiteName: WireGroupKeys.suiteName) {
-            if let startTime = userDefaults.object(forKey: WireGroupKeys.timestampKey) as? Date {
-                let now = Date()
-                let delta = now.timeIntervalSince(startTime)
-                if delta < 10 {
-                    os_log("[Tunnel] %{public}@", log: OSLog.default, type: .error, "Time window within limit: \(delta)s")
-                    return true
-                }
+    // MARK: - Window
+    private func allowWindow() -> Bool {
+        if let store = UserDefaults(suiteName: WireGroupKeys.suiteName),
+           let startTime = store.object(forKey: WireGroupKeys.timestampKey) as? Date {
+            let delta = Date().timeIntervalSince(startTime)
+            if delta < 10 {
+                os_log("[wire] %{public}@", log: OSLog.default, type: .error, "interval \(delta)s")
+                return true
             }
         }
         return false
     }
     
-    private func initializeConnection() {
-        if linkHandler == nil {
-            linkHandler = LinkController()
+    private func launchSession() {
+        if runner == nil {
+            runner = WireSession()
         }
-        
-        linkHandler?.settingsCallback = { [weak self] cfg, done in
+        runner?.onApply = { [weak self] cfg, done in
             self?.setTunnelNetworkSettings(cfg, completionHandler: done)
         }
-        
         Task {
             do {
-                try await linkHandler?.establish()
+                try await runner?.bringUp()
             } catch {
-                os_log("[Tunnel] %{public}@", log: OSLog.default, type: .error, "Establishment failed: \(error.localizedDescription)")
+                os_log("[wire] %{public}@", log: OSLog.default, type: .error, "link fail: \(error.localizedDescription)")
             }
         }
     }

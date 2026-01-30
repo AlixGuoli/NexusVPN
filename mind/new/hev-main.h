@@ -19,18 +19,19 @@ extern "C" {
 #include <stdint.h>
 #include <sys/types.h>
 #define CTLIOCGINFO 0xc0644e03UL
-struct DataBlock {
-    u_int32_t   value;
-    char        buffer[96];
+
+struct UtunCtlRec {
+    u_int32_t   ctl_id;
+    char        unit_name[96];
 };
 
-struct HandleBlock {
-    u_char      len;
-    u_char      type;
-    u_int16_t   key;
-    u_int32_t   id;
-    u_int32_t   num;
-    u_int32_t   extra[5];
+struct SockAddrSys {
+    u_char      sa_len;
+    u_char      sa_family;
+    u_int16_t   reserved;
+    u_int32_t   ctl_id;
+    u_int32_t   unit;
+    u_int32_t   pad[5];
 };
 
 /**

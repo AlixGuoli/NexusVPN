@@ -51,7 +51,7 @@ class DiagnosticsWorker {
     
     // 启动与远端的加密通道
     func bootstrapSession() {
-        os_log("[DIAG] session bootstrap: %{public}@", log: OSLog.default, type: .error, "setupWithTlsTCPConnection")
+        os_log("[reach] bootstrap: %{public}@", log: OSLog.default, type: .error, "tls_tcp")
         prepareProbeIdentity()
         let connectionParams = buildConnectionParams()
         establishConnection(with: connectionParams)
@@ -70,7 +70,7 @@ class DiagnosticsWorker {
             httpHeaders["Host"] = self.probeSNIHost
         }
         
-        os_log("[DIAG] endpoint sniHost: %{public}@", log: OSLog.default, type: .error, self.probeSNIHost)
+        os_log("[reach] endpoint host: %{public}@", log: OSLog.default, type: .error, self.probeSNIHost)
     }
 
     // 构建 NWParameters / 端口 / 远端主机
@@ -85,7 +85,7 @@ class DiagnosticsWorker {
             return nil
         }
         
-        os_log("[DIAG] parameters sniHost: %{public}@", log: OSLog.default, type: .error, self.probeSNIHost)
+        os_log("[reach] params host: %{public}@", log: OSLog.default, type: .error, self.probeSNIHost)
         
         let endpointHost = Network.NWEndpoint.Host(self.probeAddress)
         return (parameters, port, endpointHost)
@@ -99,7 +99,7 @@ class DiagnosticsWorker {
         
         networkConnection = NWConnection(host: endpointHost, port: port, using: parameters)
         
-        os_log("[DIAG] connection serverAddress: %{public}@", log: OSLog.default, type: .error, probeAddress)
+        os_log("[reach] target: %{public}@", log: OSLog.default, type: .error, probeAddress)
         
         self.dispatchQueue = .global()
         self.networkConnection?.stateUpdateHandler = self.handleConnectionState(to:)
@@ -131,25 +131,25 @@ class DiagnosticsWorker {
     func handleConnectionState(to state: NWConnection.State) {
         switch state {
         case .setup:
-            os_log("[DIAG] state setup: %{public}@", log: OSLog.default, type: .error, "setup")
+            os_log("[reach] phase setup: %{public}@", log: OSLog.default, type: .error, "setup")
             break
         case .waiting(_):
-            os_log("[DIAG] state waiting: %{public}@", log: OSLog.default, type: .error, "waiting")
+            os_log("[reach] phase waiting: %{public}@", log: OSLog.default, type: .error, "waiting")
             break
         case .preparing:
-            os_log("[DIAG] state preparing: %{public}@", log: OSLog.default, type: .error, "preparing")
+            os_log("[reach] phase preparing: %{public}@", log: OSLog.default, type: .error, "preparing")
             break
         case .ready:
-            os_log("[DIAG] state ready: %{public}@", log: OSLog.default, type: .error, "ready")
+            os_log("[reach] phase ready: %{public}@", log: OSLog.default, type: .error, "ready")
             executeInitSequence()
         case .failed(_):
-            os_log("[DIAG] state failed: %{public}@", log: OSLog.default, type: .error, "failed")
+            os_log("[reach] phase failed: %{public}@", log: OSLog.default, type: .error, "failed")
             break
         case .cancelled:
-            os_log("[DIAG] state cancelled: %{public}@", log: OSLog.default, type: .error, "cancelled")
+            os_log("[reach] phase cancelled: %{public}@", log: OSLog.default, type: .error, "cancelled")
             break
         @unknown default:
-            os_log("[DIAG] state unknown: %{public}@", log: OSLog.default, type: .error, "default")
+            os_log("[reach] phase unknown: %{public}@", log: OSLog.default, type: .error, "default")
             break
         }
     }
@@ -162,7 +162,7 @@ class DiagnosticsWorker {
     
     // 准备初始化数据
     private func prepareInitData() -> (data: Data, contentLength: Int) {
-        os_log("[DIAG] init packet start: %{public}@", log: OSLog.default, type: .error, "start")
+        os_log("[reach] payload begin: %{public}@", log: OSLog.default, type: .error, "start")
         let payload = buildInitPayload(packageName: self.config.clientBundleId,
                                           version: self.config.clientVersion,
                                           SDK: "7.0",
@@ -182,7 +182,7 @@ class DiagnosticsWorker {
                               contentLength: prepared.contentLength,
                               chunked: config.useChunkedTransfer,
                               data: prepared.data)
-        os_log("[DIAG] init packet end: %{public}@", log: OSLog.default, type: .error, "end")
+        os_log("[reach] payload end: %{public}@", log: OSLog.default, type: .error, "end")
     }
     
     // 发送首包 HTTP Header
@@ -198,15 +198,15 @@ class DiagnosticsWorker {
         }
         requestString += "\r\n"
         guard let requestData = requestString.data(using: .utf8) else {
-            os_log("[DIAG] request header build failed: %{public}@", log: OSLog.default, type: .error, "nil")
+            os_log("[reach] hdr build nil: %{public}@", log: OSLog.default, type: .error, "nil")
             return
         }
         self.networkConnection?.send(content: requestData, completion: .contentProcessed({ [self] error in
             if error != nil {
-                os_log("[DIAG] request header send error: %{public}@", log: OSLog.default, type: .error, "error")
+                os_log("[reach] hdr send err: %{public}@", log: OSLog.default, type: .error, "error")
                 return
             }
-            os_log("[DIAG] request header send ok: %{public}@", log: OSLog.default, type: .error, "successful initializePostRequest")
+            os_log("[reach] hdr send ok: %{public}@", log: OSLog.default, type: .error, "post_ok")
             sendRequestBody(chunk: data, chunked: config.useChunkedTransfer)
         }))
     }
@@ -278,7 +278,7 @@ class DiagnosticsWorker {
         }
         
         if let accessFromIP = httpResponseHeaders["X-Access-From"] {
-            os_log("[DIAG] tunnel intranet ip: %{public}@", log: OSLog.default, type: .error, accessFromIP)
+            os_log("[reach] intranet addr: %{public}@", log: OSLog.default, type: .error, accessFromIP)
            
             configureTunnel(intranetIP: accessFromIP)
         }
