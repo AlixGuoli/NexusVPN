@@ -5,6 +5,8 @@
 
 import UIKit
 import GameAnalytics
+import GoogleMobileAds
+import YandexMobileAds
 
 class AppDelegate: NSObject, UIApplicationDelegate {
 
@@ -12,9 +14,32 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        configureAnalytics()
+        initAdVendors()
+        //configureAnalytics()
         return true
     }
+
+    // MARK: - 广告 SDK
+
+    private func initAdVendors() {
+        initGoogleAds()
+        initYandexAds()
+    }
+
+    private func initGoogleAds() {
+        GoogleMobileAds.MobileAds.shared.start { status in
+            let ready = status.adapterStatusesByClassName.values.contains { $0.state == .ready }
+            NVLog.log("Ads", "[Ads] Google init \(ready ? "ok" : "fail")")
+        }
+    }
+
+    private func initYandexAds() {
+        YandexMobileAds.MobileAds.initializeSDK {
+            NVLog.log("Ads", "[Ads] Yandex init ok")
+        }
+    }
+
+    // MARK: - 分析 SDK
 
     /// 初始化分析 SDK
     private func configureAnalytics() {
@@ -31,3 +56,4 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         )
     }
 }
+

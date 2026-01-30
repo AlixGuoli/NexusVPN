@@ -188,6 +188,7 @@
 				8E061EA02F0F9E0D00EDE9D2 /* Resources */,
 				77AC39F39845C16282D53941 /* [CP] Embed Pods Frameworks */,
 				8E061EC42F10DED800EDE9D2 /* Embed Foundation Extensions */,
+				0297AF2FE19D1C73E19D789A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -284,6 +285,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0297AF2FE19D1C73E19D789A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		77AC39F39845C16282D53941 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,13 +310,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-NexusVPN/Pods-NexusVPN-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
