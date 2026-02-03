@@ -75,7 +75,7 @@ struct NexusVPNApp: App {
                         .onAppear {
                             NVLog.log("Ads", "后台覆盖页显示")
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                showResumeContent()
+                                presentReturnOverlayAd()
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                                 resumeOverlayActive = false
@@ -96,7 +96,7 @@ struct NexusVPNApp: App {
         switch newPhase {
         case .active:
             requestAppTrackingAuthorization()
-            enterActiveMode()
+            handleForegroundReturn()
         case .inactive:
             break
         case .background:
@@ -110,12 +110,12 @@ struct NexusVPNApp: App {
     // MARK: - 后台切前台
     
     /// 仅当启动已完成且刚从后台回来时，拉广告并视条件展示覆盖页
-    private func enterActiveMode() {
+    private func handleForegroundReturn() {
         guard backgroundFlag, !showSplash else { return }
         
         AdMixer.shared.primeAll(cue: .foreground)
         
-        if canDisplayResumeOverlay() {
+        if shouldShowReturnOverlay() {
             NVLog.log("Ads", "显示后台覆盖页")
             resumeOverlayActive = true
         }
@@ -123,7 +123,7 @@ struct NexusVPNApp: App {
     }
     
     /// 是否满足展示后台覆盖页条件：隐私已同意、未在连接中、无广告在展示、有可用广告
-    private func canDisplayResumeOverlay() -> Bool {
+    private func shouldShowReturnOverlay() -> Bool {
         guard UserDefaults.standard.bool(forKey: "NexusVPN.PrivacyAccepted") else {
             NVLog.log("Ads", "隐私未同意，跳过后台页")
             return false
@@ -144,7 +144,7 @@ struct NexusVPNApp: App {
     }
     
     /// 覆盖页出现 2s 后调用：隐私检查后按优先级展示一条广告，有展示则 0.1s 后关覆盖页
-    private func showResumeContent() {
+    private func presentReturnOverlayAd() {
         guard UserDefaults.standard.bool(forKey: "NexusVPN.PrivacyAccepted") else {
             NVLog.log("Ads", "隐私未同意，跳过展示")
             return
