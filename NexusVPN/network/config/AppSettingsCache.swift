@@ -36,20 +36,20 @@ final class AppSettingsCache {
         
         UserDefaults.standard.synchronize()
         
-        NVLog.log("Wire", "[Wire] AppSettings 已保存到缓存，更新时间：\(updateTime)")
+        NVLog.log("Wire", "AppSettings 已保存到缓存，更新时间：\(updateTime)")
         
         // 打印关键字段（用于调试）
         if let adsOff = isAdsDisabled() {
-            NVLog.log("Wire", "[Wire] adsOff: \(adsOff)")
+            NVLog.log("Wire", "adsOff: \(adsOff)")
         }
         if let adsType = currentAdsType() {
-            NVLog.log("Wire", "[Wire] adsType: \(adsType)")
+            NVLog.log("Wire", "adsType: \(adsType)")
         }
         if let servers = probeServers() {
-            NVLog.log("Wire", "[Wire] detectionServers: \(servers)")
+            NVLog.log("Wire", "detectionServers: \(servers)")
         }
         if let version = remoteGitVersion() {
-            NVLog.log("Wire", "[Wire] git_version: \(version)")
+            NVLog.log("Wire", "git_version: \(version)")
         }
     }
     
@@ -57,11 +57,15 @@ final class AppSettingsCache {
     
     /// 是否关闭广告
     func isAdsDisabled() -> Bool? {
+        // MARK: - 测试服
+        return false
         return extractField(path: ["commonConf", "adsOff"]) as? Bool
     }
     
     /// 当前广告类型
     func currentAdsType() -> String? {
+        // MARK: - 测试服
+        return "y;a"
         return extractField(path: ["commonConf", "adsType"]) as? String
     }
     
@@ -99,7 +103,7 @@ final class AppSettingsCache {
     func saveLocalGitVersion(_ version: Int) {
         UserDefaults.standard.set(version, forKey: localGitVersionKey)
         UserDefaults.standard.synchronize()
-        NVLog.log("Wire", "[Wire] 本地 Git 版本号已保存：\(version)")
+        NVLog.log("Wire", "本地 Git 版本号已保存：\(version)")
     }
     
     // MARK: - 私有方法

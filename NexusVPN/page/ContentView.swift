@@ -259,6 +259,15 @@ struct ContentView: View {
                         navigationPath.removeLast()
                     }
                     navigationPath.append(NavigationDestination.result(result))
+                    // 连接成功/断开成功时按优先级展示一条广告（与原项目 displayMedia 一致）
+                    switch result {
+                    case .connectSuccess:
+                        _ = AdMixer.shared.presentTopPriorityIfAvailable(from: nil, cue: .connect)
+                    case .disconnectSuccess:
+                        _ = AdMixer.shared.presentTopPriorityIfAvailable(from: nil, cue: .disconnect)
+                    case .connectFailure:
+                        break
+                    }
                 }
             }
         }

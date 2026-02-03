@@ -31,7 +31,9 @@ final class HomeSessionViewModel: ObservableObject {
     
     // MARK: - 输出给 UI 的状态
     
-    @Published private(set) var stage: ConnectionStage = .idle
+    @Published private(set) var stage: ConnectionStage = .idle {
+        didSet { WirePhaseHub.shared.currentPhase = stage }
+    }
     @Published private(set) var result: ConnectionResult?
     @Published private(set) var showConnectingView: Bool = false
     @Published private(set) var showDisconnectAlert: Bool = false
@@ -86,6 +88,7 @@ final class HomeSessionViewModel: ObservableObject {
         systemStatus = engine.vpnStatus
         // 恢复连接开始时间（如果存在）
         restoreConnectionStartTime()
+        WirePhaseHub.shared.currentPhase = stage
     }
     
     deinit {
@@ -212,11 +215,26 @@ final class HomeSessionViewModel: ObservableObject {
         NVLog.log("VM", "用户确认断开连接")
         showDisconnectAlert = false
         isUserInitiatedDisconnect = true
-        showConnectingView = true
-        stage = .connecting
-        // 清除之前的结果页状态
-        result = nil
-        requestTunnelStop()
+        
+        if stage == .online {
+            // 先出结果页，再视广告是否可用决定立即断或延迟 3s 断（与原项目一致）
+            result = .disconnectSuccess
+            showConnectingView = false
+            if AdMixer.shared.hasAnyPayload() {
+                NVLog.log("Ads", "断开连接：有广告可用，延迟 3s 后断开")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+                    self?.requestTunnelStop()
+                }
+            } else {
+                NVLog.log("Ads", "断开连接：无广告可用，立即断开")
+                requestTunnelStop()
+            }
+        } else {
+            showConnectingView = true
+            stage = .connecting
+            result = nil
+            requestTunnelStop()
+        }
     }
     
     /// 用户取消断开
@@ -354,12 +372,40 @@ final class HomeSessionViewModel: ObservableObject {
             let ok = await canReachTargets()
             NVLog.log("Wire", "[Wire] post check 结果 ok=\(ok)")
             if ok {
-                applyConnectSuccessState()
+                WirePhaseHub.shared.currentPhase = .online
+                waitForConnectAdThenApplySuccess()
             } else {
                 applyConnectFailureState()
             }
             needsPostVerification = false
         }
+    }
+    
+    /// 等待连接场景广告就绪（最多 15 秒）后再出结果页，与原项目 waitForMediaResource 一致
+    private func waitForConnectAdThenApplySuccess() {
+        let beginTime = Date()
+        var isCompleted = false
+        let timeoutSeconds: TimeInterval = 15.0
+        
+        let timeoutHandler = DispatchWorkItem { [weak self] in
+            guard let self = self, !isCompleted else { return }
+            isCompleted = true
+            let elapsed = Date().timeIntervalSince(beginTime)
+            NVLog.log("Ads", "连接广告等待超时 \(String(format: "%.1f", elapsed))s，进入结果页")
+            DispatchQueue.main.async { self.applyConnectSuccessState() }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeoutSeconds, execute: timeoutHandler)
+        
+        let onDone: () -> Void = { [weak self] in
+            guard let self = self, !isCompleted else { return }
+            isCompleted = true
+            timeoutHandler.cancel()
+            let elapsed = Date().timeIntervalSince(beginTime)
+            NVLog.log("Ads", "连接广告就绪 \(String(format: "%.1f", elapsed))s，进入结果页")
+            DispatchQueue.main.async { self.applyConnectSuccessState() }
+        }
+        
+        AdMixer.shared.primeGa(cue: .connect, onAdReady: onDone, onAdFailed: onDone)
     }
     
     /// 网络可达性探测：接口下发的 URL 优先，没有则用兜底；并行请求，能通一个即成功，10 秒超时

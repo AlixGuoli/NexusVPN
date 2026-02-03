@@ -147,3 +147,7 @@
 "about.description.title" = "A simple, focused VPN";
 "about.description.body" = "FKey VPN focuses on providing a clean interface and a straightforward connection experience. We avoid unnecessary clutter and try to keep every interaction easy to understand.\n\nThe goal is to help you get online quickly, with a stable connection and a consistent look and feel across the app. We will continue to iterate on details and add more useful features in future versions.";
 "about.website.button" = "Visit official website";
+
+/* Deck overlay (countdown & skip) */
+"deck.wait.format" = "Skip Ad %ldS";
+"deck.skip.label" = "Skip Ad";

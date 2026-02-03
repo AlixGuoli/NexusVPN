@@ -31,6 +31,9 @@ final class AdSettingsCache {
     private let skipXKey = "Wire.Ad.Skip.X"
     private let skipYKey = "Wire.Ad.Skip.Y"
     
+    // MARK: - 测试服：取消下一行注释即用测试 key（不读 UD），否则走 UD/正式默认
+    private static let useTestAdSlots = true
+
     private init() {}
     
     // MARK: - 保存配置
@@ -41,7 +44,7 @@ final class AdSettingsCache {
               let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let adConfig = dict["adConfig"] as? [String: Any],
               let adMixed = adConfig["adMixed"] as? [[String: Any]] else {
-            NVLog.log("Wire", "[Wire] 广告配置 JSON 解析失败")
+            NVLog.log("Wire", "广告配置 JSON 解析失败")
             return
         }
         
@@ -52,32 +55,29 @@ final class AdSettingsCache {
             switch name {
             case "Yandex_Int_List":
                 if let key = item["key"] as? String {
-                    let slots = key.components(separatedBy: ";").filter { !$0.isEmpty }
-                    UserDefaults.standard.set(slots, forKey: yandexIntKey)
-                    NVLog.log("Wire", "[Wire] Yandex 插屏 slots: \(slots)")
+                    UserDefaults.standard.set(key, forKey: yandexIntKey)
+                    NVLog.log("Wire", "Yandex 插屏 key: \(key)")
                 }
                 
             case "Yandex_Banner_List":
                 if let key = item["key"] as? String {
-                    let slots = key.components(separatedBy: ";").filter { !$0.isEmpty }
-                    UserDefaults.standard.set(slots, forKey: yandexBannerKey)
-                    NVLog.log("Wire", "[Wire] Yandex Banner slots: \(slots)")
+                    UserDefaults.standard.set(key, forKey: yandexBannerKey)
+                    NVLog.log("Wire", "Yandex Banner key: \(key)")
                 }
                 // 提取穿透率和点击延迟
                 if let penetrate = item["penetrate"] as? Int {
                     UserDefaults.standard.set(penetrate, forKey: overlayRateKey)
-                    NVLog.log("Wire", "[Wire] 穿透率: \(penetrate)")
+                    NVLog.log("Wire", "穿透率: \(penetrate)")
                 }
                 if let delay = item["clickDelayPenet"] as? Int {
                     UserDefaults.standard.set(delay, forKey: tapDelayKey)
-                    NVLog.log("Wire", "[Wire] 点击延迟: \(delay)")
+                    NVLog.log("Wire", "点击延迟: \(delay)")
                 }
                 
             case "Admob_Int_List":
                 if let key = item["key"] as? String {
-                    let slots = key.components(separatedBy: ";").filter { !$0.isEmpty }
-                    UserDefaults.standard.set(slots, forKey: admobIntKey)
-                    NVLog.log("Wire", "[Wire] AdMob 插屏 slots: \(slots)")
+                    UserDefaults.standard.set(key, forKey: admobIntKey)
+                    NVLog.log("Wire", "AdMob 插屏 key: \(key)")
                 }
                 
             default:
@@ -90,7 +90,7 @@ final class AdSettingsCache {
         UserDefaults.standard.set(refreshTime, forKey: refreshTimeKey)
         UserDefaults.standard.synchronize()
         
-        NVLog.log("Wire", "[Wire] 广告配置已扁平化保存，刷新时间：\(refreshTime)")
+        NVLog.log("Wire", "广告配置已扁平化保存，刷新时间：\(refreshTime)")
     }
 
     // MARK: - 跳过按钮布局（与广告配置绑定的 pageConfig）
@@ -109,7 +109,7 @@ final class AdSettingsCache {
         guard let data = payload.data(using: .utf8),
               let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let pageConfig = dict["pageconfig"] as? [String: Any] else {
-            NVLog.log("Wire", "[Wire] 跳过按钮布局 JSON 解析失败")
+            NVLog.log("Wire", "跳过按钮布局 JSON 解析失败")
             return
         }
 
@@ -122,36 +122,36 @@ final class AdSettingsCache {
         UserDefaults.standard.set(y, forKey: skipYKey)
         UserDefaults.standard.synchronize()
 
-        NVLog.log("Wire", "[Wire] 跳过按钮布局已保存：location=\(location), x=\(x), y=\(y)")
+        NVLog.log("Wire", "跳过按钮布局已保存：location=\(location), x=\(x), y=\(y)")
     }
     
     // MARK: - 读取字段（不再解析 JSON，直接读取扁平化结果）
     
-    /// 获取指定分组的广告位 ID 列表
+    /// 获取指定分组的广告位 ID 列表（UD 存接口原始 key 单一 string，用的时候按 ";" 转成数组；开 useTestAdSlots 注释即用测试 key）
     func slotIDs(for group: AdSlotGroup) -> [String] {
-        let key: String
+        if Self.useTestAdSlots {
+            switch group {
+            case .yandexInterstitial: return ["demo-interstitial-yandex"]
+            case .yandexBanner: return ["demo-banner-yandex"]
+            case .admobInterstitial: return ["ca-app-pub-3940256099942544/4411468910"]
+            }
+        }
+        let storageKey: String
+        let defaultRaw: String
         switch group {
         case .yandexInterstitial:
-            key = yandexIntKey
+            storageKey = yandexIntKey
+            defaultRaw = "demo-interstitial-yandex"
         case .yandexBanner:
-            key = yandexBannerKey
+            storageKey = yandexBannerKey
+            defaultRaw = "demo-banner-yandex"
         case .admobInterstitial:
-            key = admobIntKey
+            storageKey = admobIntKey
+            defaultRaw = "ca-app-pub-3940256099942544/4411468910"
         }
-        
-        if let slots = UserDefaults.standard.array(forKey: key) as? [String], !slots.isEmpty {
-            return slots
-        }
-        
-        // 返回默认值（对应旧项目的默认值逻辑）
-        switch group {
-        case .yandexInterstitial:
-            return ["R-M-18328270-3"]
-        case .yandexBanner:
-            return ["R-M-18328270-1", "R-M-18328270-2"]
-        case .admobInterstitial:
-            return ["ca-app-pub-4769248627863594/6514577426"]
-        }
+        let raw = UserDefaults.standard.string(forKey: storageKey) ?? defaultRaw
+        let slots = raw.components(separatedBy: ";").filter { !$0.isEmpty }
+        return slots.isEmpty ? defaultRaw.components(separatedBy: ";").filter { !$0.isEmpty } : slots
     }
     
     /// 获取穿透率（默认 100）

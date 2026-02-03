@@ -145,3 +145,7 @@
 "about.description.title" = "간단하고 집중된 VPN";
 "about.description.body" = "FKey VPN은 깔끔한 인터페이스와 직접적인 연결 경험을 제공하는 데 중점을 둡니다. 불필요한 복잡성을 피하고 모든 상호 작용을 이해하기 쉽게 유지하려고 노력합니다.\n\n목표는 안정적인 연결과 앱 전체에서 일관된 모양과 느낌으로 빠르게 온라인에 연결할 수 있도록 돕는 것입니다. 계속해서 세부 사항을 반복하고 향후 버전에서 더 유용한 기능을 추가할 것입니다.";
 "about.website.button" = "공식 웹사이트 방문";
+
+/* Deck overlay (countdown & skip) */
+"deck.wait.format" = "%ld초 후 광고 건너뛰기";
+"deck.skip.label" = "건너뛰기";

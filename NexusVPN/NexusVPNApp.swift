@@ -17,6 +17,8 @@ struct NexusVPNApp: App {
     @State private var hasAcceptedPrivacy: Bool = UserDefaults.standard.bool(
         forKey: "NexusVPN.PrivacyAccepted"
     )
+    @State private var resumeOverlayActive: Bool = false
+    @State private var backgroundFlag: Bool = false
     
     @Environment(\.scenePhase) private var scenePhase
     
@@ -30,11 +32,22 @@ struct NexusVPNApp: App {
                         viewModel.initialize()
                     }
                 
-                // 启动页（只在首次进入期间覆盖）
+                // 启动页（20 秒超时，有网络拉配置+广告，无网络不拉；有广告走 onFinishWithAd，否则 onFinish）
                 if showSplash {
-                    SplashView {
-                        showSplash = false
-                    }
+                    SplashView(
+                        onFinish: { showSplash = false },
+                        onFinishWithAd: {
+                            showSplash = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                // 与原项目一致：仅隐私同意后才展示启动广告
+                                guard UserDefaults.standard.bool(forKey: "NexusVPN.PrivacyAccepted") else {
+                                    NVLog.log("Ads", "隐私未同意，跳过展示")
+                                    return
+                                }
+                                _ = AdMixer.shared.presentTopPriorityIfAvailable(from: nil, cue: .launch)
+                            }
+                        }
+                    )
                     .environmentObject(viewModel)
                     .environmentObject(languageManager)
                     .ignoresSafeArea()
@@ -53,6 +66,23 @@ struct NexusVPNApp: App {
                     .environmentObject(languageManager)
                     .ignoresSafeArea()
                 }
+                
+                // 后台切回前台覆盖页（2s 后尝试展示广告，3s 后自动关闭）
+                if resumeOverlayActive {
+                    ReturnOverlayView()
+                        .background(Color(UIColor.systemBackground).opacity(1.0))
+                        .ignoresSafeArea()
+                        .onAppear {
+                            NVLog.log("Ads", "后台覆盖页显示")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                showResumeContent()
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                                resumeOverlayActive = false
+                            }
+                        }
+                        .zIndex(9999)
+                }
             }
             .onChange(of: scenePhase) { newPhase in
                 processScenePhaseChange(newPhase)
@@ -66,10 +96,65 @@ struct NexusVPNApp: App {
         switch newPhase {
         case .active:
             requestAppTrackingAuthorization()
-        case .inactive, .background:
+            enterActiveMode()
+        case .inactive:
             break
+        case .background:
+            NVLog.log("App", "切后台")
+            backgroundFlag = true
         @unknown default:
             break
+        }
+    }
+    
+    // MARK: - 后台切前台
+    
+    /// 仅当启动已完成且刚从后台回来时，拉广告并视条件展示覆盖页
+    private func enterActiveMode() {
+        guard backgroundFlag, !showSplash else { return }
+        
+        AdMixer.shared.primeAll(cue: .foreground)
+        
+        if canDisplayResumeOverlay() {
+            NVLog.log("Ads", "显示后台覆盖页")
+            resumeOverlayActive = true
+        }
+        backgroundFlag = false
+    }
+    
+    /// 是否满足展示后台覆盖页条件：隐私已同意、未在连接中、无广告在展示、有可用广告
+    private func canDisplayResumeOverlay() -> Bool {
+        guard UserDefaults.standard.bool(forKey: "NexusVPN.PrivacyAccepted") else {
+            NVLog.log("Ads", "隐私未同意，跳过后台页")
+            return false
+        }
+        if viewModel.stage == .connecting {
+            NVLog.log("Ads", "VPN 正在连接，跳过后台页")
+            return false
+        }
+        if AdMixer.shared.mediaVisible {
+            NVLog.log("Ads", "已有媒体在展示，跳过后台页")
+            return false
+        }
+        guard AdMixer.shared.hasAnyPayload() else {
+            NVLog.log("Ads", "无可用媒体，跳过后台页")
+            return false
+        }
+        return true
+    }
+    
+    /// 覆盖页出现 2s 后调用：隐私检查后按优先级展示一条广告，有展示则 0.1s 后关覆盖页
+    private func showResumeContent() {
+        guard UserDefaults.standard.bool(forKey: "NexusVPN.PrivacyAccepted") else {
+            NVLog.log("Ads", "隐私未同意，跳过展示")
+            return
+        }
+        if AdMixer.shared.presentTopPriorityIfAvailable(from: nil, cue: .foreground) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                resumeOverlayActive = false
+            }
+        } else {
+            NVLog.log("Ads", "无可用媒体，等待 3 秒超时关闭")
         }
     }
     

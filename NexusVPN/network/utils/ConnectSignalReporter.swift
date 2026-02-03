@@ -29,6 +29,16 @@ final class ConnectSignalReporter {
         case success  = "connect_success"
         case stop     = "disconnect"
     }
+
+    /// 广告事件类型（事件名按后台约定）
+    private enum AdEvent: String {
+        /// 开始请求广告
+        case request = "start_get_ad"
+        /// 广告资源就绪
+        case ready   = "get_ad_success"
+        /// 展示广告
+        case display = "show_ad"
+    }
     
     /// 上报端点类型
     private enum EndpointKind {
@@ -85,6 +95,41 @@ final class ConnectSignalReporter {
         }
         submitLog(message: message, event: .stop)
     }
+
+    // MARK: - 对外接口：广告事件上报
+
+    /// 上报“开始请求广告”事件
+    /// - Parameters:
+    ///   - adKey: 广告位 ID（可选）
+    ///   - cue:  触发时机标记（如 connect/foreground/closead）
+    func reportAdRequest(adKey: String?, cue: String?) {
+        guard let message = buildAdMessage(event: .request,
+                                           adKey: adKey,
+                                           cue: cue) else {
+            return
+        }
+        submitAdLog(message: message, event: .request)
+    }
+
+    /// 上报“广告资源就绪”事件
+    func reportAdReady(adKey: String?, cue: String?) {
+        guard let message = buildAdMessage(event: .ready,
+                                           adKey: adKey,
+                                           cue: cue) else {
+            return
+        }
+        submitAdLog(message: message, event: .ready)
+    }
+
+    /// 上报“展示广告”事件
+    func reportAdDisplay(adKey: String?, cue: String?) {
+        guard let message = buildAdMessage(event: .display,
+                                           adKey: adKey,
+                                           cue: cue) else {
+            return
+        }
+        submitAdLog(message: message, event: .display)
+    }
     
     // MARK: - 对外接口：服务状态上报
     
@@ -126,6 +171,30 @@ final class ConnectSignalReporter {
             return "\(ConnectEvent.stop.rawValue),\(identifier),\(ip)"
         }
     }
+
+    /// 构建广告事件的 message 字符串
+    ///
+    /// 约定格式（与旧项目保持一致）：
+    /// start_get_ad:   start_get_ad,<moment>,<ip>,ad
+    /// get_ad_success: get_ad_success,<moment>,<ip>,ad,<adKey>
+    /// show_ad:        show_ad,<moment>,<ip>,ad,<adKey or empty>
+    private func buildAdMessage(
+        event: AdEvent,
+        adKey: String?,
+        cue: String?
+    ) -> String? {
+        let moment = cue ?? ""
+        let ip = ConnectReportContext.shared.currentEndpoint ?? "0.0.0.0"
+
+        switch event {
+        case .request:
+            return "\(AdEvent.request.rawValue),\(moment),\(ip),ad"
+        case .ready:
+            return "\(AdEvent.ready.rawValue),\(moment),\(ip),ad,\(adKey ?? "")"
+        case .display:
+            return "\(AdEvent.display.rawValue),\(moment),\(ip),ad,\(adKey ?? "empty")"
+        }
+    }
     
     /// 生成时间戳（格式：MMddHHmmss）
     private func formattedTimestamp() -> String {
@@ -141,8 +210,14 @@ final class ConnectSignalReporter {
             await self?.performLogReport(message: message, event: event)
         }
     }
+
+    private func submitAdLog(message: String, event: AdEvent) {
+        Task.detached { [weak self] in
+            await self?.performAdLogReport(message: message, event: event)
+        }
+    }
     
-    /// 执行日志上报（使用 connreport 作为上报地址）
+    /// 执行连接日志上报（使用 connreport 作为上报地址）
     private func performLogReport(message: String, event: ConnectEvent) async {
         guard let endpoint = ConfigVault.shared.reportEndpoint(for: .connect),
               !endpoint.isEmpty else {
@@ -162,6 +237,29 @@ final class ConnectSignalReporter {
         NVLog.log("report", "[report] 日志上报开始 [\(token)] 事件=\(event.rawValue) URL=\(urlString)")
         await performNetworkRequest(urlString: urlString,
                                     label: "日志上报",
+                                    token: token)
+    }
+
+    /// 执行广告日志上报（与连接事件共用 connreport 端点）
+    private func performAdLogReport(message: String, event: AdEvent) async {
+        guard let endpoint = ConfigVault.shared.reportEndpoint(for: .connect),
+              !endpoint.isEmpty else {
+            NVLog.log("report", "[report] 广告上报终止：缺少 connreport 端点")
+            return
+        }
+
+        guard let urlString = buildEndpointURL(kind: .log,
+                                               baseURL: endpoint,
+                                               message: message,
+                                               statusCode: nil) else {
+            NVLog.log("report", "[report] 广告上报终止：URL 构建失败")
+            return
+        }
+
+        let token = String(UUID().uuidString.prefix(8))
+        NVLog.log("report", "[report] 广告上报开始 [\(token)] 事件=\(event.rawValue) URL=\(urlString)")
+        await performNetworkRequest(urlString: urlString,
+                                    label: "广告上报",
                                     token: token)
     }
     
