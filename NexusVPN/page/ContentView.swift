@@ -17,11 +17,13 @@ enum NavigationDestination: Hashable {
     case portCheck
     case qrcodeGenerator
     case passwordGenerator
+    case vip
 }
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: HomeSessionViewModel
     @EnvironmentObject var language: AppLanguageManager
+    @EnvironmentObject var premiumCenter: SubscriptionAccessStore
     @StateObject private var relayStore = RelayStore.shared
     @State private var navigationPath = NavigationPath()
     
@@ -58,14 +60,26 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                
-                            // 设置按钮
-                Button(action: {
-                                navigationPath.append(NavigationDestination.settings)
-                            }) {
-                                Image(systemName: "gearshape.fill")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(.white.opacity(0.7))
+                            
+                            HStack(spacing: 12) {
+                                // 小 VIP 入口
+                                Button(action: {
+                                    navigationPath.append(NavigationDestination.vip)
+                                }) {
+                                    Image(premiumCenter.hasActiveSubscription ? "vipYes" : "vipNo")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                }
+                                
+                                // 设置按钮
+                                Button(action: {
+                                    navigationPath.append(NavigationDestination.settings)
+                                }) {
+                                    Image(systemName: "gearshape.fill")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.white.opacity(0.7))
+                                }
                             }
                         }
                         .padding(.horizontal, 20)
@@ -242,6 +256,8 @@ struct ContentView: View {
                     QRCodeGeneratorView()
                 case .passwordGenerator:
                     PasswordGeneratorView()
+                case .vip:
+                    VipView()
                 }
             }
             .onChange(of: viewModel.showConnectingView) { show in

@@ -18,6 +18,7 @@ struct SplashView: View {
     let onFinish: () -> Void
     let onFinishWithAd: (() -> Void)?
     @EnvironmentObject var viewModel: HomeSessionViewModel
+    @EnvironmentObject var language: AppLanguageManager
 
     @State private var opacity: Double = 0.0
     @StateObject private var splashProgress = SplashProgress()
@@ -59,7 +60,7 @@ struct SplashView: View {
                         y: 10
                     )
 
-                Text("FKey VPN")
+                Text(language.text("app.title"))
                     .font(.system(size: 26, weight: .semibold, design: .rounded))
                     .foregroundColor(.white)
 
@@ -267,4 +268,5 @@ struct SplashView: View {
 #Preview {
     SplashView(onFinish: {})
         .environmentObject(HomeSessionViewModel())
+        .environmentObject(AppLanguageManager.shared)
 }

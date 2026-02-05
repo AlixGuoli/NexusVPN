@@ -155,37 +155,45 @@ final class DeckOverlayController: UIViewController {
     }
 
     // MARK: - 倒计时
-
+    
     private func startTicker() {
         countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             self?.handleStep(timer)
         }
     }
-
+    
+    /// 每秒回调一次：负责更新倒计时和按钮可点击状态
     private func handleStep(_ timer: Timer) {
         if countdown > 0 {
             countdown -= 1
             updateLabelText()
-            if countdown == 0 {
-                timer.invalidate()
-            }
+        } else {
+            // 倒计时结束这一刻：无条件打开按钮点击能力
+            captionLabel.isUserInteractionEnabled = true
+            chromeBox.isUserInteractionEnabled = true
+            updateLabelText()
+            timer.invalidate()
         }
     }
-
+    
     private func activateButton() {
+        // 与原项目一致：未命中延迟或未命中穿透时，允许按钮接管点击
         let shouldEnable = !delayEnabled || !penetrateEnabled
         if shouldEnable {
             captionLabel.isUserInteractionEnabled = true
             chromeBox.isUserInteractionEnabled = true
         }
     }
-
+    
     private func updateLabelText() {
         if countdown <= 0 {
             activateButton()
             captionLabel.text = NSLocalizedString("deck.skip.label", value: "Skip Ad", comment: "")
         } else {
-            captionLabel.text = String(format: NSLocalizedString("deck.wait.format", value: "Skip Ad %ldS", comment: ""), countdown)
+            captionLabel.text = String(
+                format: NSLocalizedString("deck.wait.format", value: "Skip Ad %ldS", comment: ""),
+                countdown
+            )
         }
     }
 
@@ -210,7 +218,8 @@ final class DeckOverlayController: UIViewController {
     // MARK: - 交互
 
     @objc private func handleSkipTap() {
-        let canSkip = countdown <= 0
+        // 与原项目一致：仅在倒计时进入最后 1 秒及之后才允许关闭
+        let canSkip = countdown <= 1
         if canSkip {
             close()
         }

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ReturnOverlayView: View {
+    @EnvironmentObject var language: AppLanguageManager
+
     var body: some View {
         ZStack {
             LinearGradient(
@@ -33,7 +35,7 @@ struct ReturnOverlayView: View {
                         y: 10
                     )
 
-                Text("FKey VPN")
+                Text(language.text("app.title"))
                     .font(.system(size: 26, weight: .semibold, design: .rounded))
                     .foregroundColor(.white)
             }

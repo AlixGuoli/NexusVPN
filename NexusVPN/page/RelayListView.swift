@@ -10,6 +10,7 @@ import SwiftUI
 struct RelayListView: View {
     @EnvironmentObject var relayStore: RelayStore
     @EnvironmentObject var language: AppLanguageManager
+    @EnvironmentObject var subscriptionStore: SubscriptionAccessStore
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -58,11 +59,25 @@ struct RelayListView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(relayStore.relays) { relay in
-                            RelayRowView(relay: relay)
-                                .onTapGesture {
-                                    relayStore.selectRelay(relay)
-                                    dismiss()
+                            let isLocked = !subscriptionStore.hasActiveSubscription && relay.id != -1
+
+                            let row = RelayRowView(relay: relay, isLocked: isLocked)
+
+                            if isLocked {
+                                // 非会员点击锁定节点：跳转到会员页
+                                NavigationLink {
+                                    VipView()
+                                } label: {
+                                    row
                                 }
+                                .buttonStyle(.plain)
+                            } else {
+                                row
+                                    .onTapGesture {
+                                        relayStore.selectRelay(relay)
+                                        dismiss()
+                                    }
+                            }
                         }
                     }
                     .padding(.horizontal, 20)
@@ -87,6 +102,7 @@ struct RelayListView: View {
 
 private struct RelayRowView: View {
     let relay: Relay
+    let isLocked: Bool
     @EnvironmentObject var relayStore: RelayStore
     @EnvironmentObject var language: AppLanguageManager
     
@@ -128,7 +144,7 @@ private struct RelayRowView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(relay.id == -1 ? language.text("relay.auto.name") : relay.name)
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor(isLocked ? .white.opacity(0.5) : .white)
                 
                 if relay.id == -1 {
                     // Auto 节点显示说明文字
@@ -143,10 +159,10 @@ private struct RelayRowView: View {
                         HStack(spacing: 4) {
                             Image(systemName: "speedometer")
                                 .font(.system(size: 11))
-                            Text("\(relay.latency) ms")
+                            Text("\(relay.latency) \(language.text("relay.latency.unit"))")
                                 .font(.system(size: 13))
                         }
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.white.opacity(isLocked ? 0.4 : 0.7))
                         
                         // 节点状态
                         HStack(spacing: 4) {
@@ -162,11 +178,15 @@ private struct RelayRowView: View {
             
             Spacer()
             
-            // 选中标记
+            // 右侧状态：选中标记或锁标记
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 24))
                     .foregroundColor(.cyan.opacity(0.9))
+            } else if isLocked {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 18))
+                    .foregroundColor(.white.opacity(0.5))
             }
         }
         .padding(.horizontal, 16)
@@ -176,14 +196,14 @@ private struct RelayRowView: View {
                 .fill(
                     isSelected
                     ? Color.white.opacity(0.15)
-                    : Color.white.opacity(0.08)
+                    : Color.white.opacity(isLocked ? 0.04 : 0.08)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .stroke(
                             isSelected
                             ? Color.cyan.opacity(0.6)
-                            : Color.white.opacity(0.1),
+                            : Color.white.opacity(isLocked ? 0.06 : 0.1),
                             lineWidth: isSelected ? 1.5 : 0.5
                         )
                 )
@@ -228,4 +248,5 @@ private struct RelayRowView: View {
     RelayListView()
         .environmentObject(RelayStore.shared)
         .environmentObject(AppLanguageManager.shared)
+        .environmentObject(SubscriptionAccessStore.sharedStore)
 }

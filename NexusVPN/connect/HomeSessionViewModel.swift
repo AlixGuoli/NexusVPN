@@ -296,7 +296,7 @@ final class HomeSessionViewModel: ObservableObject {
     
     /// 用户从首页主动发起的连接流程入口
     private func kickOffUserConnectFlow() {
-        NVLog.log("VM", "kickOffUserConnectFlow() 开始发起连接流程")
+                NVLog.log("VM", "kickOffUserConnectFlow() 开始发起连接流程")
         result = nil
         
         // 确保有配置（必要时创建）
@@ -329,7 +329,8 @@ final class HomeSessionViewModel: ObservableObject {
                 
                 // 正确流程：先拉服务配置写入 App Group，再上报开始连接，最后启动隧道
                 Task {
-                    await EducationRoutes.callServiceProfile(isVip: false)
+                    let hasSub = SubscriptionAccessStore.sharedStore.hasActiveSubscription
+                    await EducationRoutes.callServiceProfile(isVip: hasSub)
                     await MainActor.run {
                         self.connectionSessionId = ConnectSignalReporter.generateSessionId()
                         ConnectSignalReporter.shared.reportConnectStart(sessionId: self.connectionSessionId ?? "")

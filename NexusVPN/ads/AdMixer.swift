@@ -26,10 +26,9 @@ final class AdMixer {
         AppSettingsCache.shared.isAdsDisabled() ?? false
     }
     
-    /// 当前是否为 VIP 用户（占位实现，后续接入内购时替换）
+    /// 当前是否为 VIP 用户（由订阅中心提供）
     private var isVipUser: Bool {
-        // TODO: 接入内购后，用真实 VIP 状态替换
-        return false
+        SubscriptionAccessStore.sharedStore.hasActiveSubscription
     }
     
     /// 当前广告总开关（受 VIP 与 adsOff 共同影响）

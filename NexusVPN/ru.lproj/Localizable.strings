@@ -78,6 +78,7 @@
 "relay.list.title" = "Выбрать узел";
 "relay.auto.name" = "Авто";
 "relay.auto.desc" = "Автоматически выбрать лучший узел";
+"relay.latency.unit" = "мс";
 "relay.status.excellent" = "Отлично";
 "relay.status.good" = "Хорошо";
 "relay.status.normal" = "Нормально";
@@ -108,9 +109,19 @@
 "toolbox.port.open" = "✅ Порт доступен";
 "toolbox.port.closed" = "❌ Не удаётся подключиться к этому порту";
 
+"toolbox.base64.title" = "Base64";
+"toolbox.base64.subtitle" = "Кодирование и декодирование Base64";
+"toolbox.base64.hint" = "Введите текст в поле ниже, затем нажмите «Закодировать» или «Декодировать».";
+"toolbox.base64.placeholderInput" = "Введите текст здесь...";
+"toolbox.base64.placeholderOutput" = "Результат появится здесь...";
+"toolbox.base64.encode" = "Закодировать";
+"toolbox.base64.decode" = "Декодировать";
+"toolbox.base64.error" = "Недопустимый ввод Base64.";
+
 "toolbox.qrcode.title" = "QR-код";
 "toolbox.qrcode.subtitle" = "Генерировать QR-коды";
 "toolbox.qrcode.hint" = "Введите текст или URL, затем нажмите «Создать», чтобы создать QR-код.";
+"toolbox.qrcode.placeholderInput" = "Введите текст или URL здесь...";
 "toolbox.qrcode.placeholder" = "QR-код появится здесь";
 "toolbox.qrcode.save" = "Сохранить";
 "toolbox.qrcode.saved" = "Сохранено!";
@@ -149,3 +160,42 @@
 /* Deck overlay (countdown & skip) */
 "deck.wait.format" = "Пропустить рекламу через %ld";
 "deck.skip.label" = "Пропустить";
+
+/* VIP / Premium */
+"vip.title" = "VIP";
+"vip.subtitle.member" = "Премиум-участник";
+"vip.subtitle.subscribe" = "Подписаться";
+"vip.expiration.format" = "Истекает: %@";
+"vip.plans.section" = "Планы подписки";
+"vip.restore" = "Восстановить покупки";
+"vip.plan.week" = "1 неделя";
+"vip.plan.month" = "1 месяц";
+"vip.plan.year" = "1 год";
+"vip.badge.popular" = "ПОПУЛЯРНЫЙ";
+"vip.badge.best" = "ЛУЧШИЙ";
+"vip.agreement" = "Согласие ";
+"vip.terms.autoRenewal" = "《Условия автопродления》";
+"vip.terms.comma" = " , ";
+"vip.terms.membership" = "《Условия подписки》";
+"vip.busy" = "Обработка покупки...";
+"vip.benefits.title" = "Что входит";
+"vip.benefit.speed.title" = "Максимальная скорость";
+"vip.benefit.speed.subtitle" = "Оптимизированные маршруты и высокая пропускная способность для потоковой передачи, загрузок и просмотра.";
+"vip.benefit.adfree.title" = "100% без рекламы";
+"vip.benefit.adfree.subtitle" = "Убрать всю рекламу в приложении для безопасного и стабильного соединения.";
+"vip.benefit.countries.title" = "Больше стран";
+"vip.benefit.countries.subtitle" = "Доступ к большему количеству стран и регионов для путешествий, стриминга и работы.";
+"vip.disclaimer" = "Оплата будет списана с вашего Apple ID при подтверждении покупки. Подписка автоматически продлевается, если не отменена не менее чем за 24 часа до конца текущего периода. Управлять или отменить подписку можно в настройках учётной записи.";
+"vip.disclaimer.more" = "Подробнее читайте в наших:";
+"vip.terms.of.use" = "《Условия использования》";
+"vip.and" = " и ";
+"vip.privacy.policy" = "《Политика конфиденциальности》";
+"vip.button.agreePay" = "Согласен и оплатить";
+"vip.perDay.format" = "%@/день";
+"vip.price.placeholder" = "--";
+
+"settings.premium.title" = "Премиум-доступ";
+"settings.premium.subscriptionActive" = "Подписка активна";
+"settings.premium.notSubscribed" = "Нет подписки";
+
+"language.english" = "Английский";

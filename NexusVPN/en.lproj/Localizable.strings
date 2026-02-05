@@ -79,6 +79,7 @@
 "relay.list.title" = "Select Node";
 "relay.auto.name" = "Auto";
 "relay.auto.desc" = "Automatically select the best node";
+"relay.latency.unit" = "ms";
 "relay.status.excellent" = "Excellent";
 "relay.status.good" = "Good";
 "relay.status.normal" = "Normal";
@@ -110,14 +111,24 @@
 "toolbox.port.open" = "✅ Port is reachable";
 "toolbox.port.closed" = "❌ Cannot connect to this port";
 
+"toolbox.base64.title" = "Base64";
+"toolbox.base64.subtitle" = "Encode and decode Base64 text";
+"toolbox.base64.hint" = "Enter text in the box below, then tap Encode or Decode.";
+"toolbox.base64.placeholderInput" = "Enter text here...";
+"toolbox.base64.placeholderOutput" = "Result will appear here...";
+"toolbox.base64.encode" = "Encode";
+"toolbox.base64.decode" = "Decode";
+"toolbox.base64.error" = "Invalid Base64 input.";
+
 "toolbox.qrcode.title" = "QR Code";
 "toolbox.qrcode.subtitle" = "Generate QR codes";
 "toolbox.qrcode.hint" = "Enter text or URL, then tap Generate to create a QR code.";
+"toolbox.qrcode.placeholderInput" = "Enter text or URL here...";
 "toolbox.qrcode.placeholder" = "QR code will appear here";
 "toolbox.qrcode.save" = "Save";
 "toolbox.qrcode.saved" = "Saved!";
 "toolbox.qrcode.share" = "Share";
- "toolbox.qrcode.generate" = "Generate";
+"toolbox.qrcode.generate" = "Generate";
 
 "toolbox.ipinfo.title" = "IP Info";
 "toolbox.ipinfo.subtitle" = "View network information";
@@ -151,3 +162,43 @@
 /* Deck overlay (countdown & skip) */
 "deck.wait.format" = "Skip Ad %ldS";
 "deck.skip.label" = "Skip Ad";
+
+/* VIP / Premium */
+"vip.title" = "Vip";
+"vip.subtitle.member" = "Premium Member";
+"vip.subtitle.subscribe" = "Subscribe";
+"vip.expiration.format" = "Expiration: %@";
+"vip.plans.section" = "Subscription Plans";
+"vip.restore" = "Restore Purchases";
+"vip.plan.week" = "1 Week";
+"vip.plan.month" = "1 Month";
+"vip.plan.year" = "1 Year";
+"vip.badge.popular" = "POPULAR";
+"vip.badge.best" = "BEST";
+"vip.agreement" = "Agreement ";
+"vip.terms.autoRenewal" = "《Auto Renewal Terms》";
+"vip.terms.comma" = " , ";
+"vip.terms.membership" = "《Membership Terms》";
+"vip.busy" = "Processing purchase...";
+"vip.benefits.title" = "What's Included";
+"vip.benefit.speed.title" = "Top Speed";
+"vip.benefit.speed.subtitle" = "Optimized routes and high bandwidth for smoother streaming, downloads and browsing.";
+"vip.benefit.adfree.title" = "100% Ad‑Free";
+"vip.benefit.adfree.subtitle" = "Remove all in-app ads for a secure, stable connection.";
+"vip.benefit.countries.title" = "More Countries";
+"vip.benefit.countries.subtitle" = "Unlock more countries and regions for travel, streaming and work.";
+"vip.disclaimer" = "Payment will be charged to your Apple ID account at confirmation of purchase. Your subscription will automatically renew unless cancelled at least 24 hours before the end of the current period. You can manage or cancel your subscription at any time in Account Settings.";
+"vip.disclaimer.more" = "For more information, please read our:";
+"vip.terms.of.use" = "《Terms of use》";
+"vip.and" = " and ";
+"vip.privacy.policy" = "《Privacy Policy》";
+"vip.button.agreePay" = "Agree and Pay";
+"vip.perDay.format" = "%@/day";
+"vip.price.placeholder" = "--";
+
+/* Settings – Premium row */
+"settings.premium.title" = "Premium Access";
+"settings.premium.subscriptionActive" = "Subscription Active";
+"settings.premium.notSubscribed" = "Not Subscribed";
+
+"language.english" = "English";

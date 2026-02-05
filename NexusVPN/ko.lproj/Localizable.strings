@@ -78,6 +78,7 @@
 "relay.list.title" = "노드 선택";
 "relay.auto.name" = "자동";
 "relay.auto.desc" = "최적의 노드를 자동으로 선택";
+"relay.latency.unit" = "ms";
 "relay.status.excellent" = "우수";
 "relay.status.good" = "양호";
 "relay.status.normal" = "보통";
@@ -108,9 +109,19 @@
 "toolbox.port.open" = "✅ 포트가 접근 가능합니다";
 "toolbox.port.closed" = "❌ 이 포트에 연결할 수 없습니다";
 
+"toolbox.base64.title" = "Base64";
+"toolbox.base64.subtitle" = "Base64 텍스트 인코딩/디코딩";
+"toolbox.base64.hint" = "아래 입력란에 텍스트를 입력한 다음 인코딩 또는 디코딩을 탭하세요.";
+"toolbox.base64.placeholderInput" = "여기에 텍스트 입력...";
+"toolbox.base64.placeholderOutput" = "결과가 여기에 표시됩니다...";
+"toolbox.base64.encode" = "인코딩";
+"toolbox.base64.decode" = "디코딩";
+"toolbox.base64.error" = "잘못된 Base64 입력입니다.";
+
 "toolbox.qrcode.title" = "QR 코드";
 "toolbox.qrcode.subtitle" = "QR 코드 생성";
 "toolbox.qrcode.hint" = "텍스트 또는 URL을 입력한 다음 생성을 탭하여 QR 코드를 만듭니다.";
+"toolbox.qrcode.placeholderInput" = "텍스트 또는 URL을 여기에 입력...";
 "toolbox.qrcode.placeholder" = "QR 코드가 여기에 표시됩니다";
 "toolbox.qrcode.save" = "저장";
 "toolbox.qrcode.saved" = "저장됨!";
@@ -149,3 +160,42 @@
 /* Deck overlay (countdown & skip) */
 "deck.wait.format" = "%ld초 후 광고 건너뛰기";
 "deck.skip.label" = "건너뛰기";
+
+/* VIP / Premium */
+"vip.title" = "VIP";
+"vip.subtitle.member" = "프리미엄 회원";
+"vip.subtitle.subscribe" = "구독하기";
+"vip.expiration.format" = "만료: %@";
+"vip.plans.section" = "구독 플랜";
+"vip.restore" = "구매 복원";
+"vip.plan.week" = "1주";
+"vip.plan.month" = "1개월";
+"vip.plan.year" = "1년";
+"vip.badge.popular" = "인기";
+"vip.badge.best" = "베스트";
+"vip.agreement" = "동의 ";
+"vip.terms.autoRenewal" = "《자동 갱신 약관》";
+"vip.terms.comma" = " , ";
+"vip.terms.membership" = "《회원 약관》";
+"vip.busy" = "구매 처리 중...";
+"vip.benefits.title" = "포함 내용";
+"vip.benefit.speed.title" = "최고 속도";
+"vip.benefit.speed.subtitle" = "스트리밍, 다운로드, 브라우징을 위한 최적화된 경로와 높은 대역폭.";
+"vip.benefit.adfree.title" = "100% 광고 없음";
+"vip.benefit.adfree.subtitle" = "안전하고 안정적인 연결을 위해 앱 내 모든 광고 제거.";
+"vip.benefit.countries.title" = "더 많은 국가";
+"vip.benefit.countries.subtitle" = "여행, 스트리밍, 업무를 위해 더 많은 국가와 지역 잠금 해제.";
+"vip.disclaimer" = "구매 확인 시 Apple ID 계정으로 청구됩니다. 현재 기간 종료 24시간 전까지 취소하지 않으면 구독이 자동 갱신됩니다. 계정 설정에서 언제든 관리하거나 취소할 수 있습니다.";
+"vip.disclaimer.more" = "자세한 내용은 다음을 참조하세요:";
+"vip.terms.of.use" = "《이용약관》";
+"vip.and" = " 및 ";
+"vip.privacy.policy" = "《개인정보 처리방침》";
+"vip.button.agreePay" = "동의하고 결제";
+"vip.perDay.format" = "%@/일";
+"vip.price.placeholder" = "--";
+
+"settings.premium.title" = "프리미엄 이용";
+"settings.premium.subscriptionActive" = "구독 중";
+"settings.premium.notSubscribed" = "미구독";
+
+"language.english" = "영어";

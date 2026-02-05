@@ -78,6 +78,7 @@
 "relay.list.title" = "Sélectionner un nœud";
 "relay.auto.name" = "Auto";
 "relay.auto.desc" = "Sélectionner automatiquement le meilleur nœud";
+"relay.latency.unit" = "ms";
 "relay.status.excellent" = "Excellent";
 "relay.status.good" = "Bon";
 "relay.status.normal" = "Normal";
@@ -108,9 +109,19 @@
 "toolbox.port.open" = "✅ Le port est accessible";
 "toolbox.port.closed" = "❌ Impossible de se connecter à ce port";
 
+"toolbox.base64.title" = "Base64";
+"toolbox.base64.subtitle" = "Encoder et décoder du texte Base64";
+"toolbox.base64.hint" = "Entrez le texte ci-dessous, puis appuyez sur Encoder ou Décoder.";
+"toolbox.base64.placeholderInput" = "Entrez le texte ici...";
+"toolbox.base64.placeholderOutput" = "Le résultat apparaîtra ici...";
+"toolbox.base64.encode" = "Encoder";
+"toolbox.base64.decode" = "Décoder";
+"toolbox.base64.error" = "Entrée Base64 invalide.";
+
 "toolbox.qrcode.title" = "Code QR";
 "toolbox.qrcode.subtitle" = "Générer des codes QR";
 "toolbox.qrcode.hint" = "Entrez du texte ou une URL, puis appuyez sur Générer pour créer un code QR.";
+"toolbox.qrcode.placeholderInput" = "Entrez du texte ou une URL ici...";
 "toolbox.qrcode.placeholder" = "Le code QR apparaîtra ici";
 "toolbox.qrcode.save" = "Enregistrer";
 "toolbox.qrcode.saved" = "Enregistré !";
@@ -149,3 +160,42 @@
 /* Deck overlay (countdown & skip) */
 "deck.wait.format" = "Passer la pub dans %ld s";
 "deck.skip.label" = "Passer";
+
+/* VIP / Premium */
+"vip.title" = "VIP";
+"vip.subtitle.member" = "Membre Premium";
+"vip.subtitle.subscribe" = "S'abonner";
+"vip.expiration.format" = "Expiration : %@";
+"vip.plans.section" = "Offres d'abonnement";
+"vip.restore" = "Restaurer les achats";
+"vip.plan.week" = "1 semaine";
+"vip.plan.month" = "1 mois";
+"vip.plan.year" = "1 an";
+"vip.badge.popular" = "POPULAIRE";
+"vip.badge.best" = "MEILLEURE";
+"vip.agreement" = "J'accepte ";
+"vip.terms.autoRenewal" = "《Conditions de renouvellement automatique》";
+"vip.terms.comma" = " , ";
+"vip.terms.membership" = "《Conditions d'adhésion》";
+"vip.busy" = "Traitement de l'achat...";
+"vip.benefits.title" = "Inclus";
+"vip.benefit.speed.title" = "Vitesse maximale";
+"vip.benefit.speed.subtitle" = "Routes optimisées et bande passante élevée pour le streaming, les téléchargements et la navigation.";
+"vip.benefit.adfree.title" = "100 % sans pub";
+"vip.benefit.adfree.subtitle" = "Supprimer toutes les publicités in-app pour une connexion stable et sécurisée.";
+"vip.benefit.countries.title" = "Plus de pays";
+"vip.benefit.countries.subtitle" = "Débloquez plus de pays et régions pour voyager, streamer et travailler.";
+"vip.disclaimer" = "Le paiement sera débité de votre compte Apple ID à la confirmation d'achat. Votre abonnement se renouvellera automatiquement sauf annulation au moins 24 h avant la fin de la période en cours. Vous pouvez gérer ou annuler votre abonnement à tout moment dans Réglages du compte.";
+"vip.disclaimer.more" = "Pour en savoir plus, consultez :";
+"vip.terms.of.use" = "《Conditions d'utilisation》";
+"vip.and" = " et ";
+"vip.privacy.policy" = "《Politique de confidentialité》";
+"vip.button.agreePay" = "Accepter et payer";
+"vip.perDay.format" = "%@/jour";
+"vip.price.placeholder" = "--";
+
+"settings.premium.title" = "Accès Premium";
+"settings.premium.subscriptionActive" = "Abonnement actif";
+"settings.premium.notSubscribed" = "Non abonné";
+
+"language.english" = "Anglais";

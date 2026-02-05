@@ -78,6 +78,7 @@
 "relay.list.title" = "ノードを選択";
 "relay.auto.name" = "自動";
 "relay.auto.desc" = "最適なノードを自動選択";
+"relay.latency.unit" = "ms";
 "relay.status.excellent" = "優秀";
 "relay.status.good" = "良好";
 "relay.status.normal" = "通常";
@@ -108,9 +109,19 @@
 "toolbox.port.open" = "✅ ポートは到達可能";
 "toolbox.port.closed" = "❌ このポートに接続できません";
 
+"toolbox.base64.title" = "Base64";
+"toolbox.base64.subtitle" = "Base64のエンコード・デコード";
+"toolbox.base64.hint" = "下の欄にテキストを入力し、エンコードまたはデコードをタップしてください。";
+"toolbox.base64.placeholderInput" = "ここにテキストを入力...";
+"toolbox.base64.placeholderOutput" = "結果がここに表示されます...";
+"toolbox.base64.encode" = "エンコード";
+"toolbox.base64.decode" = "デコード";
+"toolbox.base64.error" = "無効なBase64入力です。";
+
 "toolbox.qrcode.title" = "QRコード";
 "toolbox.qrcode.subtitle" = "QRコードを生成";
 "toolbox.qrcode.hint" = "テキストまたはURLを入力し、生成をタップしてQRコードを作成します。";
+"toolbox.qrcode.placeholderInput" = "テキストまたはURLをここに入力...";
 "toolbox.qrcode.placeholder" = "QRコードがここに表示されます";
 "toolbox.qrcode.save" = "保存";
 "toolbox.qrcode.saved" = "保存しました！";
@@ -149,3 +160,42 @@
 /* Deck overlay (countdown & skip) */
 "deck.wait.format" = "広告を%ld秒後にスキップ";
 "deck.skip.label" = "スキップ";
+
+/* VIP / Premium */
+"vip.title" = "VIP";
+"vip.subtitle.member" = "プレミアム会員";
+"vip.subtitle.subscribe" = "購読する";
+"vip.expiration.format" = "有効期限: %@";
+"vip.plans.section" = "サブスクリプションプラン";
+"vip.restore" = "購入を復元";
+"vip.plan.week" = "1週間";
+"vip.plan.month" = "1ヶ月";
+"vip.plan.year" = "1年";
+"vip.badge.popular" = "人気";
+"vip.badge.best" = "おすすめ";
+"vip.agreement" = "同意 ";
+"vip.terms.autoRenewal" = "《自動更新条款》";
+"vip.terms.comma" = " 、 ";
+"vip.terms.membership" = "《会員条款》";
+"vip.busy" = "購入を処理中...";
+"vip.benefits.title" = "含まれる内容";
+"vip.benefit.speed.title" = "最速";
+"vip.benefit.speed.subtitle" = "ストリーミング・ダウンロード・閲覧向けに最適化されたルートと高帯域.";
+"vip.benefit.adfree.title" = "100%広告なし";
+"vip.benefit.adfree.subtitle" = "アプリ内広告をすべて削除し、安全で安定した接続を.";
+"vip.benefit.countries.title" = "より多くの国";
+"vip.benefit.countries.subtitle" = "旅行・ストリーミング・仕事に使える国・地域を追加で利用可能.";
+"vip.disclaimer" = "購入の確認時にApple IDアカウントに請求されます。現在の期間の終了の24時間以上前にキャンセルしない限り、サブスクリプションは自動更新されます。アカウント設定でいつでも管理またはキャンセルできます。";
+"vip.disclaimer.more" = "詳細は以下をご覧ください:";
+"vip.terms.of.use" = "《利用規約》";
+"vip.and" = " および ";
+"vip.privacy.policy" = "《プライバシーポリシー》";
+"vip.button.agreePay" = "同意して支払う";
+"vip.perDay.format" = "%@/日";
+"vip.price.placeholder" = "--";
+
+"settings.premium.title" = "プレミアムアクセス";
+"settings.premium.subscriptionActive" = "サブスクリプション有効";
+"settings.premium.notSubscribed" = "未購読";
+
+"language.english" = "英語";

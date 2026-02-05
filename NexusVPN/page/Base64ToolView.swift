@@ -59,7 +59,7 @@ struct Base64ToolView: View {
                     // 输入框
                     ZStack(alignment: .topLeading) {
                         if inputText.isEmpty {
-                            Text("Enter text here...")
+                            Text(language.text("toolbox.base64.placeholderInput"))
                                 .foregroundColor(.white.opacity(0.3))
                                 .padding(.horizontal, 4)
                                 .padding(.vertical, 8)
@@ -126,7 +126,7 @@ struct Base64ToolView: View {
                     // 输出框
                     ZStack(alignment: .topLeading) {
                         if outputText.isEmpty {
-                            Text("Result will appear here...")
+                            Text(language.text("toolbox.base64.placeholderOutput"))
                                 .foregroundColor(.white.opacity(0.3))
                                 .padding(.horizontal, 4)
                                 .padding(.vertical, 8)

@@ -9,20 +9,27 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var language: AppLanguageManager
+    @EnvironmentObject var subscriptionStore: SubscriptionAccessStore
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     
-    // 获取当前实际使用的语言显示名称
+    // 获取当前实际使用的语言显示名称（用于「设置 → 语言」那一行的副标题）
     private var currentLanguageDisplayName: String {
         if language.current == .system {
-            // 如果选择的是"跟随系统"，显示实际使用的语言
+            // 选择「跟随系统」时，尽量显示当前系统语言名（如 Deutsch、日本語）
             let actualLocale = language.current.localeIdentifier
             if let actualLang = AppLanguage.allCases.first(where: { $0.localeIdentifier == actualLocale && $0 != .system }) {
                 return actualLang.displayName
             }
-            return "English" // 回退显示
+            // 无法解析系统语言时的回退：显示「英语」在各语言中的翻译（language.english）
+            return language.text("language.english")
         }
         return language.current.displayName
+    }
+
+    /// 当前会员状态文案
+    private var membershipStatusDisplay: String {
+        subscriptionStore.hasActiveSubscription ? language.text("settings.premium.subscriptionActive") : language.text("settings.premium.notSubscribed")
     }
     
     var body: some View {
@@ -70,12 +77,24 @@ struct SettingsView: View {
                 // 内容区域
                 ScrollView {
                     VStack(spacing: 20) {
-                        // 通用设置：语言
+                        // 通用设置：会员 / 语言
                         VStack(alignment: .leading, spacing: 12) {
                             Text(language.text("settings.section.general"))
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundColor(.white.opacity(0.7))
                             
+                            // 会员入口
+                            NavigationLink {
+                                VipView()
+                            } label: {
+                                SettingsRow(
+                                    icon: "crown.fill",
+                                    title: language.text("settings.premium.title"),
+                                    subtitle: membershipStatusDisplay
+                                )
+                            }
+                            .buttonStyle(.plain)
+
                             NavigationLink {
                                 LanguageSettingsView()
                             } label: {
@@ -161,6 +180,8 @@ enum AppLinks {
     static let officialWebsite = URL(string: "https://fkeysupervpn.xyz/")!
     static let privacyPolicy = URL(string: "https://fkeysupervpn.xyz/p.html")!
     static let userAgreement = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    /// 会员/续费条款页（勾选同意里的 Auto Renewal Terms、Membership Terms 共用）
+    static let membershipTerms = URL(string: "https://fkeysupervpn.xyz/m.html")!
     static let telegram = URL(string: "https://t.me/+sqwyDllHDt0wYTY1")!
 }
 

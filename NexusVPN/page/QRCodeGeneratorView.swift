@@ -67,7 +67,7 @@ struct QRCodeGeneratorView: View {
                         // 输入框
                         ZStack(alignment: .topLeading) {
                             if inputText.isEmpty {
-                                Text("Enter text or URL here...")
+                                Text(language.text("toolbox.qrcode.placeholderInput"))
                                     .foregroundColor(.white.opacity(0.3))
                                     .padding(.horizontal, 4)
                                     .padding(.vertical, 8)
