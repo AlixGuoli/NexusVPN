@@ -209,8 +209,13 @@ struct ContentView: View {
                                 )
                             }
                             .padding(.horizontal, 20)
-                            .padding(.bottom, 24)
+                            .padding(.bottom, 16)
                         }
+
+                        // 评价引导卡片
+                        RatingPromptCard()
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 24)
                     }
                 }
                 

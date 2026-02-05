@@ -75,7 +75,11 @@ struct ResultView: View {
                     shareAppCard
                     joinUsCard
                 }
-                
+
+                // 评价引导卡片
+                RatingPromptCard()
+                    .padding(.top, 8)
+
                 Spacer(minLength: 20)
                 
                 Button {
@@ -250,5 +254,6 @@ struct ResultView: View {
     NavigationStack {
         ResultView(result: .connectSuccess)
             .environmentObject(HomeSessionViewModel())
+            .environmentObject(AppLanguageManager.shared)
     }
 }

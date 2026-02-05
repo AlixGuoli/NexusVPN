@@ -199,3 +199,6 @@
 "settings.premium.notSubscribed" = "Нет подписки";
 
 "language.english" = "Английский";
+
+"rating.card.title" = "Нравится приложение? Мы будем рады вашему отзыву.";
+"rating.card.subtitle" = "Ваш отзыв помогает нам становиться лучше.";

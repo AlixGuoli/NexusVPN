@@ -199,3 +199,6 @@
 "settings.premium.notSubscribed" = "미구독";
 
 "language.english" = "영어";
+
+"rating.card.title" = "앱이 마음에 드시나요? 소중한 의견을 남겨 주세요.";
+"rating.card.subtitle" = "여러분의 의견이 더 나은 앱을 만드는 데 도움이 됩니다.";

@@ -199,3 +199,6 @@
 "settings.premium.notSubscribed" = "No suscrito";
 
 "language.english" = "Inglés";
+
+"rating.card.title" = "¿Te gusta la app? Nos encantaría conocer tu opinión.";
+"rating.card.subtitle" = "Tu feedback nos ayuda a mejorar.";

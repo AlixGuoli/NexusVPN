@@ -159,6 +159,14 @@ struct ConnectingView: View {
             }
             // 整体略微上移，给底部预留卡片空间
             .offset(y: -40)
+
+            // 底部评价引导卡片
+            VStack {
+                Spacer()
+                RatingPromptCard()
+                    .padding(.horizontal, 22)
+                    .padding(.bottom, 28)
+            }
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
@@ -189,6 +197,7 @@ struct ConnectingView: View {
 #Preview {
     NavigationStack {
         ConnectingView()
+            .environmentObject(AppLanguageManager.shared)
     }
 }
 

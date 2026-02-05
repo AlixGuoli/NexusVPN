@@ -202,3 +202,7 @@
 "settings.premium.notSubscribed" = "Not Subscribed";
 
 "language.english" = "English";
+
+/* Rating prompt card */
+"rating.card.title" = "Enjoying the app? We'd love your feedback.";
+"rating.card.subtitle" = "Your feedback helps us do better.";

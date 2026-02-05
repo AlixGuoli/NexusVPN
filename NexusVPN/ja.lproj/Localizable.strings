@@ -199,3 +199,6 @@
 "settings.premium.notSubscribed" = "未購読";
 
 "language.english" = "英語";
+
+"rating.card.title" = "アプリは気に入りましたか？フィードバックをお待ちしています。";
+"rating.card.subtitle" = "いただいた感想は今後の改善に役立てます。";
