@@ -1,6 +1,0 @@
-framework module DivKitBinaryCompatibilityFacade {
-  umbrella header "DivKitBinaryCompatibilityFacade-umbrella.h"
-
-  export *
-  module * { export * }
-}

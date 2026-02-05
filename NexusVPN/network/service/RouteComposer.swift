@@ -86,8 +86,19 @@ final class RouteComposer {
         
         // 固定域名
         let fixedDomains = [
-            "yastatic", "yandex", "gameanalytics", "mradx.net",
-            "target.my.com", "vk.ru", "vk.me", "vk.com", "mail.ru"
+            "yastatic",
+            "yandex",
+            "yandex.ru",
+            "yandexadexchange.net",
+            "ads.adfox.ru",
+            "appmetrica.yandex.ru",
+            "gameanalytics",
+            "mradx.net",
+            "target.my.com",
+            "vk.ru",
+            "vk.me",
+            "vk.com",
+            "mail.ru"
         ]
         domains.append(contentsOf: fixedDomains)
         NVLog.log("Wire", "[Wire] 固定直连域名：\(fixedDomains.joined(separator: ", "))")

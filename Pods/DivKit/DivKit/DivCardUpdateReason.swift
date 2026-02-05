@@ -1,1 +1,0 @@
-public typealias DivCardUpdateReason = DivActionURLHandler.UpdateReason
