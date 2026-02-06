@@ -26,6 +26,7 @@ struct ContentView: View {
     @EnvironmentObject var premiumCenter: SubscriptionAccessStore
     @StateObject private var relayStore = RelayStore.shared
     @State private var navigationPath = NavigationPath()
+    @State private var showDisconnectFirstAlert = false
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -119,9 +120,13 @@ struct ContentView: View {
                                 }
                             }
                             
-                            // 切换节点按钮
+                            // 切换节点按钮（已连接时不可进节点页，需先断开）
                             Button(action: {
-                                navigationPath.append(NavigationDestination.relayList)
+                                if viewModel.stage == .online {
+                                    showDisconnectFirstAlert = true
+                                } else {
+                                    navigationPath.append(NavigationDestination.relayList)
+                                }
                             }) {
                                 HStack(spacing: 6) {
                                     Image(systemName: "network")
@@ -211,11 +216,6 @@ struct ContentView: View {
                             .padding(.horizontal, 20)
                             .padding(.bottom, 16)
                         }
-
-                        // 评价引导卡片
-                        RatingPromptCard()
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, 24)
                     }
                 }
                 
@@ -264,6 +264,11 @@ struct ContentView: View {
                 case .vip:
                     VipView()
                 }
+            }
+            .alert(language.text("relay.disconnectFirst.title"), isPresented: $showDisconnectFirstAlert) {
+                Button(language.text("common.ok"), role: .cancel) {}
+            } message: {
+                Text(language.text("relay.disconnectFirst.message"))
             }
             .onChange(of: viewModel.showConnectingView) { show in
                 if show {

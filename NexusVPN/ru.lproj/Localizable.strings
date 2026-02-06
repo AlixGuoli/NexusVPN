@@ -82,6 +82,8 @@
 "relay.status.excellent" = "Отлично";
 "relay.status.good" = "Хорошо";
 "relay.status.normal" = "Нормально";
+"relay.disconnectFirst.title" = "Нельзя сменить узел";
+"relay.disconnectFirst.message" = "Сначала отключитесь, чтобы сменить узел.";
 
 "toolbox.title" = "Инструменты";
 "toolbox.subtitle" = "Сетевые инструменты · Текстовые утилиты";

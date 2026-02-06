@@ -82,6 +82,8 @@
 "relay.status.excellent" = "優秀";
 "relay.status.good" = "良好";
 "relay.status.normal" = "通常";
+"relay.disconnectFirst.title" = "ノードを切り替えられません";
+"relay.disconnectFirst.message" = "ノードを変更するには、先に切断してください。";
 
 "toolbox.title" = "ツールボックス";
 "toolbox.subtitle" = "ネットワークツール · テキストユーティリティ";

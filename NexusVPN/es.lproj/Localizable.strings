@@ -82,6 +82,8 @@
 "relay.status.excellent" = "Excelente";
 "relay.status.good" = "Bueno";
 "relay.status.normal" = "Normal";
+"relay.disconnectFirst.title" = "No se puede cambiar de nodo";
+"relay.disconnectFirst.message" = "Desconéctate primero para cambiar de nodo.";
 
 "toolbox.title" = "Herramientas";
 "toolbox.subtitle" = "Herramientas de red · Utilidades de texto";

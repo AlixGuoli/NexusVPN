@@ -82,6 +82,8 @@
 "relay.status.excellent" = "Ausgezeichnet";
 "relay.status.good" = "Gut";
 "relay.status.normal" = "Normal";
+"relay.disconnectFirst.title" = "Knoten nicht wechselbar";
+"relay.disconnectFirst.message" = "Bitte zuerst trennen, um den Knoten zu wechseln.";
 
 "toolbox.title" = "Werkzeuge";
 "toolbox.subtitle" = "Netzwerktools · Text-Utilities";

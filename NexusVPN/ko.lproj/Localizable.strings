@@ -82,6 +82,8 @@
 "relay.status.excellent" = "우수";
 "relay.status.good" = "양호";
 "relay.status.normal" = "보통";
+"relay.disconnectFirst.title" = "노드 전환 불가";
+"relay.disconnectFirst.message" = "노드를 변경하려면 먼저 연결을 해제해 주세요.";
 
 "toolbox.title" = "도구 상자";
 "toolbox.subtitle" = "네트워크 도구 · 텍스트 유틸리티";

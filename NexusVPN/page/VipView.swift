@@ -143,11 +143,10 @@ struct VipView: View {
         return symbolAtPrefix ? "\(currencySymbol)\(numberString)" : "\(numberString) \(currencySymbol)"
     }
 
-    /// 顶部显示用的过期时间字符串（沙盒环境下带到分钟/秒，便于观察）
+    /// 顶部显示用的过期时间字符串（只显示日期，不含时分秒）
     private func formattedExpiry(_ date: Date) -> String {
         let formatter = DateFormatter()
-        // 沙盒调试：到秒，方便看剩余时间；正式上线可改回只显示日期
-        formatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
+        formatter.dateFormat = "yyyy.MM.dd"
         return formatter.string(from: date)
     }
 

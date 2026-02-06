@@ -65,7 +65,7 @@ final class AppSettingsCache {
     /// 当前广告类型
     func currentAdsType() -> String? {
         // MARK: - 测试服
-        //return "y;e;a"
+        //return "y;a"
         return extractField(path: ["commonConf", "adsType"]) as? String
     }
     

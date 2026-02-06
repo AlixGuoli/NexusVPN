@@ -83,6 +83,8 @@
 "relay.status.excellent" = "Excellent";
 "relay.status.good" = "Good";
 "relay.status.normal" = "Normal";
+"relay.disconnectFirst.title" = "Cannot Switch Node";
+"relay.disconnectFirst.message" = "Please disconnect first before changing node.";
 
 /* Toolbox */
 "toolbox.title" = "Toolbox";

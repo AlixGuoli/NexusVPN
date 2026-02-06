@@ -82,6 +82,8 @@
 "relay.status.excellent" = "Excellent";
 "relay.status.good" = "Bon";
 "relay.status.normal" = "Normal";
+"relay.disconnectFirst.title" = "Impossible de changer de nœud";
+"relay.disconnectFirst.message" = "Veuillez vous déconnecter d'abord pour changer de nœud.";
 
 "toolbox.title" = "Boîte à outils";
 "toolbox.subtitle" = "Outils réseau · Utilitaires texte";
