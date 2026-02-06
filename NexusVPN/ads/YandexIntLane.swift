@@ -109,13 +109,28 @@ final class YandexIntLane: NSObject {
     }
 
     // MARK: - 展示
-
+    
     func expose(from viewController: UIViewController, cue: String?) {
-        guard let ad = cachedPayload else { return }
+        guard let ad = currentPayload() else {
+            NVLog.log("Ads", "Yandex Int 无可用 payload，忽略 expose")
+            return
+        }
+        ad.delegate = self
         ad.show(from: viewController)
         NVLog.log("Ads", "Yandex Int present | cue: \(cue ?? "nil")")
     }
-
+    
+    private func mediaWillShow() {
+        AdMixer.shared.mediaVisible = true
+    }
+    
+    /// 广告真正关闭 / 展示失败 后再去预加载下一支，避免「展示即加载」
+    private func mediaDidDismiss(cue: String? = nil) {
+        AdMixer.shared.mediaVisible = false
+        showingSlot = nil
+        resetAndRequest(cue: cue)
+    }
+    
     // MARK: - 清理
 
     func dropCurrent() {
@@ -161,17 +176,16 @@ extension YandexIntLane: InterstitialAdDelegate {
 
     func interstitialAdDidShow(_ ad: InterstitialAd) {
         NVLog.log("Ads", "Yandex Int 即将展示")
-        AdMixer.shared.mediaVisible = true
-        showingSlot = cachedPayload
+        mediaWillShow()
+        showingSlot = ad
         cachedPayload = nil
-        resetAndRequest(cue: "closead")
     }
 
     func interstitialAdDidDismiss(_ ad: InterstitialAd) {
         NVLog.log("Ads", "Yandex Int 已关闭")
+        mediaDidDismiss(cue: "closead")
         onClosed?()
         onClosed = nil
-        AdMixer.shared.mediaVisible = false
     }
 
     func interstitialAdDidClick(_ ad: InterstitialAd) {
@@ -181,6 +195,6 @@ extension YandexIntLane: InterstitialAdDelegate {
 
     func interstitialAd(_ ad: InterstitialAd, didFailToShowWithError error: Error) {
         NVLog.log("Ads", "Yandex Int 展示失败 | error: \(error.localizedDescription)")
-        resetAndRequest()
+        mediaDidDismiss()
     }
 }

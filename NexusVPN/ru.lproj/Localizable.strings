@@ -5,6 +5,9 @@
 "home.status.connected" = "Подключено";
 "home.status.failed" = "Ошибка подключения";
 
+"connect.noNetwork.title" = "Нет сети";
+"connect.noNetwork.message" = "Проверьте подключение к интернету и попробуйте ещё раз.";
+
 "home.node.auto" = "Авто • Лучшее местоположение";
 "home.action.changeNode" = "Сменить узел";
 "home.info.upload" = "Отдача";

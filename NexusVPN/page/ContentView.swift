@@ -270,6 +270,11 @@ struct ContentView: View {
             } message: {
                 Text(language.text("relay.disconnectFirst.message"))
             }
+            .alert(language.text("connect.noNetwork.title"), isPresented: $viewModel.showNoNetworkAlert) {
+                Button(language.text("common.ok"), role: .cancel) {}
+            } message: {
+                Text(language.text("connect.noNetwork.message"))
+            }
             .onChange(of: viewModel.showConnectingView) { show in
                 if show {
                     navigationPath.append(NavigationDestination.connecting)

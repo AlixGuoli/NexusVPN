@@ -5,6 +5,9 @@
 "home.status.connected" = "Conectado";
 "home.status.failed" = "Error de conexión";
 
+"connect.noNetwork.title" = "Sin conexión";
+"connect.noNetwork.message" = "Por favor, comprueba tu conexión a internet e inténtalo de nuevo.";
+
 "home.node.auto" = "Auto • Mejor ubicación";
 "home.action.changeNode" = "Cambiar nodo";
 "home.info.upload" = "Subida";

@@ -5,6 +5,9 @@
 "home.status.connected" = "연결됨";
 "home.status.failed" = "연결 실패";
 
+"connect.noNetwork.title" = "네트워크 없음";
+"connect.noNetwork.message" = "인터넷 연결을 확인한 후 다시 시도해 주세요.";
+
 "home.node.auto" = "자동 • 최적 위치";
 "home.action.changeNode" = "노드 변경";
 "home.info.upload" = "업로드";

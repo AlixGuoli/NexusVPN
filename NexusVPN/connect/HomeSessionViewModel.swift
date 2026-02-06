@@ -37,6 +37,8 @@ final class HomeSessionViewModel: ObservableObject {
     @Published private(set) var result: ConnectionResult?
     @Published private(set) var showConnectingView: Bool = false
     @Published private(set) var showDisconnectAlert: Bool = false
+    /// 无网络提示（点击连接按钮第一时间拦截）
+    @Published var showNoNetworkAlert: Bool = false
     
     /// 连接开始时间（用于计算连接时长）
     @Published var connectionStartTime: Date?
@@ -70,6 +72,7 @@ final class HomeSessionViewModel: ObservableObject {
     // MARK: - 内部依赖
     
     private let engine: ConnectionEngine
+    private let reachability = NetworkReachabilityManager()
     private var networkMonitor: NWPathMonitor?
     private var networkQueue: DispatchQueue?
     
@@ -200,13 +203,23 @@ final class HomeSessionViewModel: ObservableObject {
         NVLog.log("VM", "主按钮点击，当前阶段=\(stage)")
         switch stage {
         case .idle, .failed:
+            // 优先判断是否有网络，无网时直接给出提示，不进入连接流程
+            if reachability?.isReachable == false {
+                showNoNetworkAlert = true
+                return
+            }
             kickOffUserConnectFlow()
         case .online:
             // 已连接：先弹出确认框
             showDisconnectAlert = true
         case .connecting:
-            // 忽略重复点击
-            break
+            // 如果连接流程还在进行、但连接页因为 40s 兜底被关掉了，允许重新打开连接页
+            if !showConnectingView {
+                showConnectingView = true
+            } else {
+                // 连接页本身还在时，后续点击保持忽略，避免重复触发
+                break
+            }
         }
     }
     
@@ -296,7 +309,7 @@ final class HomeSessionViewModel: ObservableObject {
     
     /// 用户从首页主动发起的连接流程入口
     private func kickOffUserConnectFlow() {
-                NVLog.log("VM", "kickOffUserConnectFlow() 开始发起连接流程")
+        NVLog.log("VM", "kickOffUserConnectFlow() 开始发起连接流程")
         result = nil
         
         // 确保有配置（必要时创建）
@@ -499,6 +512,15 @@ final class HomeSessionViewModel: ObservableObject {
         result = .connectFailure
         needsPostVerification = false
         clearConnectionStartTime()
+    }
+
+    // MARK: - 连接页兜底超时处理
+    
+    /// 连接页超时（例如 UI 层 40 秒兜底）时调用：
+    /// 仅重置连接页的 UI 状态；真正的连接结果由系统状态回调决定
+    func handleConnectingTimeout() {
+        NVLog.log("VM", "handleConnectingTimeout() 连接页兜底超时，仅关闭连接页，不修改连接流程")
+        showConnectingView = false
     }
     
     // MARK: - 连接时长管理

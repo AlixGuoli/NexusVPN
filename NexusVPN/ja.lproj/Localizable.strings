@@ -5,6 +5,9 @@
 "home.status.connected" = "接続済み";
 "home.status.failed" = "接続失敗";
 
+"connect.noNetwork.title" = "ネットワーク未接続";
+"connect.noNetwork.message" = "インターネット接続を確認してから、もう一度お試しください。";
+
 "home.node.auto" = "自動 • 最適な場所";
 "home.action.changeNode" = "ノードを変更";
 "home.info.upload" = "アップロード";

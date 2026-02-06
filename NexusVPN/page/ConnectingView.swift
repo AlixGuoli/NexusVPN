@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ConnectingView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var viewModel: HomeSessionViewModel
     @EnvironmentObject var language: AppLanguageManager
     
     /// 三角装甲点亮进度（0~1，不断循环）
@@ -205,6 +206,8 @@ struct ConnectingView: View {
         timeoutTask?.cancel()
         let task = DispatchWorkItem {
             debugPrint("[ConnectingView] 40秒超时，自动关闭页面")
+            // 通知 ViewModel 做一次兜底回退，避免下一次点击无法重新进入连接流程
+            viewModel.handleConnectingTimeout()
             dismiss()
         }
         timeoutTask = task
@@ -221,6 +224,7 @@ struct ConnectingView: View {
 #Preview {
     NavigationStack {
         ConnectingView()
+            .environmentObject(HomeSessionViewModel())
             .environmentObject(AppLanguageManager.shared)
     }
 }

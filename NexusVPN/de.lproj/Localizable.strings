@@ -5,6 +5,9 @@
 "home.status.connected" = "Verbunden";
 "home.status.failed" = "Verbindung fehlgeschlagen";
 
+"connect.noNetwork.title" = "Kein Netzwerk";
+"connect.noNetwork.message" = "Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.";
+
 "home.node.auto" = "Auto • Beste Position";
 "home.action.changeNode" = "Knoten ändern";
 "home.info.upload" = "Upload";

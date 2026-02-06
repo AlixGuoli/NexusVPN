@@ -44,6 +44,8 @@ enum RequestContext {
     }
     
     private static func bundleIdentifier() -> String {
+        // MARK: - 测试服
+        //return "admobon"
         return Bundle.main.bundleIdentifier ?? "com.bluelink.nexus.key.vpn"
     }
     
