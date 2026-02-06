@@ -44,16 +44,29 @@ final class AdMixer {
         return true
     }
 
-    /// AppSettings 中的 adsType（例如 "y;a"）
+    /// AppSettings 中的 adsType（例如 "y;a;e"）
     private var adsType: String? {
         AppSettingsCache.shared.currentAdsType()
     }
 
-    /// Yandex 系列广告是否允许
+    /// adsType 拆分后的标记集合（例如 ["y", "a", "e"]）
+    private var adsFlags: Set<String> {
+        guard let raw = adsType, !raw.isEmpty else { return [] }
+        return Set(raw.split(separator: ";").map { String($0) })
+    }
+
+    /// 是否处于 EM 模式（有 e 即为 EM 模式）
+    private var isEMMode: Bool {
+        adsFlags.contains("e")
+    }
+
+    /// Yandex 系列广告是否允许（仅在非 EM 模式且包含 y 时开启）
     private var isYandexEnabled: Bool {
-        guard let adType = adsType else { return false }
-        let types = adType.components(separatedBy: ";")
-        let enabled = types.contains("y")
+        guard !isEMMode else {
+            NVLog.log("Ads", "Mixer Yandex 已关闭（EM 模式）")
+            return false
+        }
+        let enabled = adsFlags.contains("y")
         if !enabled {
             NVLog.log("Ads", "Mixer Yandex 已关闭（adsType 不包含 y）")
         }
@@ -62,9 +75,7 @@ final class AdMixer {
 
     /// AdMob 是否允许（需要 adsType 包含 "a"，且当前全局阶段为 online）
     private var isAdmobEnabled: Bool {
-        guard let adType = adsType else { return false }
-        let types = adType.components(separatedBy: ";")
-        guard types.contains("a") else {
+        guard adsFlags.contains("a") else {
             return false
         }
         let online = WirePhaseHub.shared.currentPhase == .online
@@ -76,14 +87,15 @@ final class AdMixer {
 
     // MARK: - 状态检查（混淆名，对应原项目 queryBa/queryYa/queryGa、hasYa/hasAny）
 
-    /// Banner 槽位是否就绪
-    func slotBannerReady() -> Bool {
-        BannerDeck.shared.hasPayload()
-    }
-
     /// Yandex 插屏槽位是否就绪
     func slotIntReady() -> Bool {
-        YandexIntLane.shared.hasPayload()
+        guard isAdsEnabled else { return false }
+        if isEMMode {
+            return EMIntLane.shared.hasPayload()
+        } else {
+            guard isYandexEnabled else { return false }
+            return YandexIntLane.shared.hasPayload()
+        }
     }
 
     /// AdMob 槽位是否就绪（非 online 时清空并返回 false）
@@ -98,7 +110,7 @@ final class AdMixer {
     /// 是否有任意 Yandex 槽位可用
     func hasYandexSlot() -> Bool {
         guard isAdsEnabled else { return false }
-        return slotBannerReady() || slotIntReady()
+        return slotIntReady()
     }
 
     /// 是否有任意广告槽位可用
@@ -109,8 +121,7 @@ final class AdMixer {
 
     /// 是否有任何 Yandex 媒体可用（Banner 或插屏）
     func hasYandexPayload() -> Bool {
-        guard isAdsEnabled else { return false }
-        return slotBannerReady() || slotIntReady()
+        hasYandexSlot()
     }
 
     /// 是否有任何媒体可用（AdMob / Yandex Banner / Yandex Int）
@@ -131,9 +142,10 @@ final class AdMixer {
 
         let tag = cue?.rawValue
 
-        if isYandexEnabled {
+        if isEMMode {
+            EMIntLane.shared.requestNext(cue: tag)
+        } else if isYandexEnabled {
             YandexIntLane.shared.requestNext(cue: tag)
-            BannerDeck.shared.requestNext(cue: tag)
         }
 
         if isAdmobEnabled {
@@ -146,26 +158,23 @@ final class AdMixer {
         primeAll(cue: cue)
     }
 
-    /// 预热 Banner 槽位，可选成功/失败回调（混淆名，对应原项目 prepareBa）
-    func primeBanner(onAdReady: (() -> Void)? = nil, onAdFailed: (() -> Void)? = nil) {
-        NVLog.log("Ads", "Mixer 加载 Yandex Banner")
-        if isAdsEnabled && isYandexEnabled {
-            if slotBannerReady() {
-                onAdReady?()
-            } else {
-                BannerDeck.shared.onFilled = onAdReady
-                BannerDeck.shared.onMiss = onAdFailed
-                BannerDeck.shared.requestNext(cue: nil)
-            }
-        } else {
-            onAdReady?()
-        }
-    }
-
     /// 预热 Yandex 插屏槽位，可选成功/失败回调（混淆名，对应原项目 prepareYa）
     func primeInt(onAdReady: (() -> Void)? = nil, onAdFailed: (() -> Void)? = nil) {
-        NVLog.log("Ads", "Mixer 加载 Yandex Int")
-        if isAdsEnabled && isYandexEnabled {
+        NVLog.log("Ads", "Mixer 加载 Int（Yandex/EM）")
+        guard isAdsEnabled else {
+            onAdReady?()
+            return
+        }
+
+        if isEMMode {
+            if slotIntReady() {
+                onAdReady?()
+            } else {
+                EMIntLane.shared.onFilled = onAdReady
+                EMIntLane.shared.onMiss = onAdFailed
+                EMIntLane.shared.requestNext(cue: nil)
+            }
+        } else if isYandexEnabled {
             if slotIntReady() {
                 onAdReady?()
             } else {
@@ -193,7 +202,7 @@ final class AdMixer {
     // MARK: - 展示入口
 
     /// 在给定控制器上按优先级尝试展示一条广告。
-    /// 默认优先级：AdMob 插屏 > Banner 覆盖层 > Yandex 插屏。
+    /// 默认优先级：AdMob 插屏 > EM/Yandex 插屏。
     /// - Returns: 是否成功展示。
     @discardableResult
     func presentTopPriorityIfAvailable(
@@ -217,17 +226,15 @@ final class AdMixer {
             return true
         }
 
-        // 2. Banner 覆盖层
-        if slotBannerReady() {
-            NVLog.log("Ads", "Mixer 选择 Banner 展示 | cue: \(cue.rawValue)")
-            BannerDeck.shared.expose(from: host, cue: cue.rawValue)
-            return true
-        }
-
-        // 3. Yandex 插屏
+        // 2. 插屏（EM / Yandex）
         if slotIntReady() {
-            NVLog.log("Ads", "Mixer 选择 Yandex Int 展示 | cue: \(cue.rawValue)")
-            YandexIntLane.shared.expose(from: host, cue: cue.rawValue)
+            if isEMMode {
+                NVLog.log("Ads", "Mixer 选择 EM Int 展示 | cue: \(cue.rawValue)")
+                EMIntLane.shared.expose(from: host, cue: cue.rawValue)
+            } else {
+                NVLog.log("Ads", "Mixer 选择 Yandex Int 展示 | cue: \(cue.rawValue)")
+                YandexIntLane.shared.expose(from: host, cue: cue.rawValue)
+            }
             return true
         }
 
@@ -237,17 +244,16 @@ final class AdMixer {
 
     // MARK: - 分类型展示（混淆名，对应原项目 presentBa/presentYa/presentGa）
 
-    /// 展示 Banner 覆盖层
-    func showBanner() {
-        guard let host = Self.locateHostViewController() else { return }
-        BannerDeck.shared.expose(from: host, cue: nil)
-    }
-
     /// 展示 Yandex 插屏，可选关闭回调
     func showInt(onClose: (() -> Void)? = nil) {
         guard let host = Self.locateHostViewController() else { return }
-        YandexIntLane.shared.onClosed = onClose
-        YandexIntLane.shared.expose(from: host, cue: nil)
+        if isEMMode {
+            EMIntLane.shared.onClosed = onClose
+            EMIntLane.shared.expose(from: host, cue: nil)
+        } else {
+            YandexIntLane.shared.onClosed = onClose
+            YandexIntLane.shared.expose(from: host, cue: nil)
+        }
     }
 
     /// 展示 AdMob 插屏（仅 online 时可用）
@@ -255,16 +261,6 @@ final class AdMixer {
         guard let host = Self.locateHostViewController() else { return }
         guard slotGaReady() else { return }
         AdMobLane.shared.expose(from: host, cue: cue.rawValue)
-    }
-
-    /// 取出当前 Banner 视图并触发下一支加载（混淆名，对应原项目 obtainBa）
-    func takeBannerView() -> AdView? {
-        BannerDeck.shared.takeCurrentAndReload(cue: nil)
-    }
-
-    /// 设置 Banner 点击回调（混淆名，对应原项目 setBannerClickCallback）
-    func setBannerTap(_ callback: @escaping () -> Void) {
-        BannerDeck.shared.onTap = callback
     }
 
     /// 查找当前可用于展示广告的宿主控制器（最顶部的可见 VC）。

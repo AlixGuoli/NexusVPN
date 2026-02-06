@@ -12,6 +12,12 @@ struct SettingsView: View {
     @EnvironmentObject var subscriptionStore: SubscriptionAccessStore
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    @State private var showUserIdSheet = false
+    
+    /// 当前用户 ID（接口用的 uid，测试用）
+    private var currentUserId: String {
+        RequestContext.baseQuery()["uid"] ?? ""
+    }
     
     // 获取当前实际使用的语言显示名称（用于「设置 → 语言」那一行的副标题）
     private var currentLanguageDisplayName: String {
@@ -165,13 +171,66 @@ struct SettingsView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, 4)
+                        
+                        // 底部隐式：长按查看并复制当前用户 ID（测试用，无任何可见元素）
+                        Color.clear
+                            .frame(height: 56)
+                            .contentShape(Rectangle())
+                            .onLongPressGesture(minimumDuration: 0.6) {
+                                showUserIdSheet = true
+                            }
                     }
                     .padding(.bottom, 24)
                 }
             }
         }
+        .sheet(isPresented: $showUserIdSheet) {
+            UserIdDebugSheet(userId: currentUserId)
+        }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+    }
+}
+
+// 测试用：长按设置页底部空白项后弹出的用户 ID 浮层（可复制）
+private struct UserIdDebugSheet: View {
+    let userId: String
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
+                Text(userId)
+                    .font(.system(.body, design: .monospaced))
+                    .textSelection(.enabled)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(12)
+                    .padding(.horizontal, 24)
+                
+                Button {
+                    UIPasteboard.general.string = userId
+                    dismiss()
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(.horizontal, 24)
+                
+                Spacer()
+            }
+            .padding(.top, 24)
+            .navigationTitle("User ID")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+        }
     }
 }
 

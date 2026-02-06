@@ -58,14 +58,14 @@ final class AppSettingsCache {
     /// 是否关闭广告
     func isAdsDisabled() -> Bool? {
         // MARK: - 测试服
-        return false
+        //return false
         return extractField(path: ["commonConf", "adsOff"]) as? Bool
     }
     
     /// 当前广告类型
     func currentAdsType() -> String? {
         // MARK: - 测试服
-        return "y;a"
+        //return "y;e;a"
         return extractField(path: ["commonConf", "adsType"]) as? String
     }
     

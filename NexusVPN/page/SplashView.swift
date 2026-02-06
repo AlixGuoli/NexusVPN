@@ -192,41 +192,6 @@ struct SplashView: View {
     }
 
     private func fetchAdSlots() async -> Bool {
-        async let bannerResult = fetchBannerSlot()
-        async let intResult = fetchIntSlot()
-
-        let bannerOk = await bannerResult
-        if bannerOk {
-            NVLog.log("Ads", "Banner 执行完成，直接返回")
-            return true
-        }
-        NVLog.log("Ads", "Banner 失败，等待 Int 结果")
-        let intOk = await intResult
-        return intOk
-    }
-
-    private func fetchBannerSlot() async -> Bool {
-        await withCheckedContinuation { cont in
-            DispatchQueue.main.async {
-                var resumed = false
-                AdMixer.shared.primeBanner(onAdReady: {
-                    if !resumed {
-                        resumed = true
-                        NVLog.log("Ads", "Banner 执行完成")
-                        cont.resume(returning: true)
-                    }
-                }, onAdFailed: {
-                    if !resumed {
-                        resumed = true
-                        NVLog.log("Ads", "Banner 加载失败")
-                        cont.resume(returning: false)
-                    }
-                })
-            }
-        }
-    }
-
-    private func fetchIntSlot() async -> Bool {
         await withCheckedContinuation { cont in
             DispatchQueue.main.async {
                 var resumed = false

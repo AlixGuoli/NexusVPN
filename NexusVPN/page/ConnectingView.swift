@@ -17,6 +17,8 @@ struct ConnectingView: View {
     @State private var auraScale: CGFloat = 1.0
     /// 背后光晕透明度
     @State private var auraOpacity: Double = 0.6
+    /// 连接页兜底超时任务（防止某些极端情况页面卡死）
+    @State private var timeoutTask: DispatchWorkItem?
     
     var body: some View {
         ZStack {
@@ -171,6 +173,10 @@ struct ConnectingView: View {
         .navigationBarBackButtonHidden(true)
         .onAppear {
             startAnimations()
+            startTimeoutGuard()
+        }
+        .onDisappear {
+            cancelTimeoutGuard()
         }
     }
     
@@ -190,6 +196,24 @@ struct ConnectingView: View {
             auraScale = 1.04
             auraOpacity = 0.8
         }
+    }
+
+    // MARK: - 兜底超时（40 秒自动关闭连接页）
+    
+    private func startTimeoutGuard() {
+        // 防止重复启动
+        timeoutTask?.cancel()
+        let task = DispatchWorkItem {
+            debugPrint("[ConnectingView] 40秒超时，自动关闭页面")
+            dismiss()
+        }
+        timeoutTask = task
+        DispatchQueue.main.asyncAfter(deadline: .now() + 40.0, execute: task)
+    }
+    
+    private func cancelTimeoutGuard() {
+        timeoutTask?.cancel()
+        timeoutTask = nil
     }
 
 }

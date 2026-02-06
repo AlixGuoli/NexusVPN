@@ -60,27 +60,6 @@ enum EducationRoutes {
         // 保存到缓存（写入时解析并扁平化）
         AdSettingsCache.shared.keepCache(json)
 
-        // 广告配置成功后，自动请求一次跳过按钮布局（与广告绑定的一体接口）
-        await callAdSkipLayout()
-    }
-
-    /// 调用跳过按钮布局接口：获取 location/x/y 并保存
-    static func callAdSkipLayout() async {
-        NVLog.log("Wire", "[Wire] 准备请求广告跳过布局 /education/page/campus")
-
-        // 原始接口：getpageconfig?pagename=ads_skip_yandex&pk=...
-        // pk 已在通用参数里，这里只需要附加 pagename
-        let extraParams = ["pagename": "ads_skip_yandex"]
-
-        guard let json = await WireClient.shared.send(.pageLayout, extra: extraParams) else {
-            NVLog.log("Wire", "[Wire] 广告跳过布局接口请求失败或无内容")
-            return
-        }
-
-        NVLog.log("Wire", "[Wire] 广告跳过布局接口响应内容：\(json)")
-
-        // 保存跳过按钮布局
-        AdSettingsCache.shared.keepSkipLayout(json)
     }
 
     /// 调用节点列表接口：请求接口 → 更新节点列表
